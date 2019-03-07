@@ -1,0 +1,93 @@
+.controlpanel {
+	/*border: solid 1px #9FCBEF;*/
+	padding: 5px 0 5px 0;
+	margin-bottom: 2px;
+	font-size: 100%;
+	font-weight: bold;
+	vertical-align: middle;
+	text-align: left;
+}
+
+.controlpanel#cmdTempMatter {
+	margin-bottom: 0px;
+	padding: 1px 0 1px 0;
+}
+
+.controlpanel span {
+	border: solid 1px #566B66;
+	padding: 5px 2px 5px 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	background: #C9D3D2;
+	vertical-align: middle;
+	font-weight: bold;
+}
+
+.controlpanel span img {
+	vertical-align: top;
+}
+
+.controlpanel span a {
+	color: #565656;
+	font-weight: bold;
+}
+
+.controlpanel span a:link {
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.controlpanel span:hover {
+	border: solid 1px #566B66;
+	background: #699197;
+}
+
+.controlpanel span.timecardbox:hover {
+	background-color: #EBF0FB !important;
+}
+
+.controlpanel span a:focus {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.controlpanel span a:hover {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.controlpanel span.disabled {
+	/*border: 1px solid #DDDDDD;
+    border-bottom:none;*/
+	color: #6A6A6A;
+	font-weight: bold;
+	background: url("../../images/current-bg2.gif") repeat-x;
+	border: solid 1px #566B66;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.controlpanel span.disabled a {
+	cursor: default;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.controlpanel span.separator {
+	border: none;
+	background: none;
+	vertical-align: middle;
+	padding: 0px 1px 0px 1px;
+	margin: 0 5px 0 5px;
+	font-weight: bold;
+}
+
+span.disabled a {
+	color: #6A6A6A;
+	cursor: default;
+	font-weight: bold;
+}
+
+hr {
+	margin: 0px;
+}

@@ -1,0 +1,16 @@
+[
+<%
+   i = 0
+   @records.each do |k, v|
+        if i != 0 then
+    %>
+,
+<%
+        end
+%>
+{ "id": "<%= v.id %>", "label": "<%= v.display %>", "value": "<%= v.display %>" }
+ <%
+        i = i + 1
+    end
+ %>
+]

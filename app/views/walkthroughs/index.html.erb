@@ -1,0 +1,7 @@
+<%= stylesheet_link_tag 'custom/groupbox', :media => 'screen' %>
+<div class="groupbox">
+  <div class="legend" style='width:120px'>Walk-through Videos</div>
+  <div class="imagelink"><%= link_to image_tag('blackberry.png') + '  Blackberry Walk-through Videos', {:controller => 'blackberry_walkthrough', :action => 'index'} %></div>
+  <div class="imagelink"> <%= link_to image_tag('iphone.png') + '  iPhone Walk-through Videos', {:controller => 'iphone_walkthrough', :action => 'index'} %></div>
+  <div class="imagelink"> <%= link_to image_tag('android.png') + '  Android Walk-through Videos', {:controller => 'android_walkthrough', :action => 'index'} %></div>
+</div>

@@ -1,0 +1,29 @@
+<%
+   if @current.nil?
+       @current = 1
+   else
+       @current += 1
+   end
+   @hash1 = @calendar_info['' + @current.to_s]
+%>
+<td class="calendartable" onclick="<%='dateClicked(' + @current.to_s + ');' %>">
+<table class="<%=@hash1[ 'class']%> " style="<%=@hash1[ 'cell_visible']%> ">
+  <tbody>
+  <tr >
+    <td class="<%=@hash1[ 'class']%>  bigfont" >
+    <input type="hidden" id='<%= "calendar" + @current.to_s %>' name='<%= "calendar" + @current.to_s %>' value='<%= @hash1[ 'date'] %>'>
+     <%= @hash1[ 'day'] %>
+    </td>
+    <td class="billablebox  smallfont">
+        <%= @hash1[ 'billable'] %>
+    </td>
+  </tr>
+  <tr >
+    <td class="<%=@hash1[ 'class']%>" style="width:30px;"> </td>
+    <td class="postedbox smallfont" style="width:130px;">
+       <%= @hash1[ 'posted' ] %>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</td>

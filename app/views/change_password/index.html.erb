@@ -1,0 +1,28 @@
+<%= render 'scripts' %>
+<section class="content" style="padding: 0px 0px !important; overflow: hidden !important;">
+  <div class="row">
+    <%= render 'control_panel' %>
+    <div class=" col-md-12">
+      <%= form_tag "/change_password/update", :id => 'change_password_form', :method => 'post' do %>
+          <div class="box box-primary">
+            <div class="row" style="margin-bottom: 10px;">
+              <div class="col-xs-6 col-md-3 col-sm-3"><%= label_tag @localData['old_password'] %></div>
+              <div class="col-xs-6 col-md-3 col-sm-3"><%= password_field_tag 'password[old]', '', :maxlength => 50, :class => 'form-control', :type => 'password' %></div>
+            </div>
+            <div class="row" style="margin-bottom: 10px;">
+              <div class="col-xs-6 col-md-3 col-sm-3"><%= label_tag @localData['new_password'] %></div>
+              <div class="col-xs-6 col-md-3 col-sm-3"><%= password_field_tag 'password[new]', '', :maxlength => 50, :class => 'form-control', :type => 'password' %></div>
+            </div>
+            <div class="row" style="margin-bottom: 10px;">
+              <div class="col-xs-6 col-md-3 col-sm-3"><%= label_tag @localData['confirm_password'] %></div>
+              <div class="col-xs-6 col-md-3 col-sm-3"><%= password_field_tag 'password[confirmed]', '', :maxlength => 50, :class => 'form-control', :type => 'password' %></div>
+            </div>
+          </div>
+
+      <% end %>
+    </div>
+    <br />
+    <br />
+  </div>
+  </div>
+</section>

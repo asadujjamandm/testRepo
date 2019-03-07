@@ -1,0 +1,4 @@
+<div class="controlpanel" style="margin-bottom: 10px; margin-right: 10px">
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-save") + ' ' + @localData['add'], 'javascript:createFarm()', :title => @localData['add_new_farm'], :tabindex=> "10",:class => "btn btn-primary" %></span>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-times") + ' ' + @localData['cancel'], {:controller => 'registered_users', :action => 'cancel'}, :title => @localData['cancel_changes'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+</div>

@@ -1,0 +1,503 @@
+<%= stylesheet_link_tag 'newcss/jQueryUI/jquery-ui-1.10.3.custom.min', :media => 'screen' %>
+<%= javascript_include_tag 'newjs/jquery-ui-1.10.3.min' %>
+
+<!--Date picker-->
+<%= stylesheet_link_tag 'newcss/datepicker/datepicker3', :media => 'screen' %>
+<%= javascript_include_tag 'newjs/plugins/datepicker/bootstrap-datepicker' %>
+<!--======-->
+
+<!-- Clock Picker-->
+<!--<%= stylesheet_link_tag 'newcss/clockpicker', :media => 'screen' %>-->
+<!--<%= javascript_include_tag 'newjs/clockpicker' %>-->
+
+<%= stylesheet_link_tag 'newcss/new-bootstrap-timepicker', :media => 'screen' %>
+<%= javascript_include_tag 'new-bootstrap-timepicker' %>
+<!--==========-->
+
+
+
+<!--<%= javascript_include_tag 'jquery.mousewheel.min' %>-->
+<!--<%= javascript_include_tag 'jquery.timeentry.min' %>-->
+<%= javascript_include_tag 'jquery.validate.min' %>
+<%= javascript_include_tag 'custom/timecardview' %>
+<%= javascript_include_tag 'custom/popup' %>
+
+
+
+<script type="text/javascript">
+    $(function() {
+        console.log("Date picker here");    //**********************************  timecard_hours
+        $('#timecard_date').datepicker({
+            autoclose:true,
+            setDate:new Date(),
+            format: '<%=session["javascript_date_format"]%>'.replace('yy','yyyy'),
+            todayBtn: "linked"
+        });
+
+        $('#timecard_hours').timepicker({
+            minuteStep: 5,
+            showMeridian:false
+        });
+
+        $("#select_hour").click(function(e){
+            $('#timecard_hours').timepicker('showWidget');
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    var updateConfirmationMessage = '<%=@localData['are_you_sure_you_want_to_update_this_record']%>';
+    var cancelConfirmationMessage = '<%=@localData['are_you_sure_you_want_to_cancel_this_record']%>';
+    var deleteConfirmationMessage = '<%=@localData['are_you_sure_you_want_to_delete_the_timecard']%>';
+    var postConfirmationMessage = '<%=@localData['are_you_sure_you_want_to_post_this_record']%>';
+    var singleErrorMessage = '<%=@localData['single_error_message']%>';
+    var multipleErrorMessage = '<%=@localData['multiple_error_message']%>';
+
+//    *********Time Card Button func ******
+    var callTimeCardListAjax=function(){
+
+        var date=  $('#tc_date').val();
+        /*if(date == "")
+        {
+            date = new Date();
+        }*/
+
+        $('#list_date').text(date);
+
+        var dateurl="/timecards/timecard_list?date="+date+"";
+
+        $.ajax({
+            url:dateurl,
+            success:function(data) {
+                var obj=JSON.parse(data);
+                generateTable(obj);
+            }
+        });
+        console.log("Calling Ajax");
+    }
+
+    //-----------generate table--------------
+    var generateTable = function(timecards){
+        console.log(timecards);
+        if(timecards.length>0)
+        {
+//            console.log("generate Table");
+            $('#example2').attr('class','table table-bordered table-striped timecardlist table-responsive');
+            var tr='';
+            for(i=0;i<timecards.length;i++)
+            {
+                tr+=createTable(timecards[i]);
+            }
+            $("#tc_tbody").html(tr);
+        }
+        else
+        {
+            $('#example2').attr('class','invisible');
+        }
+    }
+    var createTable = function(timecard){
+        var actionCol='';
+        if(timecard.aproved!='yes')
+        {
+            actionCol='<td >'+
+                    '<a href="javascript:submitEditTimecard(###)" tabindex="-1" title="Edit timecard"><img alt="Edit" options="{:alt=&gt;&quot;Edit&quot;}" src="/images/edit.png?1414668556" />'+
+                    '</a>'+
+                    '<span class="delete"><a href="/timecards/delete?page=1&amp;timecard_approved=no&amp;timecard_id=###&amp;timecard_posted=no" data-method="post" rel="nofollow" tabindex="-1" title="Delete timecard"><img alt="Delete_14" options="{:alt=&gt;&quot;Delete&quot;}" src="/images/delete_14.png?1414668556" /></a></span>'+
+                    '</td>';
+        }
+        else
+        {    actionCol='<td >'+
+                '<img alt="Edit_disabled" src="/images/edit_disabled.png?1414668556" title="Timecard is not editable" />'+
+                '<img alt="Delete_disabled_14" src="/images/delete_disabled_14.png?1414668534" title="Timecard is not deletable" />'+
+                '</td>';
+        }
+        actionCol=actionCol.replace(/###/g,timecard.id);
+        //----------status column-------------
+        var statusCol='';
+        if(timecard.aproved=='yes'){
+            statusCol='<td><img alt="Posted" src="/images/lock_locked.png?1414668556" title="Timecard is posted" /></td>';
+        }
+        else if(timecard.posted=='yes'){
+            statusCol='<td><img alt="Synced" src="/images/lock_unlocked2.png?1414668556" title="Timecard is synced" /></td>'
+        }
+        else{
+            statusCol='<td><img alt="Cached" src="/images/lock_unlocked.png?1414668556" title="Timecard is cached" /></td>'
+        }
+
+        var dirtyId=0;
+        <%='dirtyId='+ (@dirty_timecard.nil? ? '0' : ((@dirty_timecard.id.nil? ) ? '0': @dirty_timecard.id.to_s))%>;
+
+        var trClass=(dirtyId==timecard.id)?'dirty':'updated';
+        console.log(trClass);
+//        console.log("Creating Table");
+        var tr= '<tr class="###" >'+
+                actionCol+
+                '<td style="text-align: center">'+timecard.id+'</td>'+
+                '<td class="td-with-tooltip">'+timecard.client+'</td>'+
+                '<td class="td-with-tooltip">'+timecard.matter+'</td>'     +
+                '<td class="td-with-tooltip">'+timecard.actvity+'</td>'+
+                '<td>'+timecard.hour+'</td>'+
+                statusCol+
+                '</tr>';
+        return tr.replace("###",trClass);
+
+    }
+    //---------------------------------------
+    var busy = false;   //busy in ajax request
+
+    <%= 'var isNew = ' + ( (is_new_timecard) ? 'true' : 'false' ) %>;
+
+
+
+
+    $(function() {
+
+        //******-----Time card List******--------
+        var page_stat = $('#page_stat').val();
+        if(page_stat!=2)  {
+
+                $('#timecard_date').datepicker('setDate',new Date());
+        }
+
+        var date=$('#timecard_date').val();
+        $('#tc_date').val(date);
+
+        //changed for timecard_date undefined while seach timecards and ruby.exe gets crashed
+        if($("#timecard_date").val()!=undefined){
+            callTimeCardListAjax();
+        }
+
+
+
+
+        //---------date change eventhandler----------
+        $('#timecard_date').datepicker()
+                .on('changeDate', function(ev){
+                    var page_stat = $('#page_stat').val();
+                    if(page_stat==2)
+                        return;
+                    $('#tc_date').val(ev.target.value);
+                    $('#listTitle').text(ev.target.value);
+                    callTimeCardListAjax();
+                });
+        //----------------------------------------
+        //**********-------*************************************************************---------------
+
+
+        // -------Icon Clickable functions-----
+        $("#date_select").click(function(){
+            $('#timecard_date').datepicker("show");
+        });
+
+
+        //client clicked
+        $("#client_select").click(function(){
+            console.log("client click");
+
+            $('#timecard_client_number').val('');
+            $('#timecard_client_number').autocomplete("search");
+            $('#timecard_client_number').focus();
+        });
+
+        $("#matter_select").click(function(){
+            console.log("matter click");
+            $('#timecard_matter_number').val('');
+            $('#timecard_matter_number').autocomplete("search");
+            $('#timecard_matter_number').focus();
+        });
+
+        $("#activity_select").click(function(){
+            console.log("activity click");
+
+            $('#timecard_activity_code').val('');
+            $('#timecard_activity_code').autocomplete("search");
+            $('#timecard_activity_code').focus();
+
+        });
+
+        $("#narative_select").click(function(){
+            console.log("narative click");
+            $('#timecard_description').focus();
+        });
+
+        $.ajax({
+            url:"/timecards/autocomplete_list?extra_id=0&type=1",
+            data: JSON.stringify(),
+            success:function(data) {
+                console.log(data);
+                var d=JSON.parse(data);
+                var dt;
+                dt = d[0];;
+                $( "#timecard_timekeeper_id" ).val(dt["id"]);
+                $("#show_Timekeeper").html(dt["label"]);
+            }
+        });
+
+        //Activity Code Autocomplete
+        function activitySelected( code ) {
+            $( "#activity_id" ).val( code );
+        }
+        $( "#timecard_activity_code" ).autocomplete({
+           source: "/timecards/autocomplete_list?extra_id=0&type=4",
+           minLength: 0,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    activitySelected( ui.item.label.split(" - ")[0] );
+                }
+            }
+        });
+
+        $( "#timecard_activity_code" ).bind( "autocompleteopen", function(event, ui) {
+            $( "#activity_id" ).val("");
+        });
+        $('#timecard_activity_code').focus(function() {
+            if( $('#timecard_activity_code').val() == "" )
+            {
+                $( "#activity_id" ).val("");
+                $(this).keydown();
+            }
+        });
+
+            //Client Autocomplete
+            function clientSelected( id, label ) {
+               $( "#timecard_client_id" ).val( id );
+               setMatterAutocompleteSource();
+               //reset matter to blank
+               $( "#timecard_matter_id" ).val( "" );
+               $( "#timecard_matter_number" ).val( "" );
+               $( "#timecard_client_id2").val( id );
+               $( "#timecard_client_number2").val( label );
+            }
+            $( "#timecard_client_number" ).autocomplete({
+            source: "/timecards/autocomplete_list?extra_id=0&type=2",
+            minLength: 0,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    clientSelected( ui.item.id, ui.item.value );
+                }
+            }
+            });
+
+            $( "#timecard_client_number" ).bind( "autocompletechange", function(event, ui) {
+                //kept for future if needed
+            });
+            $( "#timecard_client_number" ).bind( "autocompleteopen", function(event, ui) {
+                $( "#timecard_client_id" ).val("");
+            });
+            $('#timecard_client_number').focus(function() {
+                /*if( $('#timecard_client_number').val() == "" )
+                {
+                    $("#timecard_client_number").autocomplete( "search", "" );
+                }
+                */
+                if( $('#timecard_client_number').val() == "" )
+                {
+                    $( "#timecard_client_id" ).val("");
+                    $(this).keydown();
+                }
+            });
+
+
+            //Matter Autocomplete
+            function matterSelected( id ) {
+               $( "#timecard_matter_id" ).val( id );
+               checkMatterStatus();
+            }
+
+            $( "#timecard_matter_number" ).autocomplete({
+            source: "/timecards/autocomplete_list?extra_id=0&type=3",
+            minLength: 0,
+            cache: false,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    matterSelected( ui.item.id );
+                }
+            }
+            });
+            $( "#timecard_matter_number" ).bind( "autocompleteopen", function(event, ui) {
+                $( "#timecard_matter_id" ).val("");
+            });
+            $('#timecard_matter_number').focus(function() {
+                setMatterAutocompleteSource();
+                if( $('#timecard_matter_number').val() == "" )
+                {
+                    $( "#timecard_matter_id" ).val("");
+                    $(this).keydown();
+                }
+            });
+
+            function client2Selected( id, label ) {
+               $( "#timecard_client_id2" ).val( id );
+            }
+            $( "#timecard_client_number2" ).autocomplete({
+            source: "/timecards/autocomplete_list?extra_id=0&type=2",
+            minLength: 0,
+            cache: false,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    client2Selected( ui.item.id, ui.item.value );
+                }
+            }
+            });
+            $( "#timecard_client_number2" ).bind( "autocompleteopen", function(event, ui) {
+                $( "#timecard_client_id2" ).val("");
+            });
+            $('#timecard_client_number2').focus(function() {
+                if( $('#timecard_client_number2').val() == "" )
+                {
+                    $( "#timecard_client_id2" ).val("");
+                    $(this).keydown();
+                }
+            });
+
+
+	});
+
+
+    function submitTempMatter()
+    {
+
+        if( $.trim( $( "#timecard_client_id2" ).val() ) == "" )
+        {
+            alert( '<%=@localData['please_select_a_client']%>' );
+            return;
+        }
+
+        if( $.trim( $( "#matter_number2" ).val() ) == "" )
+        {
+            alert( '<%=@localData['matter_number_is_required']%>' );
+            return;
+        }
+
+        if( $.trim( $( "#matter_name2" ).val() ) == "" )
+        {
+            alert( '<%=@localData['matter_name_is_required']%>' );
+            return;
+        }
+
+        $('#timecard_client_id2').attr('disabled', false);  //enabling for taking the post data
+        parameters = $('#temp_matter_form').serialize();
+        $('#timecard_client_id2').attr('disabled', true);
+
+        $.ajax({
+              type: "POST",
+              url: "/timecards/temporary_matter",
+              data:parameters
+              ,
+              success: function(data){
+
+                    errorIndication = "##error**";
+
+                    if( data.length < errorIndication.length )
+                    {
+                        //do nothing
+                    }
+                    else if( data.length == errorIndication.length )
+                    {
+                        if( data.substring( 0, errorIndication.length ) == errorIndication )
+                        {
+                            alert( '<%=@localData['unable_to_add_temporary_matter']%>' );
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if( data.substring( 0, errorIndication.length ) == errorIndication )
+                        {
+                            alert( data.substring( errorIndication.length ) );
+                            return;
+                        }
+                    }
+
+                    //take the actual data if no errors
+                    var index = data.indexOf("*#+", 0);
+                    var matterID = data.substring( 0, index);
+                    var matterNumber = data.substring((index + 3));
+
+                    //set this new matter id to the matter fields
+                    $("#timecard_matter_id").val( matterID );
+                    $("#timecard_matter_number").val( matterNumber );
+
+                    closePopup('matter_window');
+                    checkMatterStatus();
+
+                    $("#timecard_matter_number").focus();
+
+              },
+              error: function(x,y,z){
+                    alert( '<%=@localData['unable_to_add_temporary_matter']%>' );
+              },
+              complete: function(x,y){
+                    //do nothing
+              }
+        });
+
+    }
+
+    function checkMatterStatus()
+    {
+        busy = true;
+
+        var parameters = new Object();
+        parameters.matter_id = $( "#timecard_matter_id" ).val();
+
+        if( parameters.matter_id == undefined )
+        {
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "/timecards/matter_bill_status",
+            data: parameters,
+            success: function(data){
+                console.log(data.trim()=='yes');
+                if(data.trim()=='yes')
+                    $( "#timecard_bill_status" ).val('Non-billable');
+                else
+                    $( "#timecard_bill_status" ).val('Billable');
+            }  ,
+            error: function(x,y,z){
+                alert( '<%=@localData['unable_to_get_matter_status']%>' );
+                $( "#timecard_matter_id").html("");
+            },
+            complete: function(x,y){
+                busy = false;
+            }
+        });
+        //Code removed
+    }
+
+    function setBillableDropDown( status )
+    {
+
+        status = $.trim( status.toLowerCase() );
+        if( status == 'no' )
+        {
+            if( isNew )
+            {
+                $("#timecard_bill_status").val( "Billable" );
+            }
+            $("#timecard_bill_status").removeAttr('disabled');
+
+        }
+        else
+        {
+            $("#timecard_bill_status").val( "Non-billable" );
+            $("#timecard_bill_status").attr('disabled', 'disabled');
+        }
+
+    }
+
+    function setMatterAutocompleteSource()
+    {
+        var clientID = $( "#timecard_client_id" ).val();
+        $( "#timecard_matter_number" ).autocomplete( "option" , "source" , "/timecards/autocomplete_list?extra_id=" + clientID + "&type=3" );
+    }
+</script>
+

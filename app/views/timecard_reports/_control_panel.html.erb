@@ -1,0 +1,26 @@
+<div class="controlpanel" style="margin-bottom: 10px; margin-left: 15px">
+  <!--<span><%= link_to image_tag('search.png', :options => {:alt => @localData['search']}) + ' ' + @localData['search'], 'javascript:submitSearch()', :title => @localData['search_timecards'], :id => 'search', :class => 'btn btn-primary' %></span>-->
+
+  <% if !@timecards.nil? and !@timecards.empty? %>
+      <span><%= link_to image_tag('pdf.png', :options => {:alt => @localData['view_pdf']}) + ' ' + @localData['view_pdf'], 'javascript:submitViewPdf()', :title => @localData['view_in_pdf_format'], :id => 'view_pdf', :class => 'btn btn-primary btn-sm syncbuttonm'%></span>
+      <span><%= link_to image_tag('pdf.png', :options => {:alt => @localData['week_report']}) + ' ' + @localData['week_report'], 'javascript:submitWeekReport()', :title => @localData['view_in_pdf_format'], :id => 'week_report', :class => 'btn btn-primary btn-sm syncbuttonm'%></span>
+      <span><%= link_to image_tag('export.png', :options => {:alt => @localData['export_timecard_txt']}) + ' ' + @localData['export_timecard_txt'], 'javascript:exportTimecard("txt")', :title => @localData['export_timecard_txt'], :id => 'export_timecard_txt', :class => 'btn btn-primary btn-sm syncbuttonm' %></span>
+      <span><%= link_to image_tag('export.png', :options => {:alt => @localData['export_timecard_xml']}) + ' ' + @localData['export_timecard_xml'], 'javascript:exportTimecard("xml")', :title => @localData['export_timecard_xml'], :id => 'export_timecard_xml', :class => 'btn btn-primary btn-sm syncbuttonm' %></span>
+      <!--<span><%= link_to image_tag('export.png', :options => {:alt => @localData['export_to_quickbooks']}) + ' ' + @localData['export_to_quickbooks'], {:controller => 'timecard_reports', :action => 'export_to_quickbooks'}, :title => @localData['export_to_quickbooks'], :id => 'export_timecard_quickbooks', :class => 'btn btn-primary btn-sm syncbuttonm' %></span>-->
+
+      <%if session[SESSION_EXPIRE_DATE ] == "1"%>
+          <span><%= link_to "Export To QuickBooks","#quickBookForm", :title => @localData['export_to_quickbooks'],:class => "btn btn-primary modal-btn-report btn-sm syncbuttonm", :id =>"activity_export", "data-toggle" => "modal", "data-target" => "quickBookForm" %></span>
+      <% end %>
+      <script type="text/javascript" src="https://appcenter.intuit.com/Content/IA/intuit.ipp.anywhere.js"></script>
+      <!-- configure the Intuit object: 'grantUrl' is a URL in your application which kicks off the flow, see below -->
+      <script>
+          intuit.ipp.anywhere.setup({menuProxy: '/path/to/blue-dot', grantUrl: '<%= timecard_reports_qb_authenticate_url%>'});
+      </script>
+
+      <!-- this will display a button that the user clicks to start the flow -->
+      <%if session[SESSION_EXPIRE_DATE ] == "0"%>
+          <ipp:connectToIntuit></ipp:connectToIntuit>
+      <% end %>
+
+  <% end %>
+</div>

@@ -1,0 +1,57 @@
+<section class="content" style="padding: 0px 0px !important; overflow: hidden !important;">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="row">
+          <div class="col-md-12">
+            <% if !@page_results.nil? %>
+                <table class=" table table-bordered roletable">
+                  <thead>
+                  <tr>
+                    <th width="100px;" class="userrole"><%= @localData['actions'] %></th>
+                    <th class="userrole"><%= @localData['name'] %></th>
+                    <th class="userrole"><%= @localData['description'] %></th>
+                    <th class="userrole"><%= @localData['status'] %></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @page_results.each do |k, v| %>
+                      <td class='action userrole'>
+                        <% if @dirty_role.nil? %>
+                            <%= link_to image_tag('user.png', :options => {:alt => @localData['view_users']}), {:controller => 'users', :action => 'external_search', :role => v.id}, :title => @localData['view_users'], :method => :get %>
+                            <%= link_to image_tag('role.png', :options => {:alt => @localData['view_permissions']}), {:controller => 'roles', :action => 'show_role_permissions', :role_id => v.id, :role_name => v.name, :page => @current_page}, :title => @localData['view_permissions'], :method => :post %>
+                            <%= link_to image_tag('edit.png', :options => {:alt => @localData['edit']}), {:controller => 'roles', :action => 'edit', :role_id => "#{v.id}", :page => @current_page}, :title => @localData['edit_role'], :method => :post %>
+                            <span class='delete'><%= link_to image_tag('delete_14.png', :options => {:alt => @localData['delete']}), {:controller => 'roles', :action => 'delete', :role_id => "#{v.id}", :page => @current_page}, :title => @localData['delete_role'], :method => :post %></span>
+                        <% else %>
+                            <%= image_tag "user_disabled.png", :title => @localData['user_view_is_not_enabled'] %>
+                            <%= image_tag "role_disabled.png", :title => @localData['permission_view_is_not_enabled'] %>
+                            <%= image_tag "edit_disabled.png", :title => @localData['role_is_not_editable'] %>
+                            <%= image_tag "delete_disabled_14.png", :title => @localData['role_is_not_deletable'] %>
+                        <% end %>
+                      </td>
+                      <td class="userrole"><%= v.name %></td>
+                      <td class="userrole"><%= v.desc %></td>
+                      <td class="centerdata userrole"><%= get_role_status v.is_active %></td>
+                      </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+                <div class="pager">
+                  <span><%= @localData['records'] %><b><%= records_from %></b><%= @localData['to'] %><b><%= records_to %></b><%= @localData['of'] %><b><%= role_records_of %></b></span>
+
+                  <div class="custom_pagination">
+                    <% if @dirty_role.nil? %>
+                        <%= will_paginate @page_results, :prev_label => "<< ", :next_label => " >>" %>
+                    <% end %>
+                  </div>
+                </div>
+                </div>
+                <br />
+                <br />
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

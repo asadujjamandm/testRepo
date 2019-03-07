@@ -1,0 +1,86 @@
+<div class="box box-primary" xmlns="http://www.w3.org/1999/html">
+  <div class="table-responsive">
+    <table id='roletable'>
+    <caption><%= is_viewing_roles ? @localData['assigned_roles_of_user'] + get_role_user_name : @localData['assign_roles'] %></caption>
+
+                <tr>
+                  <td width="310px"></td>
+                  <td width="30px"></td>
+                  <td></td>
+                </tr>
+
+    <tr>
+      <div class="col-md-3">
+        <div class="row">
+          <div class="col-md-1">
+              <td>
+                <%= select('role', 'id', @roles.collect { |k, v| [get_role_name_status_role(v), v.id] }, {}, {:size => @roles.length < 5 ? 5 : @roles.length, :tabindex=> "5"}) %>
+              </td>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-1">
+              <td>
+                <% if is_viewing_roles %>
+
+                    <div class="controlpanel"> <span class="disabled"><%= ' >> ' %></span></div>
+                    <div class="controlpanel"><span class="disabled"><%= ' << ' %></span></div>
+                <% else %>
+                    <div class="controlpanel">
+
+                      <span><%= link_to ' >> ', 'javascript:addToRole()', :title => @localData['assign_user_to_role'], :tabindex=> "5" %></span></div>
+                    <div class="controlpanel">
+                      <span><%= link_to ' << ', 'javascript:removeFromRole()', :title => @localData['remove_user_from_role'], :tabindex=> "5" %></span></div>
+                <% end %>
+              </td>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-1">
+              <td class="tablecolumn">
+                <table id='userroletable' class="table-responsive">
+                  <thead>
+                  <th width="34%"><%= @localData['role'] %></th>
+                  <th width="33%"><%= @localData['is_role_admin'] %></th>
+                  <th width="33%"><%= @localData['can_read_all'] %></th>
+                  </thead>
+                  <tbody>
+                  <% @userroles.each do |k, v| %>
+                      <tr onclick='javascript:selectRow(this);'>
+                        <td>
+                          <input type='hidden' name='roles[role_<%= v.role_id %>[id]]' value='<%= v.id %>' tabindex="5"/>
+                          <input type='hidden' name='roles[role_<%= v.role_id %>[role_id]]' value='<%= v.role_id %>' tabindex="5"/>
+                          <label><%= get_role_name_status_userrole(v) %></label>
+                        </td>
+                        <td class='centerdata'>
+                          <input name='roles[role_<%= v.role_id %>[is_role_admin]]' type='hidden' value='no'/>
+                          <input name='roles[role_<%= v.role_id %>[is_role_admin]]' type='checkbox' value='yes' onclick='javascript:adminClicked(this);' <%= is_viewing_roles ? "disabled='disabled'" : '' %>  <%= v.is_role_admin == 'yes' ? "checked='checked'" : '' %> tabindex="5" />
+                        </td>
+                        <td class='centerdata'>
+                          <input name='roles[role_<%= v.role_id %>[can_read_all]]' type='hidden' value='no'/>
+                          <input name='roles[role_<%= v.role_id %>[can_read_all]]' type='checkbox' value='yes' <%= v.is_role_admin != 'yes' || is_viewing_roles ? "disabled='disabled'" : '' %> <%= v.can_read_all == 'yes' ? "checked='checked'" : '' %> tabindex="5" />
+                        </td>
+                        <td class='centerdata'>
+                          <input name='roles[role_<%= v.role_id %>[can_insert_all]]' type='hidden' value='no'/>
+                        </td>
+                        <td class='centerdata'>
+                          <input name='roles[role_<%= v.role_id %>[can_update_all]]' type='hidden' value='no'/>
+                        </td>
+                        <td class='centerdata'>
+                          <input name='roles[role_<%= v.role_id %>[can_delete_all]]' type='hidden' value='no'/>
+                        </td>
+                      </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </td>
+          </div>
+        </div>
+      </div>
+    </tr>
+    </table>
+  </div>
+</div>
+
+
+

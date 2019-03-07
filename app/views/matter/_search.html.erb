@@ -1,0 +1,46 @@
+<% if @dirty_matter.nil? %>
+<div class="box-body no-padding">
+  <div id="search">
+    <% form_tag "/matter/search", :id => 'matter_search_form', :method => 'post' do %>
+        <div class="box" style="padding: 0 !important; margin-bottom: 10px !important">
+          <div class="box-body">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-5 col-xs-5 col-sm-5">
+                      <%= label_tag @localData['matter_no'], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-7 col-xs-7 col-sm-7">
+                      <%= text_field_tag 'search_matter[matter_number]', @search_object.nil? ? "" : @search_object.matter_number, :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px;', :placeholder => "Matter Number" %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-5">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-5 col-xs-5 col-sm-5">
+                      <%= label_tag @localData['matter_name'], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-7 col-xs-7 col-sm-7">
+                      <%= text_field_tag 'search_matter[matter_name]', @search_object.nil? ? "" : @search_object.matter_name, :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px;', :placeholder => "Matter Name" %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-5 col-xs-5 col-sm-5">
+                      <%= label_tag @localData[''], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-7 col-xs-7 col-sm-7">
+                      <%= link_to @localData['search'], 'javascript:submitSearch()', :title => @localData['search_matter'], :id => 'search', :class => 'btn btn-primary', :style => 'width: 100%' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
+<% end%>

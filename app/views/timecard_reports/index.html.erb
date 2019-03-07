@@ -1,0 +1,172 @@
+<%= render 'scripts' %>
+<section class="content" style="padding: 0px 15px !important;">
+  <div class="row">
+    <%= render 'control_panel' %>
+    <div class="col-xs-12">
+      <div class="box box-primary">
+
+        <div class="box-body table-responsive">
+          <div class="dataTables_wrapper form-inline">
+            <%= render 'search' %>
+            <% if !@timecards.nil? and !@timecards.empty? %>
+                <div class="">
+                <table class="table table-bordered table-striped ">
+                  <thead>
+                  <tr>
+                    <th width="5%">Select</th>
+                    <th width="10%"><%= @localData['work_date'] %></th>
+                    <th width="15%"><%= @localData['client'] %></th>
+                    <th width="12%"><%= @localData['matter'] %></th>
+                    <th width="15%"><%= @localData['timekeeper'] %></th>
+                    <th width="8%"><%= @localData['work_hour'] %></th>
+                    <th width="10%"><%= @localData['bill_status'] %></th>
+                    <th width="20%"><%= @localData['description'] %></th>
+                    <th width="5%"><%= @localData['status'] %></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @timecards.each do |k, v| %>
+                      <tr>
+                        <td><%= check_box_tag 'timecard[' + k + ']', value = v.id, checked = false, {:class => "td_list"}%></td>
+                        <td><%= v.date %></td>
+                        <td><%= Utils.get_display_name(v.client_name, v.client_number) %></td>
+                        <td><%= Utils.get_display_name(v.matter_name, v.matter_number) %></td>
+                        <td><%= Utils.get_display_name(v.timekeeper_name, v.timekeeper_number) %></td>
+                        <td style="text-align: right"><%= Utils.get_time_from_seconds(Utils.get_bill_hours_from_work_hours(v.hours, v.units)) %></td>
+                        <td><%= v.bill_status %></td>
+                        <td><%= v.description %></td>
+                        <td><%=
+                            if v.approved == 'yes'
+                              image_tag('lock_locked.png', :alt => @localData['posted'], :title => @localData['timecard_is_posted'])
+                            elsif v.posted == 'yes'
+                              image_tag('lock_unlocked2.png', :alt => @localData['synced'], :title => @localData['timecard_is_synced'])
+                            else
+                              image_tag('lock_unlocked.png', :alt => @localData['not_synced'], :title => @localData['timecard_is_not_synced'])
+                            end
+                        %></td>
+                      </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+                </div>
+                <% if !@timecards.nil? and !@timecards.empty? %>
+                    <%
+                       #@current_page = 1
+                       #@total_records = 4
+                       #@page_size = 10
+                       @records_label = @localData['records']
+                       @to_label = @localData['to']
+                       @of_label = @localData['total_records']
+                       @base_link = '/timecard_reports/' + @state + '?'
+                       @show_page_links = true
+                    %>
+                    <%= render 'page_links' %>
+                <% end %>
+                </div>
+            <% else %>
+                <br/><br/><strong><%= @localData['no_timecards_found_for_this_criteria'] %></strong>
+            <% end %>
+            </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<div class="modal fade " id="timeActivityForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Quick Book Export</h4>
+      </div>
+
+      <% if session[SESSION_EXPIRE_DATE ] == '1'%>
+      <%= form_for(@time_activity,:as => :time_activity, :url => timecard_reports_create_timeactivity_path(@time_activity), :method => :put, html: {role: :form, 'data-model' => 'time_activity'}) do |f| %>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= label_tag :type, nil, class: 'control-label' %><br>
+                      <%= select_tag "type", "<option selected='selected'>Employee</option><option >Vendor</option>".html_safe, :class => 'form-control' %>
+                      <span class="help-block"></span>
+                    </div>
+                    <%= hidden_field_tag :timecard_list%>
+                    <div class="form-group">
+                      <%= label_tag :reference_no, nil, class: 'control-label' %><br>
+                      <%= f.text_field :reference_no, class: 'form-control' %>
+                      <%= f.hidden_field :reference_id, class:'form-control'%>
+                      <span class="help-block"></span>
+                    </div>
+                    <div class="form-group">
+                      <%= label_tag :customer_ref, nil, class: 'control-label' %><br>
+                      <%= f.select :customer_ref, @customer_ref.collect { |k, v| [v.display, v.id] },{},{class: 'form-control'} %>
+                      <%= f.hidden_field :customer_id, class:'form-control'%>
+                      <span class="help-block"></span>
+                    </div>
+                    <div class="form-group">
+                      <%= label_tag :department_ref, nil, class: 'control-label' %><br>
+                      <%= f.select :department_ref, @department_ref.collect { |k, v| [v.display, v.id] },{},{class: 'form-control'} %>
+                      <%= f.hidden_field :department_id, class:'form-control'%>
+                      <span class="help-block"></span>
+                    </div>
+                    <!--<div class="form-group">
+                      <%= label_tag :reference_no, nil, class: 'control-label' %><br>
+                      <%= f.text_field :reference_no, class: 'form-control' %>
+                      <%= f.hidden_field :reference_id, class:'form-control'%>
+                      <span class="help-block"></span>
+                    </div>
+                    <div class="form-group">
+                      <%= label_tag :customer_ref, nil, class: 'control-label' %><br>
+                      <%= f.text_field :customer_ref, class: 'form-control' %>
+                      <%= f.hidden_field :customer_id, class:'form-control'%>
+                      <span class="help-block"></span>
+                    </div>
+                    <div class="form-group">
+                      <%= label_tag :department_ref, nil, class: 'control-label' %><br>
+                      <%= f.text_field :department_ref, class: 'form-control' %>
+                      <%= f.hidden_field :department_id, class:'form-control'%>
+                      <span class="help-block"></span>
+                    </div>-->
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <%= label_tag :item_ref, nil, class: 'control-label' %><br>
+                      <%= f.select :item_ref, @item_ref.collect { |k, v| [v.display, v.id] },{},{class: 'form-control'} %>
+                      <%= f.hidden_field :item_id, class:'form-control'%>
+                      <span class="help-block"></span>
+                    </div>
+                    <div class="form-group">
+                      <%= label_tag :class_ref, nil, class: 'control-label' %><br>
+                      <%= f.select :class_ref, @class_ref.collect { |k, v| [v.display, v.id] },{},{class: 'form-control'} %>
+                      <%= f.hidden_field :class_id, class:'form-control'%>
+                      <span class="help-block"></span>
+                    </div>
+                    <div class="form-group">
+                      <%= label_tag :hourly_rate, nil, class: 'control-label' %><br>
+                      <%= f.text_field :hourly_rate, class: 'form-control' %>
+                      <span class="help-block"></span>
+                    </div>
+                    <div class="form-group">
+                      <%= label_tag :taxable, nil, class: 'control-label' %>
+                      <%= f.check_box :taxable,{:style => 'margin-left: 20px; margin-top: -3px;'}, 'yes','no' %>
+                      <span class="help-block"></span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Confirm", :class => "btn btn-primary btn-sm", :disable_with => "Confirming..."%>
+            <a href="#" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</a>
+          </div>
+      <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,146 @@
+ <%= form_tag "/timecards/edit?page=#{@current_page}", :id => 'timecard_form', :method => 'post' do %>
+        <meta charset="utf-8">
+
+        <input type="hidden" id="page_stat" name="page_stat" value="<%= @page_id %>">
+        <%= hidden_field 'timecard', 'dirty_timecard_id', :value => '' %>
+        <% if !@dirty_timecard.nil? %>
+            <div class="box box-primary" style="padding-bottom: 42px !important">
+              <div class="box-header">
+                <h3 class="box-title">Time Entry</h3>
+                <h4 id="show_Timekeeper" class="box-title" style="float: right;color: #3DA0DB;margin-right:5%"> </h4>
+              </div>
+              <div class="box-body">
+                <div id="formtable">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <!--Time Keeper Temporary-->
+                      <div class="hidden">
+                        <input type="hidden" id="timecard_timekeeper_id" name="timecard[timekeeper_id]" value="1">
+                      </div>
+
+                      <!--date-->
+                      <div class="form-group-1">
+
+                        <input type="hidden" id="timecard_finalized" name="timecard[finalized]" value="false">
+                        <input type="hidden" id="timecard_is_new" name="timecard[is_new]" value="<%= (is_new_timecard) ? 'true' : 'false' %>">
+                        <%= label_tag @localData['work_date'] %>
+                        <div  class="input-group">
+                          <div id="date_select" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <%= text_field_tag 'timecard[date]', @dirty_timecard.date, {:class=>"form-control", :style => "width:90%" } %>
+                          <input type="hidden" id="tc_date" value="">
+                        </div>
+                      </div>
+
+                      <!-- Client -->
+                      <div class="form-group-1">
+                        <label><%= label_tag @localData['client']%></label>
+
+                        <div class="input-group">
+                          <div id="client_select" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-tag"></i>
+                          </div>
+                          <%= text_field_tag 'timecard[client_number]', @dirty_timecard.is_cached ? @dirty_timecard.client_number : Utils.get_display_name(@dirty_timecard.client_name, @dirty_timecard.client_number), {:class=>"form-control", :style => "width:90%"} %>
+                          <input type="hidden" id="timecard_client_id" name="timecard[client_id]" value="<%= @dirty_timecard.client_id %>">
+                        </div>
+                      </div>
+
+                      <!--matter-->
+                      <div class="form-group-1">
+                        <label><%= label_tag @localData['matter'] %></label>
+
+                        <div class="input-group controlpanel" id="cmdTempMatter">
+                          <div id="matter_select" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-tag"></i>
+                          </div>
+                          <%= text_field_tag 'timecard[matter_number]', @dirty_timecard.is_cached ? @dirty_timecard.matter_number : Utils.get_display_name(@dirty_timecard.matter_name, @dirty_timecard.matter_number), {:class=>"form-control", :style => "width:90%"} %>
+                          <input type="hidden" id="timecard_matter_id" name="timecard[matter_id]" value="<%= @dirty_timecard.matter_id %>">
+                        </div>
+                      </div>
+                      <div class="form-group-1">
+                        <label><%= label_tag @localData['bill_status'] %></label>
+
+                        <div class="input-group controlpanel" style="height: 0px">
+                          <%= select('timecard', 'billable_status', get_bill_statuses, {:selected =>  @dirty_timecard.bill_status}, {:tabindex=> "1", :class=>"form-control"}) %>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="col-lg-6">
+                      <!--Activity Code-->
+                      <div class="form-group-1">
+                        <%= label_tag @localData['activityId'] %>
+
+                        <div class="input-group">
+                          <div id="activity_select" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-tag"></i>
+                          </div>
+                          <%= text_field_tag 'timecard[activity_code]',@dirty_timecard.is_cached ? @dirty_timecard.activity_code : Utils.get_display_name( @dirty_timecard.activity_desc, @dirty_timecard.activity_code ), {:class => "form-control", :style => "width:90%"} %>
+                          <input type="hidden" id="activity_id" name="timecard[activity_id]" value="<%=@dirty_timecard.activity_code%>">
+
+                        </div>
+                      </div>
+
+                      <!--Hour-->
+                      <div class="form-group-1">
+
+                        <label><%= label_tag @localData['work_hour'] %></label>
+
+                        <input type="hidden" id="timecard_error" name="timecard[error]" value="">
+                        <div class="input-group">
+                          <div id="select_hour" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-clock-o"></i>
+                          </div>
+                          <%= text_field_tag 'timecard[hours]', @dirty_timecard.hours.nil? ? '00:00' : Utils.get_time_from_seconds_formatted(@dirty_timecard.hours), {:class => "form-control timepicker", :style => "width:90%"} %>
+                          <input type="hidden" id="timecard_hhmm" name="timecard[hhmm]" value="12:00:00 PM">
+                          <% unit_value, unit_type = get_units_value(@dirty_timecard.units) %>
+                          <input type="hidden" id="timecard_units" name="timecard[units]" value="<%= unit_value %>">
+                          <input type="hidden" id="timecard_unit_type" name="timecard[unit_type]" value="<%= unit_type %>">
+
+                        </div><!-- /.input group -->
+                      </div>
+
+                      <!-- Naratives -->
+                      <div class="form-group-1">
+                        <label><%= label_tag @localData['description'] %></label>
+                        <div class="input-group">
+                          <div id="narative_select" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-pencil"></i>
+                          </div>
+                          <%= text_area_tag 'timecard[description]', @dirty_timecard.description, {:class=>"form-control", :style=>"resize:vertical; width:90%", :maxlength=>400} %>
+                          <input type="hidden" name='timecard[template]' id='timecard_template' value='<%= @dirty_timecard.template %>' />
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <%= render 'control_panel' %>
+            </div>
+            <%= hidden_field 'timecard', 'updated_timecard_id', :value => @dirty_timecard.id %>
+        <% end %>
+     <!-- commented for checking bill status-->
+        <!--<div class="hidden"style="height: 0px">
+          <input type="hidden" name='timecard[bill_status]' id='timecard_bill_status' value='Non-billable' />
+        </div>-->
+    <% end %>
+    <div id="dialog-confirm">
+    </div>
+    <%= render 'temp_matter' %>
+
+
+    <% if !@dirty_timecard.nil? %>
+        <div class="invisible" style="height: 0px">
+          <%= select('timecard', 'bill_status', get_bill_statuses, {:selected => @dirty_timecard.is_cached ? @dirty_timecard.bill_status : "Billable"}, {:tabindex=> "1"}) %>
+
+          <input type="hidden" name='timecard[bill_status]' id='timecard_bill_status' value='Non-billable' />
+          <%= text_field_tag 'timecard[internal_comment]', 'Internal Commnet', :rows => 0, :maxlength => 0, :tabindex=> "1" %>
+        </div>
+    <% end %>
+
+
+

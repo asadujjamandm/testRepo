@@ -1,0 +1,117 @@
+<section class="content" style="padding: 0px 0px !important; overflow: hidden !important;"
+         xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<%= form_tag "/users/update?page=#{@current_page}", :id => 'user_form', :method => 'post' do %>
+    <% if !@dirty_user.nil? %>
+        <%= hidden_field 'user', 'updated_user_id', :value => @dirty_user.id %>
+        <div class="box box-primary" style="padding-bottom: 0px !important;">
+          <div class="box-header">
+            <h3 class="box-title" style="padding: 0px 10px !important;">User Entry</h3>
+          </div>
+          <div class="box-body">
+            <div id="formtable">
+              <% if @dirty_user.id == @current_user_id %>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group-1">
+                        <%= label_tag @localData['name'] %>
+                        <div  class="input-group">
+                          <div id="username" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-tag"></i>
+                          </div>
+                          <%= text_field_tag 'user[name]', @dirty_user.name,:maxlength => 200, :tabindex=> "5", :style => "margin-bottom: 5px !important; width: 90% !important;", :class=>"form-control"%>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group-1">
+                        <%= label_tag @localData['email'] %>
+                        <div  class="input-group">
+                          <div id="user_mail" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-tag"></i>
+                          </div>
+                          <%= text_field_tag 'user[email]', @dirty_user.email, :maxlength => 50, :tabindex=> "5", :style => "margin-bottom: 5px !important; width: 90% !important;", :class=>"form-control" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              <% else %>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group-1">
+                        <%= label_tag @localData['name'] %>
+                        <div  class="input-group">
+                          <div id="username" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-tag"></i>
+                          </div>
+                          <%= text_field_tag 'user[name]', @dirty_user.name, :maxlength => 200, :tabindex=> "5", :style => "width: 90% !important", :class=>"form-control"  %>
+                        </div>
+                      </div>
+
+                      <% if is_new_user %>
+                          <div class="form-group-1">
+                            <%= label_tag @localData['password'] %>
+                            <div  class="input-group">
+                              <div id="userpass" class="input-group-addon" style="cursor: pointer;">
+                                <i class="fa fa-tag"></i>
+                              </div>
+                              <%= password_field_tag 'user[password]', @dirty_user.password, :maxlength => 50, :tabindex=> "5", :style => "width: 90% !important", :class=>"form-control"  %>
+                            </div>
+                          </div>
+                      <% end %>
+                      <div class="form-group-1" style="padding-top: 10px">
+                        <div class="row">
+                          <div class="col-md-3 col-xs-6 col-sm-3">
+                            <%= label_tag @localData['is_active'] %>
+                          </div>
+                          <div class="col-md-2 col-xs-2 col-sm-2">
+                            <%= check_box('user', 'is_active', {:checked => @dirty_user.is_active == 'yes', :tabindex=> "5" }, 'yes', 'no') %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group-1">
+                        <%= label_tag @localData['email'] %>
+                        <div  class="input-group">
+                          <div id="user_mail" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-tag"></i>
+                          </div>
+                          <%= text_field_tag 'user[email]', @dirty_user.email, :maxlength => 50, :tabindex=> "5", :style => "width: 90% !important", :class=>"form-control"  %>
+                        </div>
+                      </div>
+                      <% if is_new_user %>
+                          <div class="form-group-1">
+                            <%= label_tag @localData['confirm_password'] %>
+                            <div  class="input-group">
+                              <div id="userconfp" class="input-group-addon" style="cursor: pointer;">
+                                <i class="fa fa-tag"></i>
+                              </div>
+                              <%= password_field_tag 'user[confirmed_password]', @dirty_user.confirmed_password, :maxlength => 50, :tabindex=> "5", :style => "width: 90% !important", :class=>"form-control"  %>
+                            </div>
+                          </div>
+                      <% end %>
+                      <div class="form-group-1">
+                        <%= label_tag @localData['timekeeper'] %>
+                        <div  class="input-group">
+                          <div id="usertk" class="input-group-addon" style="cursor: pointer;">
+                            <i class="fa fa-tag"></i>
+                          </div>
+                          <%= text_field_tag 'user[timekeeper_number]',@dirty_user.nil? ? Utils.get_display_name(@dirty_user.timekeeper_name, @dirty_user.timekeeper_number): @dirty_user.timekeeper_number, {:class=>"form-control", :style => "width:90%"} %>
+                          <input type="hidden" id="user_timekeeper_id" name="user[timekeeper_id]" value="<%= @dirty_user.timekeeper_id %>">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+    <% end %>
+    <% if !@userroles.nil? %>
+        <%= render 'roles' %>
+    <% end %>
+<% end %>
+<div id="dialog-confirm">
+</div>
+</section>

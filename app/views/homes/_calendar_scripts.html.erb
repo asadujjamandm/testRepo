@@ -1,0 +1,40 @@
+<script type="text/javascript">
+
+   function dateClicked( hiddenFieldNumber )
+   {
+       dateFound = $.trim( $( "#calendar" + hiddenFieldNumber ).val() );
+       if( dateFound == "" )
+       {
+           return
+       }
+       gotoDate( dateFound, dateFound );
+   }
+
+   function summaryClicked( hiddenFieldNumber )
+   {
+       fromDateString = $( "#calendar_summary_" + hiddenFieldNumber ).val();
+       toDateString = $( "#calendar_summary2_" + hiddenFieldNumber ).val();
+       if( $.trim( fromDateString ) == "" || $.trim( toDateString ) == "" )
+       {
+           return;
+       }
+       gotoDate( fromDateString, toDateString );
+   }
+
+   function gotoDate( fromDateString, toDateString )
+   {
+       $("#timecard_search_form").attr( "action", "/timecards/search" );
+       $('#search_timecard_from_date').val(fromDateString);
+       $('#search_timecard_to_date').val(toDateString);
+       $('#calendar_date').val(fromDateString);
+       $("#timecard_search_form").submit();
+   }
+
+   function moveCalendar( aDateString )
+   {
+       $("#timecard_search_form").attr( "action", "/homes" );
+       $('#calendar_date').val(aDateString);
+       $("#timecard_search_form").submit();
+   }
+
+</script>

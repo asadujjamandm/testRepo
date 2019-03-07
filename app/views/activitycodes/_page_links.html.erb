@@ -1,0 +1,61 @@
+<%
+  require 'pager_utils'
+  @pages_before, @pages_after, @records_from, @records_to = PagerUtils.get_page_data( @current_page, @total_records , @page_size )
+  if  @total_records <= @page_size
+      @show_page_links = false
+  end
+%>
+<% if @total_records > 0  %>
+    <div class="row">
+        <% if @show_page_links  %>
+        <div class="col-xs-6">
+            <div class="dataTables_info" style="line-height: 2; font-size: 15px; margin: 0px 0">
+              <span><%= @records_label %><b><%= @records_from %></b><%= @to_label %><b><%= @records_to %></b><%= @of_label %><b><%= @total_records %></b></span>
+            </div>
+        </div>
+         <% if @dirty_activitycode.nil? %>
+         <div class="col-xs-6">
+            <div class="dataTables_paginate paging_bootstrap">
+               <ul class="pagination" style="float: right !important;">
+                 <!--previous-->
+                 <% if @current_page == 1 %>
+                     <li class="prev disabled"><a>← Previous</a></li>
+                 <% else %>
+                     <li class="prev"><a href="<%= @base_link + 'page=' + (@current_page-1).to_s %>">← Previous</a></li>
+                 <% end %>
+                 <!--for loop-->
+                 <% @pages_before.each do |page_no| %>  <!--before page-->
+                     <li><a href="<%= @base_link + 'page=' + page_no.to_s %>"><%= page_no.to_s %></a></li>
+                 <% end %>
+                 <li><span><%= @current_page.to_s %></span></li>  <!--current page-->
+                 <% @pages_after.each do |page_no| %> <!--current page-->
+                     <li><a href="<%= @base_link + 'page=' + page_no.to_s %>"><%= page_no.to_s %></a></li>
+                 <% end %>
+                 <!--next page-->
+                 <% if (@current_page+1)>( (@total_records * 1.0) / @page_size ).ceil.to_i %>
+                     <li class="next disabled"><a>Next → </a></li>
+                 <% else %>
+                     <li class="next"><a href="<%= @base_link + 'page=' + (@current_page+1).to_s %>">Next → </a></li>
+                 <% end %>
+               </ul>
+            </div>
+         </div>
+         <% end %>
+            <!--<div class="pagination">-->
+              <!--<div class="custom_pagination">-->
+
+                  <!--<% @pages_before.each do |page_no| %>-->
+                        <!--<a href="<%= @base_link + 'page=' + page_no.to_s %>"><%= page_no.to_s %></a>-->
+                  <!--<% end %>-->
+                  <!--<span><%= @current_page.to_s %></span>-->
+                  <!--<% @pages_after.each do |page_no| %>-->
+                        <!--<a href="<%= @base_link + 'page=' + page_no.to_s %>"><%= page_no.to_s %></a>-->
+                  <!--<% end %>-->
+
+              <!--</div>-->
+
+            <!--</div>-->
+        <%end%>
+
+    </div>
+<% end %>

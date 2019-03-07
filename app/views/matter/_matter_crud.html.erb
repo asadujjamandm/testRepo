@@ -1,0 +1,116 @@
+<style>
+    .input-group-addon{cursor: pointer;}
+</style>
+
+<section class="content" style="padding: 0px 0px !important; overflow: hidden !important;">
+  <%form_tag "/matter/create?page=#{@current_page}", :id => 'matter_form', :method => 'post' do%>
+      <% if !@dirty_matter.nil? %>
+          <!--value need to changed dirty_matter.id, some problem faced -->
+          <%= hidden_field 'matter', 'updated_matter_id', :value => @dirty_matter.id %>
+          <meta charset="utf-8">
+
+          <div class="box box-primary" style="padding-bottom: 42px !important">
+            <div class="box-header">
+              <h3 class="box-title">Matter Entry</h3>
+              <h4 id="show_Timekeeper" class="box-title" style="float: right;color: #3DA0DB;margin-right:5%"> </h4>
+            </div>
+            <div class="box-body">
+
+              <div id="formtable">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <!-- Matter Name -->
+                    <div class="form-group-1">
+                      <label>Matter Name</label>
+                      <div class="input-group">
+                        <div id="matter_name" class="input-group-addon">
+                          <i class="fa fa-tag"></i>
+                        </div>
+                        <%= text_field_tag 'matter[matter_name]', @dirty_matter.matter_name, {:class=>"form-control", :style => "width:90%" } %>
+                        <!--<input type="hidden" id="matter_name" name="matter[matter_name]" value="<%=@dirty_matter.matter_name%>">-->
+                      </div>
+                    </div>
+
+                    <!-- Matter  Nick Name-->
+                    <div class="form-group-1">
+                      <label>Nick Name</label>
+                      <div class="input-group">
+                        <div id="matter_nick_name" class="input-group-addon">
+                          <i class="fa fa-tag"></i>
+                        </div>
+                        <%= text_field_tag 'matter[matter_nick_name]', @dirty_matter.matter_nick_name, {:class=>"form-control", :style => "width:90%" } %>
+                      </div>
+                    </div>
+
+                    <!--Is Non-Billable-->
+                    <div class="form-group-1" >
+                      <div class="input-group" style="width: 50% !important; float: left">
+
+                        <label style="padding-top: 5px">Billable</label>
+                        <%= check_box('matter', 'is_non_billable', {:checked =>@dirty_matter.is_non_billable=='no' , :tabindex=> "5",:style=>"margin-left:5px; height:30px"}, 'no', 'yes') %>
+                        <!--<input type="hidden" id="activity_id" name="matter[matter_name]" value="<%=@dirty_matter.is_non_billable%>">-->
+                      </div>
+                      <div class="input-group" style="width: 50% !important; float: right">
+
+                        <label style="padding-top: 5px">Open to all</label>
+                        <%= check_box('matter', 'mt_udf9', {:checked =>@dirty_matter.mt_udf9=='yes' , :tabindex=> "5",:style=>"margin-left:5px; height:30px"}, 'yes', 'no') %>
+
+                      </div>
+                    </div>
+
+
+                  </div>
+
+                  <div class="col-lg-6">
+                    <!-- Client Name -->
+                    <div class="form-group-1">
+                      <label>Client Name</label>
+                      <div class="input-group">
+                        <div id="client_name" class="input-group-addon" disabled="">
+                          <i class="fa fa-tag"></i>
+                        </div>
+                        <%if !is_new_matter %>
+                            <%= text_field_tag 'matter[client_name]', @dirty_matter.client_display, {:class=>"form-control", :style => "width:90%",:disabled=>"" } %>
+                        <% else %>
+                            <%= text_field_tag 'matter[client_name]', @dirty_matter.client_display, {:class=>"form-control", :style => "width:90%" } %>
+                        <% end %>
+
+                        <input type="hidden" id="matter_client_id" name="matter[client_id]" value="<%= @dirty_matter.client_id %>">
+                      </div>
+                    </div>
+
+                    <!-- Matter Number -->
+                    <div class="form-group-1">
+                      <label>Matter Number</label>
+                      <div class="input-group">
+                        <div id="matter_number" class="input-group-addon">
+                          <i class="fa fa-tag"></i>
+                        </div>
+                        <%= text_field_tag 'matter[matter_number]', @dirty_matter.matter_number, {:class=>"form-control", :style => "width:90%" } %>
+                        <!--<input type="hidden" id="matter_display_name" name="matter[display_name]" value="<%=@dirty_matter.matter_nick_name%>">-->
+                      </div>
+                    </div>
+
+                    <!--Is active-->
+                    <div class="form-group-1">
+                      <div class="input-group">
+                        <label style="padding-top: 5px">Is active</label>
+                        <%= check_box('matter', 'is_active', {:checked =>@dirty_matter.is_active == 'yes', :tabindex=> "5",:style=>"margin-left:5px; height:30px"}, 'yes', 'no') %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+      <% end %>
+  <%end%>
+</section>
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+<%= stylesheet_link_tag 'newcss/jQueryUI/jquery-ui-1.10.3.custom.min', :media => 'screen' %>
+<%= javascript_include_tag 'newjs/jquery-ui-1.10.3.min' %>
+<%= javascript_include_tag 'custom/registeredusersview' %>
+<%= javascript_include_tag 'newjs/bootstrap.min'%>
+<%= javascript_include_tag 'newjs/bootstrap-modal'%>
+<%= javascript_include_tag 'newjs/bootstrap-modalmanager'%>
+
+<script type="text/javascript">
+
+    var singleErrorMessage = '<%=@localData['single_error_message']%>';
+    var multipleErrorMessage = '<%=@localData['multiple_error_message']%>';
+
+    $(document).ready(function(){
+        $('#farm_setting_farm_name').click(function(){
+            $('#farm_setting_xml_export_path').prop('disabled', false);
+            $('#farm_setting_setting_timcard_persistent_days').prop('disabled', false);
+            $('#farm_setting_sync_enabled').prop('disabled', false);
+            $('#farm_name_list').val('');
+        });
+
+        $("#farm_name_list").click(function(){
+            $('#farm_name_list').val('');
+            $('#farm_name_list').autocomplete("option", "appendTo", ".farm_setting_new");
+            $('#farm_name_list').focus();
+            $('#farm_setting_xml_export_path').prop('disabled', true);
+            $('#farm_setting_setting_timcard_persistent_days').prop('disabled', true);
+            $('#farm_setting_sync_enabled').prop('disabled', true);
+        });
+        //$( ".addresspicker" ).autocomplete( "option", "appendTo", ".eventInsForm" );
+        function farmNameSelected( id ) {
+            $( "#farm_id" ).val( id );
+        }
+        $( "#farm_name_list" ).autocomplete({
+            source: "/registered_users/autocomplete_list?extra_id=0&type=6",
+            minLength: 0,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    farmNameSelected( ui.item.id );
+                }
+                else{
+                    console.log("error");
+                }
+            }
+        });
+        $( "#farm_name_list" ).bind( "autocompleteopen", function(event, ui) {
+            $( "#farm_id" ).val("");
+        });
+        $('#farm_name_list').focus(function() {
+            if( $('#farm_name_list').val() == "" )
+            {
+                $( "#farm_id" ).val("");
+                $(this).keydown();
+            }
+        });
+    }) ;
+
+</script>

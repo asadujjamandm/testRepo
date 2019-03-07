@@ -1,0 +1,17 @@
+<div class="controlpanel" style="margin-bottom: 10px; margin-left: 0px">
+  <% if is_new_role %>
+      <span class="btn btn-primary syncbuttonm"><%= link_to image_tag('savenew.png', :options => {:alt => @localData['save']}) + ' ' + @localData['save'], 'javascript:createRole()', :title => @localData['save_new_role'], :tabindex=> "10", :style => "color: #fff !important;" %></span>
+      <span class="btn btn-primary syncbuttonm"><%= link_to image_tag('list.png', :options => {:alt => @localData['show_roles']}) + ' ' + @localData['show_roles'], {:controller => 'roles', :action => 'index'}, :title => @localData['show_roles'], :tabindex=> "-1", :style => "color: #fff !important;" %></span>
+  <% elsif !@dirty_role.nil? %>
+      <span class="btn btn-primary syncbuttonm"><%= link_to image_tag('save.png', :options => {:alt => @localData['update']}) + ' ' + @localData['update'], 'javascript:updateRole()', :id => 'update', :title => @localData['update_changed_role'], :tabindex=> "10", :style => "color: #fff !important;" %></span>
+      <span class="btn btn-primary syncbuttonm"><%= link_to image_tag('cancel.png', :options => {:alt => @localData['cancel_changes']}) + ' ' + @localData['cancel_changes'], {:controller => 'roles', :action => 'cancel', :page => @current_page}, :id => 'cancel', :title => @localData['cancel_changes'], :tabindex=> "11", :style => "color: #fff !important;" %></span>
+  <% else %>
+      <span class="btn btn-primary syncbuttonm"><%= link_to image_tag('addnew.png', :options => {:alt => @localData['add_new']}) + ' ' + @localData['add_new'], {:controller => 'roles', :action => 'new', :page => @current_page}, :id => 'new', :title => @localData['create_new_role'], :tabindex=> "-1", :style => "color: #fff !important;" %></span>
+  <% end %>
+  <% if is_new_role || !@dirty_role.nil? %>
+      <span class='separator'></span>
+      <span class="btn btn-primary syncbuttonm"><%= link_to @localData['select_all'], 'javascript:selectPermissions(true);', {:tabindex=> "1", :id=>"select_all", :style => "color: #fff !important;"} %></span>
+      <span class="btn btn-primary syncbuttonm"><%= link_to @localData['select_default'], 'javascript:selectDefaultPermissions();', {:tabindex=> "1", :style => "color: #fff !important;"} %></span>
+      <span class="btn btn-primary syncbuttonm"><%= link_to @localData['select_none'], 'javascript:selectPermissions(false);', {:tabindex=> "1", :style => "color: #fff !important;"} %></span>
+  <% end %>
+</div>

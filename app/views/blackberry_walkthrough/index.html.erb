@@ -1,0 +1,70 @@
+<%= javascript_include_tag 'custom/swfobject' %>
+<%= javascript_include_tag 'custom/player' %>
+<%= stylesheet_link_tag 'custom/player', :media => 'screen' %>
+
+<table id="videotable">
+  <tr>
+    <td>
+        <%= render :partial => 'layouts/player', :locals => {:clsid => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540099',
+        :obj_id => 'csSWF99', :image_path => '/videos/blackberry/demo/FirstFrame.png',
+        :object_path => '/videos/blackberry/demo/WIPTimeBBDemo6_controller.swf'} %>
+        <a href="/videos/blackberry/demo/WIPTimeBBDemo6.mp4">Download</a>
+    </td>
+    <td>
+        <%= render :partial => 'layouts/player', :locals => {:clsid => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000',
+        :obj_id => 'csSWF0', :image_path => '/videos/blackberry/signup/FirstFrame.png',
+        :object_path => '/videos/blackberry/signup/Signup_controller.swf'} %>
+        <a href="/videos/blackberry/signup/Signup.mp4">Download</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <%= render :partial => 'layouts/player', :locals => {:clsid => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540001',
+        :obj_id => 'csSWF1', :image_path => '/videos/blackberry/signin/FirstFrame.png',
+        :object_path => '/videos/blackberry/signin/Signin_controller.swf'} %>
+      <a href="/videos/blackberry/signin/Signin.mp4">Download</a>
+    </td>
+    <td>
+        <%= render :partial => 'layouts/player', :locals => {:clsid => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540002',
+        :obj_id => 'csSWF2', :image_path => '/videos/blackberry/calendar/FirstFrame.png',
+        :object_path => '/videos/blackberry/calendar/WIPTimeCalendar_controller.swf'} %>
+        <a href="/videos/blackberry/calendar/WIPTimeCalendar.mp4">Download</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <%= render :partial => 'layouts/player', :locals => {:clsid => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540003',
+        :obj_id => 'csSWF3', :image_path => '/videos/blackberry/timecardadd/FirstFrame.png',
+        :object_path => '/videos/blackberry/timecardadd/WIPTimeAdd_controller.swf'} %>
+        <a href="/videos/blackberry/timecardadd/WIPTimeAdd.mp4">Download</a>
+    </td>
+    <td>
+        <%= render :partial => 'layouts/player', :locals => {:clsid => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540004',
+        :obj_id => 'csSWF4', :image_path => '/videos/blackberry/template/FirstFrame.png',
+        :object_path => '/videos/blackberry/template/WIPTimeTemplate_controller.swf'} %>
+        <a href="/videos/blackberry/template/WIPTimeTemplate.mp4">Download</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <%= render :partial => 'layouts/player', :locals => {:clsid => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540005',
+        :obj_id => 'csSWF5', :image_path => '/videos/blackberry/reports/FirstFrame.png',
+        :object_path => '/videos/blackberry/reports/WIPTimeReports_controller.swf'} %>
+        <a href="/videos/blackberry/reports/WIPTimeReports.mp4">Download</a>
+    </td>
+    <td>
+        <%= render :partial => 'layouts/player', :locals => {:clsid => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540006',
+        :obj_id => 'csSWF6', :image_path => '/videos/blackberry/eventtracking/FirstFrame.png',
+        :object_path => '/videos/blackberry/eventtracking/WIPTimeAutoEventTracking_controller.swf'} %>
+        <a href="/videos/blackberry/eventtracking/WIPTimeAutoEventTracking.mp4">Download</a>
+    </td>
+  </tr>
+  <tr>
+     <td>
+        <%= render :partial => 'layouts/player', :locals => {:clsid => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540007',
+        :obj_id => 'csSWF7', :image_path => '/videos/blackberry/calllog/FirstFrame.png',
+        :object_path => '/videos/blackberry/calllog/WIPTimeCallLog_controller.swf'} %>
+        <a href="/videos/blackberry/calllog/WIPTimeCallLog.mp4">Download</a>
+     </td>
+  </tr>
+</table>

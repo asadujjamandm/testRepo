@@ -1,0 +1,89 @@
+<%= javascript_include_tag 'custom/farmsetting' %>
+<section class="content" style="padding: 0px 0px !important; overflow: hidden !important;">
+   <div class="row">
+     <%= render 'control_panel' %>
+     <div class="col-md-12">
+       <div class="table-responsive">
+         <%= form_tag "/farm_setting/update", :id => 'farm_setting_form', :method => 'post' do %>
+             <div class="box box-primary">
+               <div class="row">
+                 <div class="col-md-12">
+                   <p style="text-align: justify;">The following settings are Firm specific settings and will be effective for all users in a firm.<br/><br/>
+                     <strong>Cache timecards for (days):</strong> It means the number of days old timecards will be cached in the device.
+                     After that the application will clean the cache up.
+                     The old timecards will be loaded from server when switched to a month of the calendar.<br/>
+                     <strong>Default Activity Code : </strong>It is the default activity code that will be used for each timecard if an activity
+                     code wasn't sent by the device.<br/>
+                   </p>
+                 </div>
+               </div>
+               <div class="row" style="margin-bottom: 10px;">
+                 <div class="col-xs-6 col-md-3 col-sm-3"><%= @localData['timecard_persistent_days'] %></div>
+                 <div class="col-xs-6 col-md-3 col-sm-3">
+                   <% if !@farm_setting.nil? %>
+                       <input type="hidden" id="farm_setting_id" name="farm_setting[setting_id]" value="<%= @farm_setting.setting_id %>">
+                       <input type="hidden" id="farm_setting_farm_id" name="farm_setting[setting_farm_id]" value="<%= @farm_setting.setting_farm_id %>">
+                       <%= select('farm_setting', 'setting_timcard_persistent_days', @timecard_persistent_days, {:selected => @farm_setting.setting_timcard_persistent_days}, {:tabindex=> "1", :class => 'form-control'})  %>
+
+                   <% else %>
+                       <b><%= GENERIC_NO_DATA_MESSAGE %></b>
+                   <% end %>
+                 </div>
+               </div>
+               <div class="row" style="margin-bottom: 10px;">
+                 <div class="col-xs-6 col-md-3 col-sm-3"><%= @localData['default_activity_code'] %></div>
+                 <div class="col-xs-6 col-md-3 col-sm-3">
+                   <% if !@farm_setting.nil? %>
+                       <%=  text_field_tag ('default_activity_code'), @farm_setting.setting_default_activity_code , :maxlength => 80, :size => 20, :tabindex=> 2, :class => 'form-control', :type => 'text'%>
+
+                   <% else %>
+                       <%=  text_field_tag ('default_activity_code') ,"", :maxlength => 80, :size => 20, :tabindex=> 2,:class => 'form-control', :type => 'text'%>
+                   <% end %>
+                   <input type="hidden" id="farm_setting_setting_default_activity_code" name="farm_setting[setting_default_activity_code]"  value="" />
+                 </div>
+               </div>
+               <div class="row" style="margin-bottom: 10px;">
+                 <div class="col-xs-6 col-md-3 col-sm-3"><%= @localData['default_activity_code_tracked_timecards'] %></div>
+                 <div class="col-xs-6 col-md-3 col-sm-3">
+                   <% if !@farm_setting.nil? %>
+                       <%=  text_field_tag ('activity_code_tracked_timecards'), @farm_setting.setting_default_activity_code_tracked_timecards , :maxlength => 80, :size => 20, :tabindex=> 3, :class => 'form-control', :type => 'text'%>
+
+                   <% else %>
+                       <%=  text_field_tag ('activity_code_tracked_timecards'), "" , :maxlength => 80, :size => 20, :tabindex=> 3, :class => 'form-control', :type => 'text'%>
+
+                   <% end %>
+                   <input type="hidden" id="farm_setting_setting_default_activity_code_tracked_timecards" name="farm_setting[setting_default_activity_code_tracked_timecards]" value="" />
+                 </div>
+               </div>
+               <div class="row" style="margin-bottom: 10px;">
+                 <div class="col-xs-6 col-md-3 col-sm-3"><%= @localData['xml_export_path'] %></div>
+                 <div class="col-xs-6 col-md-3 col-sm-3">
+                   <% if !@farm_setting.nil? %>
+                       <%=  text_field_tag ('xml_export_path'), @farm_setting.xml_export_path , :maxlength => 200, :size => 20, :tabindex=> 3, :class => 'form-control', :type => 'text'%>
+
+                   <% else %>
+                       <%=  text_field_tag ('xml_export_path'), "" , :maxlength => 200, :size => 20, :tabindex=> 3, :class => 'form-control', :type => 'text'%>
+
+                   <% end %>
+                 </div>
+               </div>
+               <div class="row" style="margin-bottom: 10px;">
+                 <div class="col-xs-6 col-md-3 col-sm-3"><%= @localData['sync_enabled'] %></div>
+                 <div class="col-xs-6 col-md-3 col-sm-3">
+                   <% if !@farm_setting.nil? %>
+                       <%= check_box('farm_setting', 'sync_enabled', {:checked => @farm_setting.sync_enabled == 'yes', :tabindex=> "5" }, 'yes', 'no') %>
+                   <% else %>
+                       <%= check_box('farm_setting', 'sync_enabled', {:tabindex=> "5" }, 'yes', 'no') %>
+                   <% end %>
+                 </div>
+               </div>
+
+             </div>
+         <% end %>
+       </div>
+
+     </div>
+   </div>
+</section>
+
+<%= render 'farm_setting/scripts' %>

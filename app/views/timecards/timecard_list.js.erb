@@ -1,0 +1,16 @@
+[
+    <%
+       i = 0
+       @records.each do |k, v|
+            if i != 0 then
+        %>
+    ,
+    <%
+            end
+    %>
+    { "id": "<%= v.id %>", "client": "<%= Utils.get_display_name( v.client_name , v.client_number ) %>", "matter": "<%= Utils.get_display_name( v.matter_name , v.matter_number ) %>","hour":"<%=Utils.get_time_from_seconds( Utils.get_bill_hours_from_work_hours(v.hours, v.units ) )%>","aproved":"<%=v.approved%>","posted":"<%=v.posted%>","actvity":"<%= v.activity_desc%>" }
+    <%
+           i = i + 1
+       end
+    %>
+]

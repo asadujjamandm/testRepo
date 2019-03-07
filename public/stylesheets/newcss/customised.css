@@ -1,0 +1,547 @@
+@media ( max-width : 480px) {
+	.recaptchatable #recaptcha_image {
+		margin: 0 !important;
+		width: 200px !important;
+		float: left !important;
+	}
+	.recaptchatable #recaptcha_image img {
+		max-width: 100%;
+	}
+	.recaptchatable .recaptcha_r1_c1, .recaptchatable .recaptcha_r3_c1,
+		.recaptchatable .recaptcha_r3_c2, .recaptchatable .recaptcha_r7_c1,
+		.recaptchatable .recaptcha_r8_c1, .recaptchatable .recaptcha_r3_c3,
+		.recaptchatable .recaptcha_r2_c1, .recaptchatable .recaptcha_r4_c1,
+		.recaptchatable .recaptcha_r4_c2, .recaptchatable .recaptcha_r4_c4,
+		.recaptchatable .recaptcha_image_cell, .recaptchatable .recaptcha_r2_c2
+		{
+		background: none !important;
+	}
+}
+
+@media ( min-width : 480px) and (max-width: 767px) {
+	.billable {
+		padding-left: 10px !important;
+		padding-right: 10px !important;
+	}
+}
+
+@media ( max-width : 479px) {
+	.billable {
+		padding-left: 3px !important;
+		padding-right: 0px !important;
+	}
+	.columnxs {
+		padding-left: 5px !important;
+		padding-right: 5px !important;
+	}
+	.rowmargin {
+		margin-left: 0px !important;
+		margin-right: 0px !important;
+	}
+}
+
+.bodycontent {
+	/*margin: 5px auto 0px auto; */
+	padding: 0 10px 10px 10px;
+	/*border: solid 1px #A1ADAA;   */
+	-moz-border-radius: 5px;
+	border-radius: 0px;
+	background-color: #e1eae9;
+	/*background-color: #efefef;    */
+	/*width:1200px;*/
+}
+
+.pagebody {
+	/*border: solid 1px #566B66;*/
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 0px 10px 10px 10px;
+	text-align: left;
+}
+
+.calendarcontrolpanel {
+	/*border: solid 1px #9FCBEF;*/
+	padding: 5px 0 5px 0;
+	margin-bottom: 2px;
+	font-size: 100%;
+	font-weight: bold;
+	vertical-align: middle;
+	text-align: left;
+}
+
+.headerblocktr {
+	font-size: 20px;
+	padding: 0px 0px !important;
+}
+
+.headerblockt {
+	padding: 0px 0px !important;
+}
+/*.calendarcontrolpanel span {
+    border: solid 1px #566B66;
+    padding: 5px 2px 5px 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background: #C9D3D2;
+    vertical-align: middle;
+    font-weight:bold;
+}  */
+span.statusspan {
+	color: #566b66;
+	font-style: italic;
+	/*font-weight: bold; */
+}
+
+p.welcome {
+	font-size: 13px !important;
+	margin: 0;
+}
+
+p.welcome span {
+	color: #566b66;
+	font-style: italic;
+}
+
+.userpanelmargin {
+	margin-top: 50px !important;
+}
+
+@media ( max-width : 977px) {
+	.userpanelmargin {
+		margin-top: 0px !important;
+	}
+}
+
+.headermenumargin {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	font-size: 16px;
+	color: #F6F6F6;
+}
+
+@media ( max-width : 479px) {
+	.headermenumargin {
+		margin-top: 15px;
+		margin-bottom: 15px;
+		font-size: 13px;
+		color: #F6F6F6;
+		margin-right: 5px !important;
+	}
+}
+
+.pageheader {
+	background: #C9D3D2;
+	border-top: 0;
+	border-left: solid 1px #A1ADAA;
+	border-right: solid 1px #A1ADAA;
+	border-bottom: solid 1px #A1ADAA;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 3px 10px 3px 10px;
+	margin-bottom: 0px;
+	font-size: 100%;
+	font-weight: bold;
+	color: #565656;
+	text-align: left;
+}
+
+.groupbox {
+	position: relative;
+	margin: 0px;
+	border: 1px solid #ddd;
+	padding: 10px;
+	/*width: 400px; */
+	-moz-border-radius: 5px;
+	border-radius: 2px;
+}
+
+.groupbox .legend {
+	position: relative;
+	margin-top: -22px;
+	margin-bottom: 30px;
+	padding: 3px 10px 5px 10px;
+	height: 15px;
+	background: #FFFFFF;
+	color: #565656;
+	font-weight: bold;
+	text-align: center;
+}
+
+.groupbox div {
+	margin: 15px;
+}
+
+#formtable {
+	border: solid 1px #ddd;
+	border-spacing: 0;
+	width: 100%;
+	padding: 2px;
+	margin: 0;
+}
+
+#formtable tr td {
+	/*background: #E1EAE9; */
+	width: 40%;
+	margin: 0;
+	padding: 3px;
+}
+
+#formtable tr td.labelcolumn {
+	width: 10%;
+}
+
+#formtable tr td.labelcolumn2 {
+	width: 15%;
+}
+
+#formtable tr td.itemcolumn {
+	
+}
+
+#formtable tr td.invisible {
+	visibility: hidden;
+}
+
+#formtable tr td textarea {
+	width: 400px;
+	height: 100px;
+	vertical-align: middle;
+	padding: 0;
+	margin: 1px;
+	/*max-width:95%;
+    max-height:50px;*/
+	resize: none;
+	line-height: 1.888em;
+}
+
+#formtable tr td textarea.fullrow {
+	width: 98%; /*max-width:98%;*/
+	resize: none;
+}
+
+#formtable tr td input[type=text], input.text, input.title, label {
+	/*width: 300px; */
+	/*height: 20px; */
+	padding: 2px;
+	margin: 1px;
+	vertical-align: middle;
+}
+
+#formtable tr td select {
+	width: 50%;
+	height: 30px;
+	padding: 2px;
+	margin: 1px;
+	vertical-align: middle;
+	border: 1px solid #ddd;
+}
+
+#formtable tr td select.hourcombo, select.mincombo {
+	width: 50px;
+	margin: 0;
+}
+
+.timecarduintform {
+	width: 25% !important;
+}
+
+.timecarduintform1 {
+	width: 24% !important;
+}
+
+#formtable caption, #datatable caption {
+	border-top: 1px solid #A1ADAA;
+	border-left: 1px solid #A1ADAA;
+	border-right: 1px solid #A1ADAA;
+	background: #E1EAE9;
+	color: #565656;
+	padding-left: 5px;
+	/*margin: 0 -2px 0 0;*/
+	font-weight: bold;
+}
+
+@media ( max-width : 676px) {
+	#formtable tr td select {
+		width: 100%;
+		height: 30px;
+		padding: 2px;
+		margin: 1px;
+		vertical-align: middle;
+		border: 1px solid #ddd;
+		font-size: 12px;
+	}
+	.timecarduintform {
+		width: 38% !important;
+	}
+	.timecarduintform1 {
+		width: 55% !important;
+	}
+	#formtable tr td.labelcolumn {
+		width: 50%;
+	}
+}
+
+.farmsettingtd {
+	width: 50%;
+}
+
+div.statusdiv {
+	margin-top: 20px;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.syncbuttonf {
+	font-size: 14px;
+}
+
+.syncbuttonm {
+	margin-bottom: 10px !important;
+}
+
+@media ( max-width : 479px) {
+	.syncbuttonf {
+		font-size: 11px !important;
+	}
+}
+
+@media ( max-width : 325px) {
+	.userrole {
+		padding: 4px 2px !important;
+	}
+	.roletable {
+		width: 100%;
+		margin-bottom: 20px
+	}
+	.roletable>thead>tr>th, .roletable>tbody>tr>th, .roletable>tfoot>tr>th,
+		.roletable>thead>tr>td, .roletable>tbody>tr>td, .roletable>tfoot>tr>td
+		{
+		padding: 1 !important;
+		font-size: 14px !important;
+	}
+	.edittable {
+		width: 100%;
+		margin-bottom: 20px
+	}
+	.edittable>thead>tr>th, .edittable>tbody>tr>th, .edittable>tfoot>tr>th,
+		.edittable>thead>tr>td, .edittable>tbody>tr>td, .edittable>tfoot>tr>td
+		{
+		padding: 1 !important;
+		font-size: 14px !important;
+	}
+	.footersize {
+		font-size: 11px !important;
+	}
+}
+
+#permissiontable {
+	height: auto;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	width: 100%;
+	height: 100%;
+	margin: 10px 0 0 0;
+	padding: 2px;
+	border-spacing: 0px;
+	background-color: #F5F5F5;
+}
+
+#permissiontable tbody {
+	/*background: #E1EAE9;*/
+	
+}
+
+#permissiontable tr td {
+	/*background: #E1EAE9;  */
+	height: 20px;
+	vertical-align: middle;
+	padding: 2px 5px 2px 2px;
+}
+
+#permissiontable tr td label, input {
+	font-weight: normal;
+	vertical-align: top;
+}
+
+#permissiontable caption {
+	background: #F5F5F5;
+	font-weight: bold;
+	padding-left: 0;
+	color: #565656;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+}
+
+#roletable {
+	border: solid 1px #A1ADAA;
+	border-spacing: 0;
+	width: 100%;
+	padding: 2px;
+	margin: 5px 0 0 0;
+}
+
+#roletable caption {
+	background: inherit;
+	font-weight: bold;
+	padding-left: 0;
+}
+
+#roletable tr td {
+	background: #FFF;
+	margin: 0;
+	padding: 0;
+}
+
+#roletable td {
+	padding: 2px !important;
+}
+
+#roletable tr td.tablecolumn {
+	vertical-align: top;
+}
+
+#roletable tr td select {
+	height: 100%;
+	width: 300px;
+}
+
+#userroletable {
+	height: auto;
+	/*background: #E1EAE9;*/
+	border: 1px solid #A1ADAA;
+	width: 100%;
+	height: 100%;
+}
+
+#userroletable th {
+	text-align: center;
+	vertical-align: middle;
+}
+
+#userroletable tr td {
+	/*background: #E1EAE9; */
+	height: 20px;
+	vertical-align: middle;
+	padding: 1px;
+}
+
+#userroletable tr td label, input {
+	font-weight: normal;
+	vertical-align: middle;
+}
+
+#userroletable td.centerdata {
+	text-align: center;
+}
+
+#userroletable td.selected {
+	background: #E1EAE9;
+}
+
+#userroletable caption, th {
+	color: #565656;
+}
+
+span.errortip {
+	color: #FF0000;
+	font-weight: bold;
+	padding: 0px;
+	overflow: hidden;
+	vertical-align: bottom;
+	float: right;
+}
+
+span.errortipnarrow {
+	color: #FF0000;
+	font-weight: bold;
+	padding: 0px;
+	overflow: hidden;
+	vertical-align: middle;
+	float: right;
+}
+
+span.errortip:hover, span.errortipnarrow:hover {
+	cursor: help;
+}
+
+/********************************/
+#example2 tr.dirty {
+	color: #FF0000;
+}
+
+#example2 tr.dirty a {
+	color: #FF0000;
+	font-weight: bold;
+}
+
+#example2 tr.dirty a:hover {
+	color: #699197;
+}
+
+#example2 tr.updated {
+	color: #565656;
+}
+
+#example2 tr.updated a {
+	color: #565656;
+	font-weight: bold;
+}
+
+#example2 tr.updated a:hover {
+	color: #699197;
+}
+
+.hideextra {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.timecardlist {
+	/*table-layout: fixed !important;*/
+	/*width: 100%;*/
+	/*white-space: nowrap;  */
+	
+}
+
+.timecardlist td, th {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@media ( max-width : 360px) {
+	h6.box-title {
+		font-size: 14px !important;
+	}
+	a#view_pdf {
+		/*width: 80px;*/
+		font-size: 10px;
+	}
+	a#export_timecard_txt {
+		/*width: 80px;*/
+		font-size: 10px;
+	}
+	a#export_timecard_xml {
+		/*width: 80px;*/
+		font-size: 10px;
+	}
+}
+
+@media ( max-width : 479px) {
+	.confirmpaymenttext {
+		font-size: 14px !important;
+	}
+}
+
+@media ( min-width : 480px) and (margin: 767px) {
+	.confirmpaymenttext {
+		font-size: 14px !important;
+	}
+}
+
+#flash-notice {
+	position: absolute !important;
+	top: 0 !important;
+	width: 100% !important;
+}

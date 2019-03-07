@@ -1,0 +1,85 @@
+
+<div class="box box-primary">
+  <div class="box-header">
+    <h3 class="box-title">TimeCard List </h3>
+
+    <% if ( !( @timecards.nil? || @timecards.size == 0 ) ) %>
+        <h3 id="list_date" class="box-title" style="float: right; margin-bottom: 0px !important; margin-top: 0px !important;"></h3>
+    <%end%>
+
+  </div>
+
+  <div id="list" class="box-body table-responsive">
+    <% if ( !( @timecards.nil? || @timecards.size == 0 ) ) %>
+        <table id="example2" class="table table-bordered table-striped timecardlist table-responsive" >
+          <thead>
+          <!--timecardId client matter hour -->
+          <th width="5%" ><%=@localData['actions']%></th> <!--1 actions-->
+          <th width="8%" >TimeCard Id</th> <!--2 timecardId -->
+          <th width="20%" ><%= @localData['client'] %></th>   <!--3 client-->
+          <!--<th width="40px"><%= @localData['unit'] %></th>-->
+          <th width="15%" ><%= @localData['matter'] %></th>     <!--4 matter-->
+          <th width="20%" >Activity</th><!--6 Narrative-->
+          <th width="5%" >Hours</th>    <!--5 date-->
+          <!--<th width="50px"><%=@localData['work_date']%></th>-->
+          <!--<th><%= @localData['timekeeper'] %></th>-->
+
+          <!--
+                <th width="100px"><%= @localData['bill_status'] %></th>
+                -->
+
+
+          <!--<th><%= @localData['internal_comment'] %></th>   -->
+          <th width="5%" ><%= @localData['status'] %></th>   <!--7Status -->
+          </thead>
+          <tbody id="tc_tbody">
+          <div></div>
+          </tbody>
+        </table>
+        <%
+           #@current_page = 1
+           #@total_records = 4
+           #@page_size = 10
+           @records_label = @localData['records']
+           @to_label = @localData['to']
+           @of_label = @localData['total_records']
+           if( @state == 'calendar' )
+             @base_link = '/timecards/calendar_view?state2=' + @state2.downcase + '&'
+           else
+             @base_link = '/timecards/search?state2=' + @state2.downcase + '&'
+           end
+           if @dirty_timecard.nil?
+             @show_page_links = true
+           else
+             @show_page_links = false
+           end
+        %>
+        <%= render 'page_links' %>
+        </div>
+        <br />
+        <br />
+    <% else %>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    <% end %>
+    </div>

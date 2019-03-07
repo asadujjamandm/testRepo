@@ -1,0 +1,20 @@
+<%= stylesheet_link_tag 'jqui/jquery-ui-1.8.18.custom', :media => 'screen' %>
+<%= stylesheet_link_tag 'newcss/customised', :media => 'screen' %>
+<%= stylesheet_link_tag 'newcss/AdminLTE', :media => 'screen' %>
+<%= javascript_include_tag 'jquery-ui-1.8.18.custom.min' %>
+<%= javascript_include_tag 'custom/clientview' %>
+<script type="text/javascript">
+    var singleErrorMessage = 'Please check the field marked with *';
+    var multipleErrorMessage = 'Please check the #n fields that has been marked with *';
+    $(function(){
+        //---------- On click focus functions-----------
+        $("#client_name").click(function(){
+            $('#client_client_name').focus();
+        });
+
+        $("#display_name").click(function(){
+            $('#client_display_name').focus();
+        });
+        //-------------------------
+    });
+</script>

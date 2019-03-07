@@ -1,0 +1,10 @@
+<%= render 'styles' %>
+<%= render 'scripts' %>
+
+<%= render 'search' %>
+<% if flash[:fatalerror].nil? %>
+    <!--<div class="row">-->
+    <%= render 'edit' %>
+    <%= render 'newlist' %>
+    <!--</div>-->
+<% end %>

@@ -1,0 +1,147 @@
+.art-footer img {
+	border-color: #B5A175;
+	border-style: solid;
+	border-width: 0;
+	margin: 5px 5px 5px 5px;
+}
+
+/* begin Footer */
+.art-footer {
+	position: relative;
+	margin-top: 0;
+	margin-bottom: 0;
+	width: 100%;
+}
+
+.art-footer-body {
+	position: relative;
+	padding: 15px;
+	color: #0D100F;
+	font-size: 11px;
+}
+
+.art-footer-body ul li {
+	font-size: 13px;
+	line-height: 125%;
+	color: #252014;
+	margin: 5px 0 0 5px;
+	padding: 0 0 0 10px;
+	background-image: url('../../images/site/footerbullets.png');
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+.art-footer-body:before {
+	position: absolute;
+	content: ' ';
+	z-index: -2;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 50px;
+	background-image: url('../../images/site/footer.png');
+	background-position: bottom left;
+}
+
+.art-footer:before, .art-footer:after {
+	position: absolute;
+	content: ' ';
+	z-index: -2;
+	bottom: 0;
+	height: 50px;
+	background-image: url('../../images/site/footer_b.png');
+}
+
+.art-footer:before {
+	left: 0;
+	right: 10px;
+	background-position: bottom left;
+}
+
+.art-footer:after {
+	right: 0;
+	width: 10px;
+	background-position: bottom right;
+}
+
+.art-footer-body .art-rss-tag-icon {
+	position: absolute;
+	left: 6px;
+	bottom: 15px;
+	z-index: 1;
+}
+
+.art-rss-tag-icon {
+	display: block;
+	background-image: url('../../images/site/rssicon.png');
+	background-position: center right;
+	background-repeat: no-repeat;
+	height: 30px;
+	width: 19px;
+	cursor: default;
+}
+
+.art-footer-text p {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.art-footer-body a, .art-footer-body a:link, .art-footer-body a:visited,
+	.art-footer-body a:hover, .art-footer-body td, .art-footer-body th,
+	.art-footer-body caption {
+	color: #0D100F;
+	font-size: 11px;
+}
+
+.art-footer-text {
+	min-height: 33px;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: center;
+}
+
+.art-footer-body a, .art-footer-body a:link {
+	color: #212F31;
+	text-decoration: none;
+}
+
+.art-footer-body a:visited {
+	color: #252D2B;
+}
+
+.art-footer-body a:hover {
+	color: #212F31;
+	text-decoration: underline;
+}
+
+div.art-footer img {
+	/* WARNING do NOT collapse this to 'border' - inheritance! */
+	border-width: 1px;
+	border-color: #B5A175;
+	border-style: solid;
+	margin: 10px;
+} /* end Footer */
+
+/* begin PageFooter */
+.art-page-footer, .art-page-footer a, .art-page-footer a:link,
+	.art-page-footer a:visited, .art-page-footer a:hover {
+	font-family: Arial;
+	font-size: 10px;
+	letter-spacing: normal;
+	word-spacing: normal;
+	font-style: normal;
+	font-weight: normal;
+	text-decoration: underline;
+	color: #252D2B;
+}
+
+.art-page-footer {
+	position: relative;
+	z-index: 10;
+	padding: 1em;
+	text-align: center;
+	text-decoration: none;
+	color: #252D2B;
+}
+/* end PageFooter */

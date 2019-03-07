@@ -1,0 +1,14 @@
+<%= javascript_include_tag 'custom/swfobject' %>
+<%= javascript_include_tag 'custom/player' %>
+<%= stylesheet_link_tag 'custom/player', :media => 'screen' %>
+
+<table id="videotable">
+  <tr>
+    <td>
+        <%= render :partial => 'layouts/player', :locals => {:clsid => 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000',
+        :obj_id => 'csSWF00', :image_path => '/videos/android/demo/FirstFrame.png',
+        :object_path => '/videos/android/demo/Wiptime_android_demo_controller.swf'} %>
+        <a href="/videos/android/demo/Wiptime_android_demo.mp4">Download</a>
+    </td>
+  </tr>
+</table>

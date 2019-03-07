@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-primary">
+      <div class="box-header">
+        <h5 class="box-title">User Subscription Notification</h5>
+      </div>
+      <div class="box-body ">
+        <div>
+            <p>Thank you for subscrtiption. You will be redirected to login within 5 seconds. If not please click here to <%= link_to 'login', {:controller => 'auths', :action => 'destroy'}%></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(document).ready(function(){
+        setTimeout(function() {
+            window.location.href = "/signout";
+        }, 5000);
+
+    });
+</script>
+

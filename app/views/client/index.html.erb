@@ -1,0 +1,8 @@
+<%= render 'script'%>
+<%= render 'control_panel'%>
+<%= render 'search' %>
+
+  <% if flash[:fatalerror].nil? %>
+      <%= render 'edit' %>
+      <%= render 'list'%>
+  <%end%>

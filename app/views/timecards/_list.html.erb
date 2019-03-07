@@ -1,0 +1,138 @@
+
+<div class="box box-primary">
+    <div class="box-header">
+    <h3 class="box-title">TimeCard List </h3>
+
+      <% if ( !( @timecards.nil? || @timecards.size == 0 ) ) %>
+          <h3 id="listTitle" class="box-title" style="float: right; margin-bottom: 0px !important; margin-top: 0px !important;"><%= @search_object.from_date %></h3>
+      <%end%>
+
+    </div>
+
+
+
+    <div class="box-body table-responsive">
+        <span class="<%= ( !@state2.nil? && @state2 == 'ALL' ) ? 'disabled' : '' %>"><%= link_to ' ' + @localData['all'], ( !@state2.nil? && @state2 == 'ALL' ) ? 'javascript:return false;' : 'javascript:submitSearch3( "ALL" );', :id => 'search', :title => @localData['all'], :tabindex=> "-1", :class => "btn btn-primary btn-sm", :style => "margin-bottom: 5px" %></span>
+
+          <!--
+        <span class=" <%= ( !@state2.nil? && @state2 == 'BILLABLE' ) ? 'disabled' : '' %>"><%= link_to ' ' + @localData['billable'], ( !@state2.nil? && @state2 == 'BILLABLE' ) ? 'javascript:return false;' : 'javascript:submitSearch3( "BILLABLE" );', :id => 'search', :title => @localData['billable'], :tabindex=> "-1", :class => "btn btn-primary btn-sm", :style => "margin-bottom: 5px" %></span> |
+        <span class="<%= ( !@state2.nil? && @state2 == 'NON-BILLABLE' ) ? 'disabled' : '' %>"><%= link_to ' ' + @localData['non_billable'], ( !@state2.nil? && @state2 == 'NON-BILLABLE' ) ? 'javascript:return false;' : 'javascript:submitSearch3( "NON-BILLABLE" );', :id => 'search', :title => @localData['non_billable'], :tabindex=> "-1", :class => "btn btn-primary btn-sm", :style => "margin-bottom: 5px" %></span> |
+        -->
+
+          <span class="<%= ( !@state2.nil? && @state2 == 'POSTED' ) ? 'disabled' : '' %>"><%= link_to ' ' + @localData['posted'], ( !@state2.nil? && @state2 == 'POSTED' ) ? 'javascript:return false;' : 'javascript:submitSearch3( "POSTED" );' , :id => 'calendar_view', :title => @localData['posted'], :tabindex=> "-1", :class => "btn btn-primary btn-sm", :style => "margin-bottom: 5px" %></span>
+          <span class="<%= ( !@state2.nil? && @state2 == 'NOT-POSTED' ) ? 'disabled' : '' %>"><%= link_to ' ' + @localData['not_posted'], ( !@state2.nil? && @state2 == 'NOT-POSTED' ) ? 'javascript:return false;' : 'javascript:submitSearch3( "NOT-POSTED" );' , :id => 'calendar_view', :title => @localData['not_posted'], :tabindex=> "-1", :class => "btn btn-primary btn-sm", :style => "margin-bottom: 5px" %></span>
+          <span class="<%= ( !@state2.nil? && @state2 == 'SYNCED' ) ? 'disabled' : '' %>"><%= link_to ' ' + @localData['synced'], ( !@state2.nil? && @state2 == 'SYNCED' ) ? 'javascript:return false;' : 'javascript:submitSearch3( "SYNCED" );' , :id => 'calendar_view', :title => @localData['synced'], :tabindex=> "-1", :class => "btn btn-primary btn-sm", :style => "margin-bottom: 5px" %></span>
+          <span class="<%= ( !@state2.nil? && @state2 == 'NOT-SYNCED' ) ? 'disabled' : '' %>"><%= link_to ' ' + @localData['not_synced'], ( !@state2.nil? && @state2 == 'NOT-SYNCED' ) ? 'javascript:return false;' : 'javascript:submitSearch3( "NOT-SYNCED" );' , :id => 'calendar_view', :title => @localData['not_synced'], :tabindex=> "-1", :class => "btn btn-primary btn-sm", :style => "margin-bottom: 5px" %></span>
+          <% if ( !( @timecards.nil? || @timecards.size == 0 ) ) %>
+              <table id="example2" class="table table-bordered table-striped timecardlist table-responsive" >
+                <thead>
+                  <!--timecardId client matter hour -->
+                  <th width="5%" ><%=@localData['actions']%></th> <!--1 actions-->
+                  <th width="8%" >TimeCard Id</th> <!--2 timecardId -->
+                  <th width="20%" ><%= @localData['client'] %></th>   <!--3 client-->
+                  <!--<th width="40px"><%= @localData['unit'] %></th>-->
+                  <th width="15%" ><%= @localData['matter'] %></th>     <!--4 matter-->
+                  <th width="20%" >Activity</th><!--6 Narrative-->
+                  <th width="5%" >Hours</th>    <!--5 date-->
+                  <!--<th width="50px"><%=@localData['work_date']%></th>-->
+                  <!--<th><%= @localData['timekeeper'] %></th>-->
+
+                  <!--
+                <th width="100px"><%= @localData['bill_status'] %></th>
+                -->
+
+
+                  <!--<th><%= @localData['internal_comment'] %></th>   -->
+                  <th width="5%" ><%= @localData['status'] %></th>   <!--7Status -->
+                </thead>
+                <tbody>
+
+                <% @timecards.each do |k, v| %>
+                    <%
+                       if( (!session[:updated_timecards].nil?) && session[:updated_timecards].size >= 1 )
+                         foundOne = session[:updated_timecards].find { |k, v2| v2.id == v.id }
+                         if( !foundOne.nil? )
+                           #v = foundOne[1]
+                           v.is_dirty_confirmed = true
+                           v.is_dirty = true
+                         end
+                       end
+                    %>
+                    <tr class=<%= ( (!@dirty_timecard.nil?) && @dirty_timecard.id == v.id ) ? 'dirty' : v.is_dirty_confirmed? ? 'updated' : '' %>>
+                      <!--1 actions-->
+                      <td >
+                        <% if v.approved != 'yes' %>
+                            <%= link_to image_tag('edit.png', :options => {:alt => @localData['edit']}), "javascript:submitEditTimecard(#{v.id})", :title => @localData['edit_timecard'], :tabindex=> "-1" %>
+                            <span class='delete'><%= link_to image_tag('delete_14.png', :options => {:alt => @localData['delete']}), {:controller => 'timecards', :action => 'delete', :timecard_id => v.id, :timecard_approved => v.approved, :timecard_posted => v.posted, :page => @current_page}, :title => @localData['delete_timecard'], :method => :post, :tabindex=> "-1" %></span>
+                        <% else %>
+                            <%= image_tag "edit_disabled.png", :title => @localData['timecard_not_editable'] %>
+                            <%= image_tag "delete_disabled_14.png", :title => @localData['timecard_not_deletable'] %>
+                        <% end %>
+                      </td>
+
+                      <!--2 timecardId -->
+                      <td style="text-align: center"><%= v.id %></td>
+                      <!--<td class="centerdata"><%= Utils.get_time_from_seconds( Utils.get_bill_hours_from_work_hours(v.hours, v.units ) )  %></td>-->
+
+                      <!--3 client-->
+                      <td class="td-with-tooltip"><%= Utils.get_display_name( v.client_name , v.client_number ) %></td>
+                      <!--5 matter-->
+                      <td class="td-with-tooltip"><%= Utils.get_display_name( v.matter_name , v.matter_number ) %></td>
+                      <!--6 Activity Description-->
+                      <td class="td-with-tooltip">
+                        <%= v.activity_desc %>
+                      </td>
+                      <!--4 hour-->
+                      <td>
+                        <%= Utils.get_time_from_seconds( Utils.get_bill_hours_from_work_hours(v.hours, v.units ) )  %>
+                        <!--<%= get_units_value_formatted(v.units) %>-->
+                      </td>
+                      <!--Date-->
+                      <!--<td class="centerdata"><%= v.date %></td>-->
+
+                      <!--<td><%= Utils.get_display_name( v.timekeeper_name, v.timekeeper_number ) %></td>-->
+
+                      <!--
+                    <td class="centerdata"><%= v.bill_status %></td>
+                    -->
+
+                      <!--<td class="overflowcol"><%= v.internal_comment %></td>-->
+                      <td><%=
+                          if v.approved == 'yes'
+                            image_tag('lock_locked.png', :alt => @localData['posted'], :title => @localData['timecard_is_posted'])
+                          elsif v.posted == 'yes'
+                            image_tag('lock_unlocked2.png', :alt => @localData['synced'], :title => @localData['timecard_is_synced'])
+                          else
+                            image_tag('lock_unlocked.png', :alt => @localData['not_synced'], :title => @localData['timecard_not_synced'])
+                          end
+                      %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+              <%
+                 #@current_page = 1
+                 #@total_records = 4
+                 #@page_size = 10
+                 @records_label = @localData['records']
+                 @to_label = @localData['to']
+                 @of_label = @localData['total_records']
+                 if( @state == 'calendar' )
+                   @base_link = '/timecards/calendar_view?state2=' + @state2.downcase + '&'
+                 else
+                   @base_link = '/timecards/search?state2=' + @state2.downcase + '&'
+                 end
+                 if @dirty_timecard.nil?
+                   @show_page_links = true
+                 else
+                   @show_page_links = false
+                 end
+              %>
+              <%= render 'page_links' %>
+              </div>
+          <br />
+          <br />
+          <% else %>
+          <br /><strong><%= @localData['no_timecard_found_for_these_criteria'] %></strong>
+          <% end %>
+</div>

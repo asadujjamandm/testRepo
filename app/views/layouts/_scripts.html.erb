@@ -1,0 +1,337 @@
+<%= javascript_include_tag :defaults %>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<%= javascript_include_tag 'jquery.validate.min' %>
+<!--<%= javascript_include_tag 'browser-issues' %>-->
+<%= javascript_include_tag 'jquery-blockUI' %>
+<%= javascript_include_tag 'newjs/Chart.min' %>
+<%= javascript_include_tag 'newjs/jquery.resize' %>
+<%= javascript_include_tag 'newjs/moment' %>
+<%= javascript_include_tag 'newjs/plugins/daterangepicker/daterangepicker' %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var i=0;
+        $("table.innertablewithtimecard>tbody>tr>td.billablebox").each(function(){
+            i++;
+        });
+        var j = i;
+        $("table.todaywithtimecard>tbody>tr>td.billablebox").each(function(){
+            j++;
+        });
+
+        var billh = 0;
+        var billm = 0;
+        var non_billh = 0;
+        var non_billm = 0;
+
+        var postedh = 0;
+        var postedm = 0;
+        var pendingh = 0;
+        var pendingm = 0;
+        var totalHours=0.0;
+        var totalBillableHours = 0.0;
+        var totalNonBillableHours= 0.0;
+        var totalPosted = 0.0;
+        var totalPending = 0.0;
+        var billablePercentage = 0.0;
+        var nonBillablePercentage = 0.0;
+        var postedPercentage = 0.0;
+        var pendingPercentage = 0.0;
+
+        var noOfPosted = 0;
+        var noOfTimecards = 0;
+
+        $(".billablebox").each(function(){
+            var v = $(this).text();
+            var val = v.split('/');
+            var bill = val[0].split(':');
+            var non_bill = val[1].split(':');
+            billh += parseInt(bill[0]);
+            billm += parseInt(bill[1]);
+            non_billh += parseInt(non_bill[0]);
+            non_billm += parseInt(non_bill[1]);
+
+            //var v= $(this).text();
+            //var bill = v.split(':');
+           // billh += parseInt(bill[0]);
+           // billm += parseInt(bill[1]);
+        });
+        $(".totalhourssummarybox").each(function(){
+            var total_t = $(this).text();
+            noOfTimecards += parseInt(total_t);
+        });
+        $(".summarypostedbox").each(function()
+        {
+           var total_p = $(this).text();
+            noOfPosted += parseInt(total_p);
+        });
+        billh = billh + parseInt((billm/60));
+        billm = (billm % 60);
+
+        non_billh = non_billh + parseInt(non_billm/60);
+        non_billm = (non_billm % 60);
+        var totalmin =billm + non_billm;
+        var totalh = billh + non_billh + parseInt(totalmin/60);
+        totalmin = (totalmin % 60);
+
+        $(".postedbox").each(function(){
+            var p = $(this).text();
+            var pval = p.split('/');
+            var post = pval[0].split(':');
+            var non_post = pval[1].split(':');
+            postedh += parseInt(post[0]);
+            postedm += parseInt(post[1]);
+            pendingh += parseInt(non_post[0]);
+            pendingm+= parseInt(non_post[1]);
+
+            //var p = $(this).text();
+            //var post = p.split(':');
+            //postedh += parseInt(post[0]);
+            //postedm += parseInt(post[1]);
+        });
+        postedh = postedh + parseInt((postedm/60));
+        postedm = (postedm % 60);
+        pendingh = pendingh + parseInt(pendingm/60);
+        pendingm = (pendingm % 60);
+
+
+        if(totalmin !=0 ){
+            totalHours = totalh + (totalmin/100);
+        }
+        else {
+            totalHours = totalh + 0;
+        }
+
+        if(billm !=0 ){
+            totalBillableHours = billh + (billm/100);
+    }
+        else {
+            totalBillableHours = billh + 0;
+        }
+
+        if(non_billm !=0 ){
+            totalNonBillableHours = non_billh + (non_billm/100);
+        }
+        else {
+            totalNonBillableHours = non_billh + 0;
+        }
+
+        if(non_billm !=0 ){
+            totalPosted = postedh + (postedm/100);
+        }
+        else {
+            totalPosted = postedh + 0;
+        }
+
+        if(pendingm !=0 ){
+            totalPending = pendingh+ (pendingm/100);
+        }
+        else {
+            totalPending = pendingh+ 0;
+        }
+
+        if(totalBillableHours !=0)
+        {
+            billablePercentage = parseFloat((totalBillableHours * 100)/totalHours);
+        }
+        else  billablePercentage = 0;
+
+        if(totalNonBillableHours != 0)
+        {
+            nonBillablePercentage = (totalNonBillableHours * 100)/totalHours;
+        }
+        else   nonBillablePercentage= 0;
+
+        if(totalPosted != 0)
+        {
+            postedPercentage = (totalPosted * 100) / totalHours;
+        }
+        else   postedPercentage= 0;
+
+        if(totalPending !=0 )
+        {
+            pendingPercentage = (totalPending * 100) /totalHours;
+        }
+        else pendingPercentage = 0;
+        if(noOfTimecards == 0) noOfTimecards = 0;
+        if(noOfPosted == 0) noOfPosted = 0;
+        $("#timecard1").html(noOfTimecards );
+        if(totalmin < 10)
+        {
+            $("#hours").html(totalh + ":0" +totalmin);
+        }
+        else
+        {
+            $("#hours").html(totalh + ":" +totalmin);
+        }
+        if(billm < 10)
+        {
+            $("#billable").html(billh + ":0"+ billm);
+        }
+        else
+        {
+            $("#billable").html(billh + ":"+ billm);
+        }
+        $('#timecards_posted').html(noOfPosted);
+
+        //$("#non-billable").html(non_billh + ":"+ non_billm);
+        //$("#posted").html(postedh + ":" + postedm);
+        //$("#pending").html(pendingh+ ":"+ pendingm);
+        //$("#billable").html(billablePercentage.toFixed(2) + "%");
+        //$("#non-billable").html(nonBillablePercentage.toFixed(2) + "%");
+        //$("#posted").html(postedPercentage.toFixed(2) + "%");
+        //$("#pending").html(pendingPercentage.toFixed(2) + "%");
+
+        var wrapperWidth =  $(".right-side").width();
+        if (wrapperWidth < 314)
+        {
+            $(".small-box >.inner > h4").css({"font-size":"10px"});
+            $(".small-box >.inner > p").css({"font-size":"10px"});
+            $(".smallfont").css({"font-size":"10px"});
+            $(".headerblocktr").css({"font-size":"13px"});
+            $(".headerblockt").css({"font-size":"10px"});
+        }
+        else if (wrapperWidth < 774)
+        {
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".small-box >.inner > p").css({"font-size":"13px"});
+            $(".smallfont").css({"font-size":"10px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+        }
+        else if (wrapperWidth < 795)
+        {
+            /*$(".small-box >.inner > h4").css({"font-size":"12px"});  */
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".small-box >.inner > p").css({"font-size":"13px"});
+            $(".smallfont").css({"font-size":"10px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+        }
+        else if(wrapperWidth<805)
+        {
+
+            /*$(".small-box >.inner > h4").css({"font-size":"12px"});    */
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".small-box >.inner > p").css({"font-size":"13px"});
+            $(".smallfont").css({"font-size":"10px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+        }
+
+        else if (wrapperWidth < 823)
+        {
+
+            /*$(".small-box >.inner > h4").css({"font-size":"12px"}); */
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".small-box >.inner > p").css({"font-size":"13px"});
+            $(".smallfont").css({"font-size":"12px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+        }
+        else if (wrapperWidth < 862)
+        {
+            /*$(".small-box >.inner > h4").css({"font-size":"13px"});   */
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".small-box >.inner > p").css({"font-size":"13px"});
+            $(".smallfont").css({"font-size":"12px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+        }
+        else if (wrapperWidth < 889)
+        {
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".small-box >.inner > p").css({"font-size":"13px"});
+            $(".smallfont").css({"font-size":"13px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+            /* $(".small-box >.inner > h4").css({"font-size":"12px"}); */
+        }
+
+        else if(wrapperWidth < 945)
+        {
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".small-box >.inner > p").css({"font-size":"13px"});
+            /*$(".small-box >.inner > h4").css({"font-size":"14px"});  */
+            $(".smallfont").css({"font-size":"13px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+
+        }
+        else if(wrapperWidth < 951)
+        {
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".small-box >.inner > p").css({"font-size":"13px"});
+            $(".smallfont").css({"font-size":"15px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+        }
+        else if(wrapperWidth<987)
+        {
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".small-box >.inner > p").css({"font-size":"13px"});
+            $(".smallfont").css({"font-size":"15px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+        }
+        else if(wrapperWidth<993)
+        {
+            $(".smallfont").css({"font-size":"15px"});
+            $(".small-box >.inner > p").css({"font-size":"10px"});
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+        }
+
+        else if(wrapperWidth < 1003)
+        {
+            $(".smallfont").css({"font-size":"15px"});
+            /*$(".small-box >.inner > h4").css({"font-size":"16px"});  */
+            $(".small-box >.inner > p").css({"font-size":"11px"});
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+
+        }
+        else if (wrapperWidth < 1018)
+        {
+            $(".smallfont").css({"font-size":"15px"});
+            /*$(".small-box >.inner > h4").css({"font-size":"16px"});  */
+            $(".small-box >.inner > p").css({"font-size":"11px"});
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+
+        }
+        else if (wrapperWidth < 1032)
+        {
+            $(".smallfont").css({"font-size":"15px"});
+            $(".small-box >.inner > p").css({"font-size":"11px"});
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+
+        }
+        else if (wrapperWidth < 1048)
+        {
+            $(".smallfont").css({"font-size":"15px"});
+            $(".small-box >.inner > p").css({"font-size":"12px"});
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+
+        }
+        else
+        {
+            $(".smallfont").css({"font-size":"15px"});
+            /*$(".small-box >.inner > h4").css({"font-size":"20px"});  */
+            $(".small-box >.inner > h4").css({"font-size":"20px"});
+            $(".small-box >.inner > p").css({"font-size":"13px"});
+            $(".headerblocktr").css({"font-size":"18px"});
+            $(".headerblockt").css({"font-size":"14px"});
+        }
+    });
+</script>
+

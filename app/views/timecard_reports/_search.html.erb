@@ -1,0 +1,170 @@
+<div class="box-body no-padding">
+  <div id="search">
+    <% form_tag "/timecard_reports/search", :id => 'timecard_search_form', :method => 'post' do %>
+<!--        <table id="formtable" class="table" style="border: 0 none !important; margin-bottom: 10px;">
+          <tbody>
+          <tr>
+            <div>
+              <td style="border-top: none; width: 12% !important">
+                <%= label_tag @localData['bill_status'], nil, :style => 'float: left' %>
+              </td>
+              <td style="border-top: none; width: 22% !important">
+                <%= select('search_timecard', 'bill_status', get_bill_statuses(true), {:selected => @search_object.nil? ? '' : @search_object.bill_status}, :style => 'width: 80%') %>
+              </td>
+              <td style="border-top: none; width: 12% !important">
+                <%= label_tag @localData['posted'] %>
+              </td>
+              <td style="border-top: none; width: 21% !important">
+                <%= select('search_timecard', 'approved', get_approve_statuses, {:selected => @search_object.nil? ? '' : @search_object.approved}, :style => 'width: 80%') %>
+              </td>
+              <td style="border-top: none; width: 12% !important">
+                <%= label_tag @localData['date_range'] %>
+              </td>
+              <td style="border-top: none; width: 21% !important">
+                <%= text_field_tag 'search_timecard[date_range]', @search_object.nil? ? '' : @search_object.date_range, :style => 'width: 90%; height: 30px; border-radius: 0px; float: right', :class => 'btn btn-default' %>
+              </td>
+            </div>
+          </tr>
+          </tbody>
+        </table>-->
+        <div style="margin-bottom: 5px !important">
+             <div class="row">
+               <div class="col-md-4">
+                 <div class="row" style="padding: 5px 0px">
+                   <div class="col-md-5 col-xs-5 col-sm-5">
+                     <%= label_tag @localData['bill_status'], nil, :style => '' %>
+                   </div>
+                   <div class="col-md-7 col-xs-7 col-sm-7">
+                     <%= select('search_timecard', 'bill_status', get_bill_statuses(true), {:selected => @search_object.nil? ? '' : @search_object.bill_status}, :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px;') %>
+                   </div>
+                 </div>
+               </div>
+               <div class="col-md-4">
+                 <div class="row" style="padding: 5px 0px">
+                   <div class="col-md-5 col-xs-5 col-sm-5">
+                     <%= label_tag @localData['posted'] %>
+                   </div>
+                   <div class="col-md-7 col-xs-7 col-sm-7">
+                     <%= select('search_timecard', 'approved', get_approve_statuses, {:selected => @search_object.nil? ? '' : @search_object.approved}, :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px;') %>
+                   </div>
+                 </div>
+               </div>
+               <div class="col-md-4">
+                 <div class="row" style="padding: 5px 0px">
+                   <div class="col-md-5 col-xs-5 col-sm-5">
+                     <%= label_tag @localData['date_range'] %>
+                   </div>
+                   <div class="col-md-7 col-xs-7 col-sm-7">
+                     <%= text_field_tag 'search_timecard[date_range]', @search_object.nil? ? '' : @search_object.date_range, :style => 'width: 100%; height: 30px; border-radius: 0px', :class => 'btn btn-default' %>
+                   </div>
+                 </div>
+               </div>
+             </div>
+        </div>
+
+        <!--<div style="border-top: 2px solid #728190; padding: 30px 0px 30px 0px; margin-top: 20px">-->
+          <!--<div style="background-color: #FFFFFF; margin-top: -40px; width: 170px; margin-left: 80px; padding: 0 10px 20px 10px; font-weight: bold; color: #444444">Additional Search Filter</div>-->
+        <!--</div>-->
+
+        <div class="box" style="padding: 0 !important; margin-bottom: 10px !important">
+          <div class="box-header">
+            <h6 class="box-title" style="">Advanced Search Filter</h6>
+            <div class="box-tools pull-right">
+              <a title="" data-toggle="collapse" data-target="#advanceFilter" class="btn btn-default btn-sm" ><i class="fa fa-plus"></i></a>
+            </div>
+          </div>
+          <div id="advanceFilter" class="box-body collapse">
+            <!--<table id="formtable" class="table" style="border: 0 none !important; margin-bottom: 10px;">
+              <tbody>
+              <tr data-widget="100%">
+                  <td style="border-top: none; width: 8% !important">
+                    <%= label_tag @localData['timekeeper'], nil, :style => 'float: left' %>
+                  </td>
+                  <td style="border-top: none; width: 18% !important">
+                    <%= text_field_tag 'search_timecard[timekeeper_number]', @search_object.nil? ? @search_object.timekeeper_number : Utils.get_display_name(@search_object.timekeeper_name, @search_object.timekeeper_number), :style => 'height: 30px; width: 90%; border: 1px solid #ccc; padding: 0 10px; border-radius: 0px;', :placeholder => "Timekeeper Number" %>
+                  </td>
+                  <td style="border-top: none; width: 8% !important">
+                    <%= label_tag @localData['client'], nil, :style => '' %>
+                  </td>
+                  <td style="border-top: none; width: 18% !important">
+                    <%= text_field_tag 'search_timecard[client_number]', @search_object.nil? ? @search_object.client_number : Utils.get_display_name(@search_object.client_name, @search_object.client_number), :style => 'height: 30px; width: 90%; border: 1px solid #ccc; padding: 0 10px; border-radius: 0px;', :class => '', :placeholder => "Client Number" %>
+                  </td>
+                  <td style="border-top: none; width: 8% !important">
+                    <%= label_tag @localData['matter'], nil, :style => '' %>
+                  </td>
+                  <td  style="border-top: none; width: 18% !important">
+                    <%= text_field_tag 'search_timecard[matter_number]', @search_object.nil? ? @search_object.matter_number : Utils.get_display_name(@search_object.matter_name, @search_object.matter_number), :style => 'height: 30px; width: 90%; border: 1px solid #ccc; padding: 0 10px; border-radius: 0px;', :class => '', :placeholder => "Matter Number" %>
+                  </td>
+                  <td style="border-top: none; width: 22% !important">
+                    <input type="submit" value="Search" class="btn btn-primary btn-sm" style="width: 85%; float: right">
+                  </td>
+              </tr>
+              </tbody>
+            </table>-->
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-4 col-xs-4 col-sm-4">
+                      <%= label_tag @localData['timekeeper'], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-8 col-xs-8 col-sm-8">
+                      <%= text_field_tag 'search_timecard[timekeeper_number]', @search_object.nil? ? @search_object.timekeeper_number : '', :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px;', :placeholder => "Timekeeper Number" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-4 col-xs-4 col-sm-4">
+                      <%= label_tag @localData['timekeeper_name'], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-8 col-xs-8 col-sm-8">
+                      <%= text_field_tag 'search_timecard[timekeeper_name]', @search_object.nil? ? "" : "", :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px;', :placeholder => "Timekeeper Name" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-4 col-xs-4 col-sm-4">
+                      <%= label_tag @localData['client'], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-8 col-xs-8 col-sm-8">
+                      <%= text_field_tag 'search_timecard[client_number]', @search_object.nil? ? @search_object.client_number : Utils.get_display_name(@search_object.client_name, @search_object.client_number), :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px;', :class => '', :placeholder => "Client Number" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-4 col-xs-4 col-sm-4">
+                      <%= label_tag @localData['matter'], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-8 col-xs-8 col-sm-8">
+                      <%= text_field_tag 'search_timecard[matter_number]', @search_object.nil? ? @search_object.matter_number : Utils.get_display_name(@search_object.matter_name, @search_object.matter_number), :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px;', :class => '', :placeholder => "Matter Number" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <!--<div class="row">
+                    <div class="col-md-offset-4 col-md-8 col-xs-offset-4 col-xs-8 col-sm-offset-4 col-sm-8">
+                      <input type="submit" value="Search" class="btn btn-primary btn-sm" style="width: 85%; float: right">
+                    </div>
+                  </div>-->
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-4 col-xs-4 col-sm-4">
+                      <%= label_tag @localData[''], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-8 col-xs-8 col-sm-8">
+                      <!--<input type="submit" value="Search" class="btn btn-primary btn-sm" style="width: 100%">-->
+                      <%= link_to @localData['search'], 'javascript:submitSearch()', :title => @localData['search_timecards'], :id => 'search', :class => 'btn btn-primary', :style => 'width: 100%' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <input type="hidden" id="search_timecard_query_type" name="search_timecard[query_type]" value="and">
+        <%= hidden_field_tag "title", @pageheader %>
+
+    <% end %>
+  </div>
+</div>
+</div>

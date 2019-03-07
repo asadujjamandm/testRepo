@@ -1,0 +1,53 @@
+<% if @confirm==0 %>
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <div class="box box-primary">
+      <div class="box-header">
+        <h5 class="box-title">User Subscription</h5>
+      </div>
+      <div class="box-body">
+        <%= form_tag "/subscriptions/confirm", :id => 'subscription_form', :method => 'post' do %>
+
+            <div>
+              <div class="row" style="margin-bottom: 10px;">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <%= label_tag @localData['subscription_model'] %>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                  <%= select 'subscription', 'subscription_model', @subscriptions.collect { |k, v| [v.subscription_model + " - "+v.subscription_days + " days", v.id] },{:selected =>  @dirty_model.id, :include_blank => true},{:style => "width:100%", :class => "form-control"} %>
+
+                </div>
+
+              </div>
+              <script id="model_json" type="text/json">
+                <%= raw @subscriptions.values.to_json %>
+              </script>
+              <div class="row" style="margin-bottom: 10px;">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <%= label_tag @localData['model_price'] %>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                  <%= text_field_tag 'subscription[subscription_price]',@dirty_model.subscription_price, {:class=>"form-control"}%>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="float: right">
+                  <%= link_to 'Submit', 'javascript:submitSubscription()', :tabindex=> "10",:class => "btn btn-primary btn-sm", :id => 'confirmSubscription', :style => "float:right"%>
+                </div>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-6">
+    <div class="box box-primary">
+      <div class="box-title">Firm Subscription</div>
+      <div class="box-body no-padding">
+
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

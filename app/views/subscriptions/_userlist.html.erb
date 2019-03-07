@@ -1,0 +1,37 @@
+<div class="box" style="padding: 0 !important; margin-bottom: 10px !important">
+  <div class="box-header">
+    <h3 class="box-title" style="">Please select users to subscribe multiple users:</h3>
+    <div class="box-tools pull-right">
+      <a title="Select User from list" data-toggle="collapse" data-target="#selectUser" class="btn btn-default btn-sm" ><i class="fa fa-plus"></i></a>
+    </div>
+  </div>
+  <div id="selectUser" class="box-body collapse">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table id='userlisttable' class="table">
+            <tbody>
+            <% if @users.empty?  %>
+                <tr><td><b><%= GENERIC_NO_DATA_MESSAGE %></b></td></tr>
+            <% else %>
+                <% @users.each do |k, v| %>
+                  <% if v.id != @current_user_id %>
+                    <tr>
+                      <td style="border-top: none !important; padding: 0 !important;">
+                        <!--<%= hidden_field 'user[' + k + ']', 'id', :value => v.id %>-->
+                        <%= check_box_tag 'user[' + k + ']', value = v.id, checked = false %>
+                        <!--<%= check_box('user[' + k + ']', 'user_id', {:checked => v.id}, '1', '0') %>-->
+                      </td>
+                      <td style="border-top: none !important; padding: 0 !important;"><%= label_tag v.name %></td>
+                    </tr>
+                  <% end %>
+                <% end %>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

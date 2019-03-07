@@ -1,0 +1,76 @@
+<!-- This page is depricated, use the _new_header.erb one -->
+
+<header>
+  <%
+     char_width = 6
+  %>
+  <div id="authinfo" class="authinfo" style="display:block;position:absolute;left:<%= ( ( get_user_name_trimmed.length > 5 ? ( ( get_user_name_trimmed.length - 5 ) * char_width * -1 ) : 0  ) + 1030 ).to_s + "px" %>;width:<%=( ( get_user_name_trimmed.length > 5 ? ( ( get_user_name_trimmed.length - 5 ) * char_width ) : 0  ) + 230 ).to_s + "px"%>;top:16px;">
+    <% if !current_auth.nil? %>
+        <%= link_to @local_menu_labels[ 'change_password' ], {:controller => 'change_password', :action => 'index'}, { :tabindex=>"-1" } %>
+        <%= ' | ' %>
+        <%= link_to @local_menu_labels[ 'sign_out' ], signout_path, :tabindex=>"-1" %>
+        <%= "  [#{get_user_name_trimmed}]" %>
+    <% end %>
+  </div>
+  <div style="height:10px;"></div>
+  <div id="menucontainer">
+    <ul id="menu">
+      <% if !signed_in? %>
+          <li><%= link_to @local_menu_labels[ 'sign_in' ], signin_path, :id => 'signin', :tabindex=>"-1" %></li>
+          <li><%= link_to @local_menu_labels[ 'about' ], about_path, :id => 'about', :tabindex=>"-1" %></li>
+          <li><%= link_to @local_menu_labels[ 'walkthroughs' ], walkthroughs_path, :id => 'walkthroughs', :tabindex=>"-1" %>
+            <ul>
+              <li><%= link_to @local_menu_labels[ 'blackberry_walkthrough' ], blackberry_walkthrough_path, :id => 'blackberry_walkthrough', :tabindex=>"-1" %></li>
+              <li><%= link_to @local_menu_labels[ 'iphone_walkthrough' ], iphone_walkthrough_path, :id => 'iphone_walkthrough', :tabindex=>"-1" %></li>
+              <li><%= link_to @local_menu_labels[ 'android_walkthrough' ], android_walkthrough_path, :id => 'android_walkthrough', :tabindex=>"-1" %></li>
+            </ul>
+          </li>
+      <% else %>
+          <li><%= link_to @local_menu_labels[ 'home' ], homes_path, :id => 'home', :tabindex=>"-1" %></li>
+          <li><%= link_to @local_menu_labels[ 'timecards' ], timecards_path, :id => 'timecard', :tabindex=>"-1" %>
+            <ul>
+              <li><%= link_to @local_menu_labels[ 'new_timecard' ], {:controller => 'timecards', :action => 'new'}, { :tabindex=>"-1" } %></li>
+            </ul>
+          </li>
+          <li><%= link_to @local_menu_labels[ 'synchronization' ], syncs_path, :id => 'sync', :tabindex=>"-1" %>
+            <ul>
+              <li><%= link_to @local_menu_labels[ 'sync_timekeeper' ], {:controller => 'syncs', :action => 'sync_timekeeper'}, { :tabindex=>"-1" }  %></li>
+              <li><%= link_to @local_menu_labels[ 'sync_client' ], {:controller => 'syncs', :action => 'sync_client'}, { :tabindex=>"-1" }  %></li>
+              <li><%= link_to @local_menu_labels[ 'sync_matter' ], {:controller => 'syncs', :action => 'sync_matter'}, { :tabindex=>"-1" }  %></li>
+              <li><%= link_to @local_menu_labels[ 'sync_timecard' ], {:controller => 'syncs', :action => 'sync_timecard'}, { :tabindex=>"-1" }  %></li>
+              <li><%= link_to @local_menu_labels[ 'sync_all' ], {:controller => 'syncs', :action => 'sync_all'}, { :tabindex=>"-1" }  %></li>
+            </ul>
+          </li>
+          <li><%= link_to @local_menu_labels[ 'user_and_role' ], user_roles_path, :id => 'userandrole', :tabindex=>"-1" %>
+            <ul>
+              <li><%= link_to @local_menu_labels[ 'manage_users' ], {:controller => 'users', :action => 'index'}, { :tabindex=>"-1" }  %></li>
+              <li><%= link_to @local_menu_labels[ 'manage_roles' ], {:controller => 'roles', :action => 'index'}, { :tabindex=>"-1" }  %></li>
+            </ul>
+          </li>
+          <li><%= link_to @local_menu_labels[ 'reports' ], reports_path, :id => 'report', :tabindex=>"-1" %>
+            <ul>
+              <li><%= link_to @local_menu_labels[ 'search_timecards' ], {:controller => 'timecard_reports', :action => 'index'}, { :tabindex=>"-1" }  %></li>
+              <li><%= link_to @local_menu_labels[ 'last_four_weeks' ], {:controller => 'timecard_reports', :action => 'last_four_weeks'}, { :tabindex=>"-1" }  %></li>
+              <li><%= link_to @local_menu_labels[ 'month_to_date' ], {:controller => 'timecard_reports', :action => 'month_to_date'}, { :tabindex=>"-1" }  %></li>
+              <li><%= link_to @local_menu_labels[ 'year_to_date' ], {:controller => 'timecard_reports', :action => 'year_to_date'}, { :tabindex=>"-1" }  %></li>
+            </ul>
+          </li>
+          <li><%= link_to @local_menu_labels[ 'settings' ], settings_path, :id => 'settings', :tabindex=>"-1" %>
+            <ul>
+              <li><%= link_to @local_menu_labels[ 'customize' ], {:controller => 'user_setting', :action => 'index'}, { :tabindex=>"-1" }  %></li>
+              <li><%= link_to @local_menu_labels[ 'change_password' ], {:controller => 'change_password', :action => 'index'}, { :tabindex=>"-1" }  %></li>
+              <li><%= link_to @local_menu_labels[ 'locale' ], {:controller => 'locality', :action => 'index'}, { :tabindex=>"-1" }  %></li>
+            </ul>
+          </li>
+          <li><%= link_to @local_menu_labels[ 'about' ], about_path, :id => 'about', :tabindex=>"-1" %></li>
+          <li><%= link_to @local_menu_labels[ 'walkthroughs' ], walkthroughs_path, :id => 'walkthroughs', :tabindex=>"-1" %>
+            <ul>
+              <li><%= link_to @local_menu_labels[ 'blackberry_walkthrough' ], blackberry_walkthrough_path, :id => 'blackberry_walkthrough', :tabindex=>"-1" %></li>
+              <li><%= link_to @local_menu_labels[ 'iphone_walkthrough' ], iphone_walkthrough_path, :id => 'iphone_walkthrough', :tabindex=>"-1" %></li>
+              <li><%= link_to @local_menu_labels[ 'android_walkthrough' ], android_walkthrough_path, :id => 'android_walkthrough', :tabindex=>"-1" %></li>
+            </ul>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+</header>

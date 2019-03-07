@@ -1,0 +1,15 @@
+<%= stylesheet_link_tag 'newcss/jQueryUI/jquery-ui-1.10.3.custom.min', :media => 'screen' %>
+<%= javascript_include_tag 'newjs/jquery-ui-1.10.3.min' %>
+<%= javascript_include_tag 'custom/roleview' %>
+
+
+<script type="text/javascript">
+
+    var updateConfirmationMessage = '<%=@localData['are_you_sure_you_want_to_update_this_record']%>';
+    var deleteConfirmationMessage = '<%=@localData['are_you_sure_you_want_to_delete_this_role']%>';
+    var cancelConfirmationMessage = '<%=@localData['are_you_sure_you_want_to_cancel_this_role']%>';
+
+    var singleErrorMessage = '<%=@localData['single_error_message']%>';
+    var multipleErrorMessage = '<%=@localData['multiple_error_message']%>';
+
+</script>

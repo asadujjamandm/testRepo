@@ -1,0 +1,15 @@
+<div class="controlpanel" style="margin-bottom: 10px; margin-left: 15px">
+
+    <span class="btn btn-primary syncbuttonm" type="button"><%= link_to image_tag('sync.png', :alt => @localData['sync_clients']) + ' ' + @localData['sync_clients'], {:controller => 'syncs', :action => 'sync_client'}, :title => @localData['sync_clients_with_erp'], :onclick => 'javascript:clearMessage();return true;', :style => "color: #fff !important;" %></span>
+    <span class="btn btn-primary syncbuttonm" type="button"><%= link_to image_tag('sync.png', :alt => @localData['sync_matters']) + ' ' + @localData['sync_matters'], {:controller => 'syncs', :action => 'sync_matter'}, :title => @localData['sync_matters_with_erp'], :onclick => 'javascript:clearMessage();return true;', :style => "color: #fff !important;"%></span>
+    <span class="btn btn-primary syncbuttonm" type="button"><%= link_to image_tag('sync.png', :alt => @localData['sync_timecards'] ) + ' ' + @localData['sync_timecards'], {:controller => 'syncs', :action => 'sync_timecard'}, :title => @localData['sync_timecards_with_erp'], :onclick => 'javascript:clearMessage();return true;', :style => "color: #fff !important;"%></span>
+    <span class="btn btn-primary syncbuttonm" type="button"><%= link_to image_tag('sync.png', :alt => @localData['sync_timekeepers']) + ' ' + @localData['sync_timekeepers'], {:controller => 'syncs', :action => 'sync_timekeeper'}, :title => @localData['sync_timekeepers_with_erp'], :onclick => 'javascript:clearMessage();return true;', :style => "color: #fff !important;" %></span>
+    <span class="btn btn-primary syncbuttonm" type="button"><%= link_to image_tag('sync.png', :alt => @localData['sync_all']) + ' ' + @localData['sync_all'], {:controller => 'syncs', :action => 'sync_all'}, :title => @localData['sync_all_with_erp'], :onclick => 'javascript:clearMessage();return true;', :style => "color: #fff !important;" %></span>
+
+
+</div>
+<div id="erpInfo" style="margin-bottom: 10px; margin-left: 15px; color: red;">
+<%= @localData['erp'] + @erp_name%>&nbsp;(<%= @mode %>)
+<br />
+<!--<%= @localData['mode'] + @mode%>-->
+</div>

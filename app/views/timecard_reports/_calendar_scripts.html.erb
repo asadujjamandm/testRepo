@@ -1,0 +1,38 @@
+<%= stylesheet_link_tag 'jqui/jquery-ui-1.8.18.custom', :media => 'screen' %>
+<%= javascript_include_tag 'jquery-ui-1.8.18.custom.min' %>
+<%= javascript_include_tag 'custom/timecardreportview' %>
+<script type="text/javascript">
+
+   function dateClicked( hiddenFieldNumber )
+   {
+       dateFound = $.trim( $( "#calendar" + hiddenFieldNumber ).val() );
+       if( dateFound == "" )
+       {
+           return
+       }
+       gotoDate( dateFound );
+   }
+
+   function gotoDate( aDateString )
+   {
+        $('#report_date').val(aDateString);
+        $("#calendar_submit_form").submit();
+   }
+
+   function moveCalendar( aDateString )
+   {
+        $('#calendar_date').val(aDateString);
+        $("#calendar_submit_form").submit();
+   }
+
+   function submitViewPdf()
+   {
+       $( "#pdf_view_request_form" ).submit();
+   }
+
+   function submitWeekReport()
+   {
+       $( "#week_report_request_form" ).submit();
+   }
+
+</script>

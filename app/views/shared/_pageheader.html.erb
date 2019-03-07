@@ -1,0 +1,13 @@
+<section class="content-header">
+  <h1>
+   <!-- <% if !@pageheader_image.nil? %>
+        <%= image_tag @pageheader_image %>
+    <% end %>-->
+    <%= @pageheader.nil? ? @title.nil? ? 'Page Header' : @title : @pageheader %>
+  </h1>
+  <!--<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-tachometer"></i> Home</a></li>
+    <li><a href="#"><%= @pageheader.nil? ? @title.nil? ? 'Page Header' : @title : @pageheader %></a></li>
+  </ol>-->
+</section>
+

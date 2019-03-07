@@ -1,0 +1,70 @@
+<style>
+    .input-group-addon{cursor: pointer;}
+</style>
+<%= form_tag "/timekeeper/create?page=#{@current_page}", :id => 'timekeepers_form', :method => 'post' do %>
+    <% if !@dirty_timekeeper.nil? %>
+    <%= hidden_field 'timekeeper', 'updated_timekeeper_id', :value => @dirty_timekeeper.id %>
+    <meta charset="utf-8">
+        <div class="box box-primary" style="padding: 0.5em !important;">
+          <div class="box-header">
+            <h3 class="box-title" style="padding: 0px 10px !important;">Timekeeper Entry</h3>
+          </div>
+          <div class="box-body">
+            <div id="formtable">
+              <div class="row">
+                <div class="col-lg-6">
+                  <!--date-->
+                  <div class="form-group-1">
+                    <%= label_tag @localData['timekeeper_no'] %>
+                    <div  class="input-group">
+                      <div id="timekeeper_no" class="input-group-addon" style="cursor: pointer;">
+                        <i class="fa fa-tag"></i>
+                      </div>
+                      <%= text_field_tag 'timekeeper[timekeeper_number]',@dirty_timekeeper.timekeeper_number, {:class=>"form-control", :style => "width:90%" } %>
+                      <input type="hidden" id="tc_no" value="">
+                    </div>
+                  </div>
+
+                  <div class="form-group-1" style="padding-top: 10px">
+                    <div class="row">
+                      <div class="col-md-3 col-xs-6 col-sm-3">
+                        <%= label_tag @localData['is_active'] %>
+                      </div>
+                      <div class="col-md-2 col-xs-2 col-sm-2">
+                        <%= check_box('timekeeper', 'is_active', {:checked => @dirty_timekeeper.is_active == 'yes', :tabindex=> "5",:style => "float: left" }, 'yes', 'no') %>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group-1">
+                    <%= label_tag @localData['display_name'] %>
+                    <div  class="input-group">
+                      <div id="timekeeper_name" class="input-group-addon" style="cursor: pointer;">
+                        <i class="fa fa-tag"></i>
+                      </div>
+                      <%= text_field_tag 'timekeeper[display_name]',@dirty_timekeeper.display_name, {:class=>"form-control", :style => "width:90%" } %>
+                      <input type="hidden" id="tc_name" value="">
+                    </div>
+                  </div>
+                  <div class="form-group-1">
+                    <%= label_tag @localData['bill_name'] %>
+                    <div  class="input-group">
+                      <div id="timekeeper_billname" class="input-group-addon" style="cursor: pointer;">
+                        <i class="fa fa-tag"></i>
+                      </div>
+                      <%= text_field_tag 'timekeeper[bill_name]', @dirty_timekeeper.bill_name,{:class=>"form-control", :style => "width:90%" } %>
+                      <input type="hidden" id="tc_billname" value="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    <% end %>
+<% end %>

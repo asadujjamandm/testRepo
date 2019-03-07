@@ -1,0 +1,8 @@
+<%= stylesheet_link_tag 'custom/groupbox', :media => 'screen' %>
+<div class="groupbox">
+  <div class="legend" style='width:80px'><%= @localData['user_Settings'] %></div>
+  <div class="imagelink"><%= link_to image_tag('settings.png') + ' ' + @localData['customize'], {:controller => 'user_setting', :action => 'index'} %></div>
+  <div class="imagelink"> <%= link_to image_tag('locale.png') + ' ' + @localData['locale'], {:controller => 'locality', :action => 'index'} %></div>
+  <div class="imagelink"> <%= link_to image_tag('settings.png') + ' ' + @localData['farm_setting'], {:controller => 'farm_setting', :action => 'index'} %></div>
+  <div class="imagelink"> <%= link_to image_tag('userlogin.png') + ' ' + @localData['change_password'], {:controller => 'change_password', :action => 'index'} %></div>
+</div>

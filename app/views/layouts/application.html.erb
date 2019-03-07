@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= "WIPTime | #{@title}" %></title>
+  <%= favicon_link_tag %>
+  <%= csrf_meta_tag %>
+  <meta name="description" content="Time Tracking - Anytime, Anywhere. WIPTime is an intuitive iPhone/Android/Blackberry application for time tracking. It�s a powerful application that allows you to access your clients/matter anytime anywhere so your hard work; be it late in the night or over the weekend never goes untracked!"/>
+  <meta name="keywords" content="Time Entry, Time Capture, Time Tracking, Lawyers, Legal, Professionals"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <%= render 'layouts/styles' %>
+  <%= render 'layouts/scripts' %>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<% if signed_in? %>
+    <body class="skin-blue" style="overflow-x: hidden">
+    <header class="header">
+      <span class="logo">
+        <%= image_tag('logo.png', :alt => @local_menu_labels['wiptime'], :height => '35px', :width => '35px') %>
+        <strong style="font-family: sans-serif !important; vertical-align: middle">WIPTime</strong>
+      </span>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+
+        <div class="navbar-right" style="height: 100%; line-height: 100%;">
+          <ul class="nav navbar-nav" style="height: 100%;">
+            <li class="headermenumargin user user-menu" style="margin-right: 10px; margin-left: 10px;">
+              <% if signed_in? %>
+                  <i class="glyphicon glyphicon-user"></i>
+                  <span><%= get_user_name %></span>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <div class="wrapper row-offcanvas row-offcanvas-left" id="mainwrapper">
+      <aside class="left-side sidebar-offcanvas">
+        <!--<div class="wrapper">-->
+          <section class="sidebar">
+            <ul class="sidebar-menu">
+              <%= render 'layouts/new_header' %>
+            </ul>
+          </section>
+          <div style="padding-left: 15px; padding-top: 10px;">
+            <!--<%= image_tag 'instance.png' %>
+            <span style="padding-left: 8px">Firm: <i><%= APP_INSTANCE %></i></span> -->
+            <%= image_tag 'instance.png' %>
+            <span style="padding-left: 8px">Firm: <i><%= get_farm_name %></i></span>
+
+            <p style="padding-top: 10px;">
+              <% if signed_in? %>
+                  <%= image_tag 'tnbuser.png' %>
+                  <span style="padding-left: 8px">Firm User: <i><%= get_tnb_user.nil? ? 'n/a' : get_tnb_user %></i>    <br></span>
+              <% end %>
+            </p>
+          </div>
+        <!--</div>-->
+      </aside>
+      <aside class="right-side">
+        <%= render 'shared/pageheader' %>
+        <div class="pagebody">
+          <div class="messageContainer">
+            <%
+               found = false
+               flash.each do |key, value|
+            %>
+                <div id='messageDiv' class="flash <%= key %>"><%= image_tag(key.to_s + '.png', :style => "padding:0;margin:0 5px 3px 5px;vertical-align:middle;") %><%= value %></div>
+            <%
+               found = true
+               end
+               if (!found) then
+            %>
+                <div id='messageDiv' style="display:none" class="flash success"></div>
+            <%
+               end
+            %>
+          </div>
+          <br/>
+          <% if flash[:fatalerror].nil? %>
+              <%= yield %>
+          <% end %>
+        </div>
+      </aside>
+
+    </div>
+    <script type="text/javascript">
+
+        $("[data-toggle='offcanvas']").click(function (e) {
+            e.preventDefault();
+
+            //If window is small enough, enable sidebar push menu
+            if ($(window).width() <= 992) {
+                $('.row-offcanvas').toggleClass('active');
+                $('.left-side').removeClass("collapse-left");
+                $(".right-side").removeClass("strech");
+                $('.row-offcanvas').toggleClass("relative");
+            } else {
+                //Else, enable content streching
+                $('.left-side').toggleClass("collapse-left");
+                $(".right-side").toggleClass("strech");
+            }
+        });
+        $('ul.sidebar-menu li a#<%= @menu %>').parent().addClass('active');
+        var mainmenu = $('li a#<%= @menu %>').parent();
+        if(mainmenu.parents('.hasSubmenu'))
+        {
+            mainmenu.parents('.hasSubmenu').addClass('active')  ;
+        }
+        $('.hasSubmenu').each(function (i) {
+            var a = $(this).children("a").first();
+            var menu = $(this).children(".treeview-menu").first();
+            var isActive = $(this).hasClass('active');
+
+            //var firstParent = $(this).parent(".hasSubmen")
+
+            if (isActive) {
+                menu.show();
+                a.children(".glyphicon-chevron-right").first().removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-down");
+            }
+            a.click(function (e) {
+                e.preventDefault();
+                if (isActive) {
+                    menu.slideUp();
+                    isActive = false;
+                    a.children(".glyphicon-chevron-down").first().removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-right");
+                    a.parent("li").removeClass("active");
+                } else {
+                    menu.slideDown();
+                    isActive = true;
+                    a.children(".glyphicon-chevron-right").first().removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-down");
+                    a.parent("li").addClass("active");
+                }
+            });
+            menu.find("li > a").each(function () {
+                var pad = parseInt($(this).css("margin-left")) + 10;
+
+                $(this).css({"margin-left": pad + "px"});
+            });
+        });
+
+        function _fix() {
+            //Get window height and the wrapper height
+            var height = $(window).height() - $("body > .header").height() - ($("body > .wrapper> .row > .main-footer").outerHeight() || 0);
+            $(".right-side").css("min-height", height + "px");
+            var content = $(".right-side").height();
+
+            //If the wrapper height is greater than the window
+            if (content > height)
+            //then set sidebar height to the wrapper
+                $(".left-side, html, body").css("min-height", content + "px");
+            else {
+                //Otherwise, set the sidebar to the height of the window
+                $(".left-side, html, body").css("min-height", height + "px");
+            }
+        }
+        //Fire upon load
+        _fix();
+        //Fire when wrapper is resized
+        $(".wrapper").resize(function () {
+            _fix();
+            fix_sidebar();
+        });
+
+        //Fix the fixed layout sidebar scroll bug
+        fix_sidebar();
+        function fix_sidebar() {
+            //Make sure the body tag has the .fixed class
+            if (!$("body").hasClass("fixed")) {
+                return;
+            }
+        }
+
+        $(".right-side").resize(function () {
+            var wrapperWidth = $(".right-side").width();
+            if (wrapperWidth < 314) {
+
+                $(".small-box >.inner > h3").css({"font-size": "30px"});
+                $(".small-box >.inner > p").css({"font-size": "9px"});
+                $(".smallfont").css({"font-size": "10px"});
+                /*$(".headerblocktr").css({"font-size":"13px"});
+                $(".headerblockt").css({"font-size":"10px"});
+                $(".small-box >.inner > h4").css({"font-size": "14px"});  */
+            }
+            else if (wrapperWidth < 372) {
+
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".small-box >.inner > p").css({"font-size": "11px"});
+                $(".smallfont").css({"font-size": "9px"});
+                /*$(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});
+                $(".small-box >.inner > h4").css({"font-size": "20px"});   */
+            }
+            else if (wrapperWidth < 774) {
+
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".small-box >.inner > p").css({"font-size": "13px"});
+                $(".smallfont").css({"font-size": "10px"});
+                /*$(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});
+                $(".small-box >.inner > h4").css({"font-size": "20px"}); */
+            }
+            else if (wrapperWidth < 795) {
+                /*$(".small-box >.inner > h4").css({"font-size":"12px"});  */
+
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".small-box >.inner > p").css({"font-size": "13px"});
+                $(".smallfont").css({"font-size": "10px"});
+                /*$(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});
+                $(".small-box >.inner > h4").css({"font-size": "20px"});*/
+            }
+            else if (wrapperWidth < 805) {
+
+                /*$(".small-box >.inner > h4").css({"font-size":"12px"});    */
+
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".small-box >.inner > p").css({"font-size": "13px"});
+                $(".smallfont").css({"font-size": "10px"});
+                /*$(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});
+                $(".small-box >.inner > h4").css({"font-size": "20px"});   */
+            }
+
+            else if (wrapperWidth < 823) {
+
+                /*$(".small-box >.inner > h4").css({"font-size":"12px"}); */
+
+                $(".small-box >.inner > p").css({"font-size": "13px"});
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".smallfont").css({"font-size": "12px"});
+                /*$(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});
+                $(".small-box >.inner > h4").css({"font-size": "20px"}); */
+            }
+            else if (wrapperWidth < 862) {
+                /*$(".small-box >.inner > h4").css({"font-size":"13px"});   */
+
+                $(".small-box >.inner > p").css({"font-size": "13px"});
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".smallfont").css({"font-size": "12px"});
+                /*$(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});
+                $(".small-box >.inner > h4").css({"font-size": "20px"});*/
+            }
+            else if (wrapperWidth < 889) {
+
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".small-box >.inner > p").css({"font-size": "13px"});
+                $(".smallfont").css({"font-size": "13px"});
+                /*$(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});
+                $(".small-box >.inner > h4").css({"font-size": "20px"}); */
+                /* $(".small-box >.inner > h4").css({"font-size":"12px"}); */
+            }
+
+            else if (wrapperWidth < 945) {
+
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".small-box >.inner > p").css({"font-size": "13px"});
+                /*$(".small-box >.inner > h4").css({"font-size":"14px"});  */
+                $(".smallfont").css({"font-size": "13px"});
+                /*$(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});
+                $(".small-box >.inner > h4").css({"font-size": "20px"}); */
+
+            }
+            else if (wrapperWidth < 951) {
+
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".small-box >.inner > p").css({"font-size": "13px"});
+                $(".smallfont").css({"font-size": "15px"});
+                /*$(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});
+                $(".small-box >.inner > h4").css({"font-size": "20px"});   */
+            }
+            else if (wrapperWidth < 987) {
+
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".small-box >.inner > p").css({"font-size": "13px"});
+                $(".smallfont").css({"font-size": "15px"});
+                /*$(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});
+                $(".small-box >.inner > h4").css({"font-size": "20px"});*/
+            }
+            else if (wrapperWidth < 993) {
+                $(".smallfont").css({"font-size": "15px"});
+                $(".small-box >.inner > p").css({"font-size": "10px"});
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+               /* $(".small-box >.inner > h4").css({"font-size": "20px"});
+                $(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});*/
+            }
+
+            else if (wrapperWidth < 1003) {
+                $(".smallfont").css({"font-size": "15px"});
+                /*$(".small-box >.inner > h4").css({"font-size":"16px"});  */
+                $(".small-box >.inner > p").css({"font-size": "11px"});
+                (".small-box >.inner > h3").css({"font-size": "38px"});
+                /*$(".small-box >.inner > h4").css({"font-size": "20px"});
+                $(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});  */
+
+            }
+            else if (wrapperWidth < 1018) {
+                $(".smallfont").css({"font-size": "15px"});
+                /*$(".small-box >.inner > h4").css({"font-size":"16px"});  */
+                $(".small-box >.inner > p").css({"font-size": "11px"});
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                /*$(".small-box >.inner > h4").css({"font-size": "20px"});
+                $(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});  */
+
+            }
+            else if (wrapperWidth < 1032) {
+                $(".smallfont").css({"font-size": "15px"});
+                $(".small-box >.inner > p").css({"font-size": "11px"});
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                /*$(".small-box >.inner > h4").css({"font-size": "20px"});
+                $(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"}); */
+
+            }
+            else if (wrapperWidth < 1048) {
+                $(".smallfont").css({"font-size": "15px"});
+                $(".small-box >.inner > p").css({"font-size": "12px"});
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                /*$(".small-box >.inner > h4").css({"font-size": "20px"});
+                $(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"}); */
+
+            }
+            else {
+                $(".smallfont").css({"font-size": "15px"});
+                /*$(".small-box >.inner > h4").css({"font-size":"20px"});  */
+
+                $(".small-box >.inner > h3").css({"font-size": "38px"});
+                $(".small-box >.inner > p").css({"font-size": "13px"});
+                /*$(".small-box >.inner > h4").css({"font-size": "20px"});
+                $(".headerblocktr").css({"font-size":"18px"});
+                $(".headerblockt").css({"font-size":"14px"});  */
+            }
+        });
+        $("#totalhours-btn").click(function () {
+            $(".postedbox").hide();
+            $(".postedbox2").hide();
+            $(".billablebox").hide();
+            $(".billablebox2").hide();
+            $(".totalhoursbox").show();
+            $(".totalhoursbox2").show();
+        });
+        $("#billable-btn").click(function () {
+            $(".totalhoursbox").hide();
+            $(".totalhoursbox2").hide();
+            $(".postedbox").hide();
+            $(".postedbox2").hide();
+            $(".billablebox").show();
+            $(".billablebox2").show();
+        });
+        $("#posted-btn").click(function () {
+            $(".totalhoursbox").hide();
+            $(".totalhoursbox2").hide();
+            $(".billablebox").hide();
+            $(".billablebox2").hide();
+            $(".postedbox").show();
+            $(".postedbox2").show();
+        });
+    </script>
+
+    </body>
+
+
+<% else %>
+    <body style="background-color: #c5c5c5 !important">
+    <% if flash[:fatalerror].nil? %>
+        <%= yield %>
+    <% end %>
+    </body>
+<% end %>
+</html>

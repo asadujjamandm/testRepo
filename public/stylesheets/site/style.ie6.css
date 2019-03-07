@@ -1,0 +1,129 @@
+/* begin Page */
+.cleared {
+	width: 1px;
+}
+
+/* end Page */
+
+/* begin Header */
+.art-header {
+	zoom: expression(runtimeStyle.zoom = 1, insertBefore(document.createElement (
+		'div'), firstChild) .className='art-header-png');
+	z-index: 1;
+}
+
+.art-header-png {
+	position: absolute;
+	z-index: -2;
+	top: 0;
+	width: 100%;
+	height: 187px;
+	background-image: url('../../images/site/header.png');
+	background-repeat: no-repeat;
+	background-position: top center;
+}
+
+/* end Header */
+
+/* begin HeaderObject */
+div.art-headerobject {
+	font-size: 1px;
+}
+/* end HeaderObject */
+
+/* begin Box, Sheet */
+.art-sheet {
+	background: #C7D1CF;
+}
+/* end Box, Sheet */
+
+/* begin Layout */
+.art-content-layout, .art-content-layout-row, .art-layout-cell {
+	display: block;
+	zoom: 1;
+}
+
+.art-layout-cell {
+	position: relative;
+	float: left;
+	clear: right;
+}
+/* end Layout */
+
+/* begin Box, Block */
+.art-block {
+	background: #C7D1CF;
+}
+/* end Box, Block */
+
+/* begin BlockHeader */
+.art-blockheader {
+	background: #C7D1CF;
+}
+/* end BlockHeader */
+
+/* begin Box, BlockContent */
+.art-blockcontent {
+	background: #C7D1CF;
+}
+
+.art-blockcontent-body ul li {
+	height: 1%;
+}
+
+/* end Box, BlockContent */
+
+/* begin Button */
+.art-button-wrapper {
+	zoom: 1;
+}
+
+.art-button-wrapper .art-button-l, .art-button-wrapper .art-button-r {
+	display: none;
+}
+
+.art-button-wrapper .art-button {
+	float: left;
+}
+/* end Button */
+
+/* begin Box, Post */
+.art-post {
+	background: #C7D1CF;
+}
+/* end Box, Post */
+
+/* begin PostIcons, PostHeaderIcons */
+.art-postheadericons span {
+	zoom: 1;
+}
+/* end PostIcons, PostHeaderIcons */
+
+/* begin PostBullets */
+.art-post ul li, .art-post ol ul li {
+	height: 1%;
+	padding-left: 11px;
+	/* makes "ul li" not to align behind the image if they are in the same line */
+	overflow-x: visible;
+	overflow-y: hidden;
+}
+
+.art-post ul ol li {
+	background: none;
+	padding-left: 0;
+	/* overrides overflow for "ul li" and sets the default value */
+	overflow: visible;
+}
+/* end PostBullets */
+
+/* begin PostIcons, PostFooterIcons */
+.art-postfootericons span {
+	zoom: 1;
+}
+/* end PostIcons, PostFooterIcons */
+
+/* begin LayoutCell, content */
+.art-sidebar2 {
+	width: auto;
+}
+/* end LayoutCell, content */

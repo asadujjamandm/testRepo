@@ -1,0 +1,22 @@
+<!--<div class="controlpanel">
+  <span class="<%= ( !@state.nil? && @state == 'new' ) ? 'disabled' : '' %>" onclick="<%= ( !@state.nil? && @state == 'new' ) ? 'javascript:return false;' : 'javascript:return true;' %>"><%= link_to image_tag('addnew.png' ,:options => {:alt => @localData['add_new']}) + ' ' + @localData['add_new'], {:controller => 'timecards', :action => 'new', :page => @current_page}, :id => 'new', :title => @localData['create_new_timecard'], :tabindex=> "-1"%></span>
+  <span class="<%= ( !@state.nil? && @state == 'search' ) ? 'disabled' : '' %>" ><%= link_to image_tag('search.png', :options => {:alt => @localData['search']}) + ' ' + @localData['search'], ( !@state.nil? && @state == 'search' ) ? 'javascript:return false;' : 'javascript:submitSearch();', :id => 'search', :title => @localData['search_timecards'], :tabindex=> "-1" %></span>
+  <span class="<%= ( !@state.nil? && @state == 'calendar' ) ? 'disabled' : '' %>" ><%= link_to image_tag('calendar.png', :options => {:alt => @localData['calendar_view']}) + ' ' + @localData['calendar_view'], ( !@state.nil? && @state == 'calendar' ) ? 'javascript:return false;' : 'javascript:submitCalendarView();' , :id => 'calendar_view', :title => @localData['calendar_view'], :tabindex=> "-1" %></span>
+</div>
+<hr />-->
+  <% if is_new_timecard %>
+    <div class="pull-right" style="padding-top: 0px; margin-right: -14px !important; margin-right: 10px !important;">
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-save") + @localData['save'], 'javascript:createTimecard(false)', :title => @localData['save_new_timecard'] , :class=> "btn btn-primary", :style => "margin-bottom: 5px" %></span>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-retweet")+  @localData['post'], 'javascript:createTimecard(true)', :id => 'post', :title => @localData['post_new_timecard'] , :class=> "btn btn-primary", :style => "margin-bottom: 5px" %></span>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-times") + ' ' + @localData['cancel_changes'], 'javascript:cancel()', :id => 'cancel', :title => @localData['cancel_changes'], :class=> "btn btn-primary ", :style => "margin-bottom: 5px" %></span>
+    </div>
+  <% else %>
+  <% if !@timecards.nil? && !@dirty_timecard.nil? %>
+    <div class="pull-right" style="padding-top: 5px; margin-right: 10px !important; ">
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-edit") + @localData['update_changes'], 'javascript:updateTimecards(false)', :title => @localData['update_changed_timecards'] , :class=> "btn btn-primary", :style => "margin-bottom: 5px" %></span>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-retweet")+  @localData['post'], 'javascript:updateTimecards(true)', :id => 'post', :title => @localData['post_new_timecard'] , :class=> "btn btn-primary", :style => "margin-bottom: 5px" %></span>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-times") + ' ' + @localData['cancel_changes'], 'javascript:cancel()', :id => 'cancel', :title => @localData['cancel_changes'], :class=> "btn btn-primary ", :style => "margin-bottom: 5px" %></span>
+      <div class="pull-left"><%= ( @total_timecards_updating.nil? || @total_timecards_updating <= 0 ) ? '' : "(" + @localData['pending_timecards'] + " " + (@total_timecards_updating).to_s + ")" %></div>
+    </div>
+  <% end %>
+  <% end %>

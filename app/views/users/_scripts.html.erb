@@ -1,0 +1,83 @@
+<%= stylesheet_link_tag 'newcss/jQueryUI/jquery-ui-1.10.3.custom.min', :media => 'screen' %>
+<%= javascript_include_tag 'newjs/jquery-ui-1.10.3.min' %>
+<%= javascript_include_tag 'jquery.validate.min' %>
+<%= javascript_include_tag 'custom/userview' %>
+
+<script type="text/javascript">
+
+    var updateConfirmationMessage = '<%=@localData['are_you_sure_you_want_to_update_this_record']%>';
+    var deleteConfirmationMessage = '<%=@localData['are_you_sure_you_want_to_delete_the_user']%>';
+    var cancelConfirmationMessage = '<%=@localData['are_you_sure_you_want_to_cancel_the_user']%>';
+    var singleErrorMessage = '<%=@localData['single_error_message']%>';
+    var multipleErrorMessage = '<%=@localData['multiple_error_message']%>';
+
+    //checking, returns true if at least one role is added to the user
+    function isAtLeastOneRoleSelected()
+    {
+        isOk = $("#userroletable tr:eq(1)").html() != null;
+        if( !isOk )
+        {
+            alert( '<%=@localData['at_least_one_role_must_be_added']%>' );
+        }
+        return isOk;
+    }
+    $(document).ready(function(){
+
+        //---------- On click focus functions-----------
+        $("#username").click(function(){
+            $('#user_name').focus();
+        });
+
+        $("#userpass").click(function(){
+            $('#user_password').focus();
+        });
+
+        $("#user_mail").click(function(){
+            $('#user_email').focus();
+        });
+
+        $("#userconfp").click(function(){
+            $('#user_confirmed_password').focus();
+        });
+        //-------------------
+        //Time keeper icon on-click
+        $("#usertk").click(function(){
+            $('#user_timekeeper_number').val('');
+            $('#user_timekeeper_number').autocomplete("search");
+            $('#user_timekeeper_number').focus();
+        });
+
+        $("#user_timekeeper_number").click(function(){
+            console.log("user click");
+            $('#user_timekeeper_number').val('');
+            $('#user_timekeeper_number').autocomplete("search");
+            $('#user_timekeeper_number').focus();
+
+        });
+        function timekeeperSelected( id ) {
+            $( "#user_timekeeper_id" ).val( id );
+        }
+        $( "#user_timekeeper_number" ).autocomplete({
+            source: "/users/autocomplete_list?extra_id=0&type=5&userid="+$("#user_updated_user_id").val(),
+            minLength: 0,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    timekeeperSelected( ui.item.id );
+                }
+            }
+        });
+        $( "#user_timekeeper_number" ).bind( "autocompleteopen", function(event, ui) {
+            $( "#user_timekeeper_id" ).val("");
+        });
+        $('#user_timekeeper_number').focus(function() {
+            if( $('#user_timekeeper_number').val() == "" )
+            {
+                $( "#user_timekeeper_id" ).val("");
+                $(this).keydown();
+            }
+        });
+    });
+
+
+</script>

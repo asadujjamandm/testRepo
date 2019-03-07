@@ -1,0 +1,77 @@
+<% if @dirty_user.nil? && !is_viewing_roles %>
+    <div class="box-body no-padding">
+      <div id="search">
+        <% form_tag "/users/search", :id => 'user_search_form', :method => 'post' do %>
+            <div class="box" style="padding: 0 !important; margin-bottom: 10px !important">
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="row" style="padding: 5px 0px">
+                      <div class="col-md-4 col-xs-4 col-sm-4">
+                        <%= label_tag @localData['user_status'], nil, :style => '' %>
+                      </div>
+                      <div class="col-md-6 col-xs-6 col-sm-6">
+                        <%= select('search_user', 'status', get_user_statuses.collect { |k, v| [v, k] }, {:selected => @search_object.nil? ? '' : @search_object.is_active},{:style=>"height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px;"}) %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-5">
+                    <div class="row" style="padding: 5px 0px">
+                      <div class="col-md-4 col-xs-4 col-sm-4">
+                        <%= label_tag @localData['role'], nil, :style => '' %>
+                      </div>
+                      <div class="col-md-6 col-xs-6 col-sm-6">
+                        <%= select('search_user', 'role', @roles.collect { |k, v| [v.name, v.id] }, {:selected => @search_object.nil? ? '' : @search_object.role_id, :include_blank => true},{:style=>"height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px;"})%>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="row" style="padding: 5px 0px">
+                      <div class="col-md-4 col-xs-4 col-sm-4">
+                        <%= label_tag @localData[''], nil, :style => '' %>
+                      </div>
+                      <div class="col-md-8 col-xs-6 col-sm-6">
+                        <%= link_to @localData['search'], 'javascript:submitSearch()', :title => @localData['search_users'], :id => 'search', :class => 'btn btn-primary', :style => 'width: 100%' %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+<% end%>
+
+
+
+<!--
+<section class="content" style="padding: 0px 0px !important; overflow: hidden !important;">
+<% if @dirty_user.nil? && !is_viewing_roles %>
+  <div class="box-body no-padding">
+    <div id="search">
+      <% form_tag "/users/search", :id => 'user_search_form', :method => 'post' do %>
+          <div class="row">
+
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6" style="padding-bottom:5px ">
+            <div id="">
+              <div>
+                <%= label_tag @localData['user_status'] %>
+              </div>
+
+              <div><%= select('search_user', 'status', get_user_statuses.collect { |k, v| [v, k] }, {:selected => @search_object.nil? ? '' : @search_object.is_active},{:style=>"width:100px"}) %></div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+             <div><%= label_tag @localData['role'] %></div>
+             <div><%= select('search_user', 'role', @roles.collect { |k, v| [v.name, v.id] }, {:selected => @search_object.nil? ? '' : @search_object.role_id, :include_blank => true},{:style=>"width:100px"}) %></div>
+          </div>
+          </div>
+
+      <% end %>
+    </div>
+  </div>
+<% end %>
+</section>-->

@@ -1,0 +1,77 @@
+<%= stylesheet_link_tag 'newcss/jquery-ui-1.10.3.custom.min', :media => 'screen' %>
+<%= javascript_include_tag 'newjs/jquery-ui-1.10.3.min' %>
+<%= javascript_include_tag 'custom/matterview' %>
+<script type="text/javascript">
+    var singleErrorMessage = 'Please check the field marked with *';
+    var multipleErrorMessage = 'Please check the #n fields that has been marked with *';
+
+  function creatematter(isActive)
+      {
+          $('#matter_form').submit();
+  }
+  function updatematter(isActive)
+  {
+      $('#matter_form').get(0).setAttribute('action', $('#matter_form').get(0).getAttribute('action').replace('create', 'update'));
+      $('#matter_form').submit();
+      //clearForm();
+  }
+  $(function() {
+      //---------- On click focus functions-----------
+      $("#matter_name").click(function(){
+          $('#matter_matter_name').focus();
+      });
+
+      $("#matter_nick_name").click(function(){
+          $('#matter_matter_nick_name').focus();
+      });
+
+      $("#matter_number").click(function(){
+          $('#matter_matter_number').focus();
+      });
+
+      $("#client_name").click(function(){
+          var disable= $('#matter_client_name').attr("disabled")
+          if(disable=="disabled")
+          return;
+          $('#matter_client_name').autocomplete("search");
+          $('#matter_client_name').focus();
+      });
+      //-------------------------
+
+      $("#matter_matter_name").keyup(function() {
+          var x = $("#matter_matter_name").val();
+          $("#matter_matter_nick_name").val(x);
+          console.log( "matter_matter_name for .keypress() called."+x);
+      });
+      //----------------------
+
+      $( "#matter_client_name" ).autocomplete({
+          source: "/matter/autocomplete_list?extra_id=0&type=2",
+          minLength: 0,
+          select: function( event, ui ) {
+              if( ui.item )
+              {
+                  clientSelected( ui.item.id, ui.item.value );
+              }
+          }
+      });
+
+      $( "#matter_client_name" ).bind( "autocompleteopen", function(event, ui) {
+          $( "#matter_client_name" ).val("");
+      });
+      $('#matter_client_name').focus(function() {
+          if( $('#matter_client_name').val() == "" )
+          {
+              $( "#matter_client_name" ).val("");
+              $(this).keydown();
+          }
+      });
+
+      function clientSelected( id, label ) {
+          $( "#matter_client_id" ).val( id );
+          console.log(label);
+          $( "#matter_matter_number" ).val( label.split("-")[0]+"-" );
+      }
+  });
+
+</script>

@@ -1,0 +1,137 @@
+div.welcome {
+	padding: 5px;
+	font-weight: bold;
+}
+
+p.welcome {
+	font-size: 1.3em;
+	margin: 0;
+}
+
+@media ( min-width : 992px) and (max-width: 1199px) {
+	p.welcome {
+		font-size: 1.1em;
+		margin: 0;
+	}
+}
+
+@media ( min-width : 768px) and (max-width: 992px) {
+	p.welcome {
+		font-size: .90em;
+		margin: 0;
+	}
+}
+
+@media ( min-width : 480px) and (max-width: 767px) {
+	p.welcome {
+		font-size: 1.3em;
+		margin: 0;
+	}
+}
+
+@media ( max-width : 479px) {
+	p.welcome {
+		font-size: .90em;
+		margin: 0;
+	}
+}
+
+p.welcome span {
+	font-style: italic;
+	color: #566B66;
+}
+
+div.welcome span.header {
+	text-decoration: underline;
+}
+
+div.statusdiv {
+	margin-top: 20px;
+	font-style: italic;
+	font-weight: bold;
+}
+
+span.statusspan {
+	color: #566B66;
+	font-style: italic;
+	font-weight: bold;
+}
+
+a.inline-image {
+	vertical-align: sub;
+}
+
+.imagelink img {
+	vertical-align: top;
+}
+
+span.errortip {
+	color: #FF0000;
+	font-weight: bold;
+	padding: 5px;
+	overflow: hidden;
+	vertical-align: bottom;
+}
+
+span.errortipnarrow {
+	color: #FF0000;
+	font-weight: bold;
+	padding: 0px;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
+span.errortip:hover, span.errortipnarrow:hover {
+	cursor: help;
+}
+
+table.signin {
+	text-align: center;
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+}
+
+table.signin tr>td.ll {
+	width: 120px;
+	padding: 0;
+	background-color: #E1EAE9;
+}
+
+table.signin tr>td.rr {
+	text-align: left;
+	padding: 0;
+	background-color: #E1EAE9;
+}
+
+table.signin tr>td#market-logo {
+	background-color: #E1EAE9;
+}
+
+table.content {
+	padding: 0;
+	margin: 0;
+}
+
+table.content tr>td.header {
+	font-size: 24pt;
+	color: #3B4E5F;
+	font-weight: bold;
+	text-align: left;
+	background-color: #E1EAE9;
+}
+
+table.content tr>td.slogan {
+	font-size: 12pt;
+	color: #3B4E5F;
+	font-weight: bold;
+	text-align: left;
+	vertical-align: top;
+	background-color: #E1EAE9;
+}
+
+.about {
+	font-size: small;
+	font-weight: bold;
+	color: #3B4E5F;
+}

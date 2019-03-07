@@ -1,0 +1,11 @@
+<div class="controlpanel" style="margin-bottom: 10px; margin-right: 10px">
+  <% if is_new_activitycode %>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-save") + ' ' + @localData['add'], 'javascript:createActivitycode()', :title => @localData['add_new_activitycode'], :tabindex=> "10",:class => "btn btn-primary" %></span>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-times") + ' ' + @localData['cancel'], {:controller => 'activitycodes', :action => 'cancel'}, :title => @localData['cancel_changes'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+  <% elsif !@dirty_activitycode.nil? %>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-save") + ' ' + @localData['update'], 'javascript:updateActivitycode()', :title => @localData['update_activitycode'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-times") + ' ' + @localData['cancel'], {:controller => 'activitycodes', :action => 'cancel'}, :title => @localData['cancel_changes'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+  <% else %>
+      <span><%= link_to image_tag('addnew.png', :options => {:alt => @localData['add_new']}) + ' ' + @localData['add_new'], {:controller => 'activitycodes', :action => 'new'}, :id => 'new', :title => @localData['create_new'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+  <% end %>
+</div>

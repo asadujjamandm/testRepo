@@ -1,0 +1,52 @@
+<%= form_tag "/activitycodes/create?page=#{@current_page}", :id => 'activitycode_form', :method => 'post' do %>
+    <% if !@dirty_activitycode.nil? %>
+        <%= hidden_field 'activitycode', 'updated_activitycode_id', :value => @dirty_activitycode.id %>
+        <meta charset="utf-8">
+        <div class="box box-primary" style="padding: 0.5em !important;">
+          <div class="box-header">
+            <h3 class="box-title" style="padding: 0px 10px !important;">Activitycode Entry</h3>
+          </div>
+          <div class="box-body">
+            <div id="formtable">
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
+                  <div class="form-group-1">
+                    <%= label_tag @localData['activity_code'] %>
+                    <div  class="input-group">
+                      <div id="activity_code" class="input-group-addon" style="cursor: pointer;">
+                        <i class="fa fa-tag"></i>
+                      </div>
+                      <%= text_field_tag 'activitycode[activity_code]',@dirty_activitycode.activity_code, {:class=>"form-control", :style => "width:90%" } %>
+                      <input type="hidden" id="activity_c" value="">
+                    </div>
+                  </div>
+
+                  <div class="form-group-1">
+                    <%= label_tag @localData['activity_desc'] %>
+                    <div  class="input-group">
+                      <div id="activity_desc" class="input-group-addon" style="cursor: pointer;">
+                        <i class="fa fa-tag"></i>
+                      </div>
+                      <%= text_field_tag 'activitycode[activity_desc]',@dirty_activitycode.activity_desc, {:class=>"form-control", :style => "width:90%" } %>
+                      <input type="hidden" id="ac_desc" value="">
+                    </div>
+                  </div>
+
+                  <div class="form-group-1" style="padding-top: 10px">
+                    <div class="row">
+                      <div class="col-md-3 col-xs-6 col-sm-3">
+                        <%= label_tag @localData['is_active'] %>
+                      </div>
+                      <div class="col-md-2 col-xs-2 col-sm-2">
+                        <%= check_box('activitycode', 'is_active', {:checked => @dirty_activitycode.is_active == 'yes', :tabindex=> "5",:style => "float: left" }, 'yes', 'no') %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    <% end %>
+<% end %>

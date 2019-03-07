@@ -1,0 +1,22 @@
+<script type="text/javascript" language="javascript">
+
+    //clears any error message and tells the user to wait for a while
+    function clearMessage()
+    {
+        var messageDiv = null;
+        messageDiv = $("#messageDiv");		
+		
+        if( messageDiv == null || messageDiv.html() == "" )
+        {
+            $( "div.controlpanel" ).before('<div class="flash success" id="messageDiv"><%=@localData['please_wait']%></div>');
+        }
+        else
+        {
+            $("#messageDiv").attr("class", "flash success");
+            $("#messageDiv").html("<%=@localData['please_wait']%>");
+        }
+        
+        showBlockedMessage("Please wait...");
+    }
+
+</script>

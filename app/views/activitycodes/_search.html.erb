@@ -1,0 +1,46 @@
+<% if @dirty_activitycode.nil? %>
+<div class="box-body no-padding">
+  <div id="search">
+    <% form_tag "/activitycodes/search", :id => 'activity_search_form', :method => 'post' do %>
+        <div class="box" style="padding: 0 !important; margin-bottom: 10px !important">
+          <div class="box-body">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-5 col-xs-5 col-sm-5">
+                      <%= label_tag @localData['activity_code'], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-7 col-xs-7 col-sm-7">
+                      <%= text_field_tag 'search_activity[activity_code]', @search_object.nil? ? "" : @search_object.activity_code, :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px;', :placeholder => "Activity Code" %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-5">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-5 col-xs-5 col-sm-5">
+                      <%= label_tag @localData['activity_desc'], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-7 col-xs-7 col-sm-7">
+                      <%= text_field_tag 'search_activity[activity_desc]', @search_object.nil? ? "" : @search_object.activity_desc, :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px;', :placeholder => "Activity Desc" %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-5 col-xs-5 col-sm-5">
+                      <%= label_tag @localData[''], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-7 col-xs-7 col-sm-7">
+                      <%= link_to @localData['search'], 'javascript:submitSearch()', :title => @localData['activity_search'], :id => 'search', :class => 'btn btn-primary', :style => 'width: 100%' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
+<% end%>

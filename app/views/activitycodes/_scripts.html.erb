@@ -1,0 +1,21 @@
+<%= stylesheet_link_tag 'jqui/jquery-ui-1.8.18.custom', :media => 'screen' %>
+<%= stylesheet_link_tag 'newcss/customised', :media => 'screen' %>
+<%= stylesheet_link_tag 'newcss/AdminLTE', :media => 'screen' %>
+<%= javascript_include_tag 'jquery-ui-1.8.18.custom.min' %>
+<%= javascript_include_tag 'custom/activitycodeview' %>
+
+<script type="text/javascript">
+    var singleErrorMessage = '<%=@localData['single_error_message']%>';
+    var multipleErrorMessage = '<%=@localData['multiple_error_message']%>';
+        $(function(){
+            //---------- On click focus functions-----------
+            $("#activity_code").click(function(){
+                $('#activitycode_activity_code').focus();
+            });
+
+            $("#activity_desc").click(function(){
+                $('#activitycode_activity_desc').focus();
+            });
+            //-------------------------
+        });
+</script>

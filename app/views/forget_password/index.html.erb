@@ -1,0 +1,52 @@
+<%= render 'scripts' %>
+<div class="form-box" id="login-box">
+  <div class="header" style="padding: 10px 10px 40px 10px">
+    <div>
+      <%= image_tag('logo.png', :alt => @local_menu_labels['wiptime'], :height => '32px', :width => '32px', :style => "float: left") %>
+      <p style="float: left; vertical-align: middle; font-weight: 500; margin-top: -5px; margin-left: 5px">WIPTime</p>
+      <p style="float: right; vertical-align: middle; font-weight: 300; margin-top: -5px">Request Password</p>
+    </div>
+  </div>
+  <%= form_for @forgetpassword, :as => :forget_password, :url => resetpassword_path(@forgetpassword), :method => :put do |f| %>
+      <div class="body bg-gray">
+        <div class="form-group">
+          <%= f.text_field :email, :class => 'form-control', :placeholder => "User Email" %>
+        </div>
+        <div class="form-group">
+          <%= f.text_field :firm_id, :class => 'form-control', :placeholder => "Firm ID" %>
+        </div>
+        <div class="messageContainer">
+          <%
+             found = false
+             flash.each do |key, value|
+               if (key.to_s == 'success')
+          %>
+                  <div id='messageDiv' class="flash <%= key %>" style="color: #088A08" <%= key %>"><%= value %></div>
+              <%
+                 end
+                 if (key.to_s == 'error')
+              %>
+                  <div id='messageDiv' class="flash <%= key %>" style="color: #b70000" <%= key %>"><%= value %></div>
+              <%
+                 end
+                 found = true
+                 end
+                 if (!found) then
+              %>
+              <div id='messageDiv' style="display:none" class="flash success"></div>
+          <%
+             end
+          %>
+          </div>
+          </div>
+          <div class="footer">
+            <%= f.submit "Submit", :class => "btn bg-light-blue btn-block" %>
+            <%= link_to 'Register a new user', signup_path %>
+          </div>
+  <% end %>
+  <script type="text/javascript">
+      $('html').css("background", "none repeat scroll 0 0 #c5c5c5");
+      $('html').css("height", "inherit");
+      $('body').css("height", "inherit");
+  </script>
+  </div>

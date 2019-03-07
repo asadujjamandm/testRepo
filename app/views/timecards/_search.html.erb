@@ -1,0 +1,100 @@
+<% if (!@state.nil? ) && @state == 'search' %>
+    <div id="search">
+      <% form_tag ( ( !@state.nil? && @state == 'calendar' ) ? '/timecards/calendar_view' : '/timecards/search' ) , :id => 'timecard_search_form', :method => 'get' do %>
+
+
+          <input type="hidden" id="calendar_date" name="calendar_date" value='<%= @calendar_report_object.nil? ? '' : @calendar_report_object["calendar_date"].strftime( "%Y-%m-%d" ) %>'>
+          <input type="hidden" id="report_date_from" name="report_date_from" value='<%= @calendar_report_object.nil? ? '' :@calendar_report_object["report_date_from"].strftime( "%Y-%m-%d" ) %>'>
+          <input type="hidden" id="report_date_to" name="report_date_to" value='<%= @calendar_report_object.nil? ? '' :@calendar_report_object["report_date_to"].strftime( "%Y-%m-%d" ) %>'>
+
+          <input type="hidden" id="state" name="state" value="<%= @state.nil? ? 'Normal' : @state %>" >
+          <input type="hidden" id="search_timecard_additional" name="search_timecard[additional]" value="<%= @state2.nil? ? 'ALL' : @state2 %>" >
+          <div class="box box-primary" style="padding: 0 !important; margin-bottom: 10px !important">
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-5 col-xs-5 col-sm-5">
+                      <%= label_tag @localData['from_date'] %>
+                    </div>
+                    <div class="col-md-7 col-xs-7 col-sm-7">
+                      <%= text_field_tag 'search_timecard[from_date]', @search_object.nil? ? '' : @search_object.from_date, :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px; font-size: 15px !important;' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-5 col-xs-5 col-sm-5">
+                      <%= label_tag @localData['to_date'] %>
+                    </div>
+                    <div class="col-md-7 col-xs-7 col-sm-7">
+                      <%= text_field_tag 'search_timecard[to_date]', @search_object.nil? ? '' : @search_object.to_date,:style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px; font-size: 15px !important;' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-5 col-xs-5 col-sm-5">
+                      <%= label_tag @localData['search_text'] %>
+                    </div>
+                    <div class="col-md-7 col-xs-7 col-sm-7">
+                      <%= text_field_tag 'search_timecard[search_text]', @search_object.nil? ? '' : @search_object.search_text, :style => 'height: 30px; width: 100%; border: 1px solid #ccc; border-radius: 0px; padding: 0px 5px; font-size: 15px !important;' %>
+                      <span title="<%= @localData['searched_by_description'] %>"><%= @localData['searched_by'] %></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="row" style="padding: 5px 0px">
+                    <div class="col-md-4 col-xs-4 col-sm-4">
+                      <%= label_tag @localData[''], nil, :style => '' %>
+                    </div>
+                    <div class="col-md-8 col-xs-8 col-sm-8">
+                      <%= link_to @localData['search'], 'javascript:submitSearch()', :id => 'search', :title => @localData['search_timecards'],:class=>"btn btn-primary", :style => 'width: 100%'  %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--<table id="formtable">
+                <tbody>
+                <tr>
+                  <td class="labelcolumn"><%= label_tag @localData['from_date'] %></td>
+                  <td class="itemcolumn"><%= text_field_tag 'search_timecard[from_date]', @search_object.nil? ? '' : @search_object.from_date %></td>
+                  <td class="labelcolumn"><%= label_tag @localData['to_date'] %></td>
+                  <td class="itemcolumn"><%= text_field_tag 'search_timecard[to_date]', @search_object.nil? ? '' : @search_object.to_date %></td>
+                </tr>
+                <tr>
+                  <td class="labelcolumn"><%= label_tag @localData['search_text'] %></td>
+                  <td class="itemcolumn">
+                    <%= text_field_tag 'search_timecard[search_text]', @search_object.nil? ? '' : @search_object.search_text %>
+                    <span title="<%= @localData['searched_by_description'] %>"><%= @localData['searched_by'] %></span>
+                  </td>
+                  <td class="labelcolumn">
+                    <div class="controlpanel"><span><%= link_to image_tag('search.png', :options => {:alt => @localData['search']}) + '' + @localData['search'], 'javascript:submitSearch()', :id => 'search', :title => @localData['search_timecards'],:class=>"btn btn-primary btn-sm"  %></span></div>
+                  </td>
+                  <td class="itemcolumn" align="right">
+                  </td>
+                </tr>
+                </tbody>
+              </table>-->
+            </div>
+          </div>
+      <% end %>
+    </div>
+<% else %>
+    <div id="search">
+      <% form_tag ( ( !@state.nil? && @state == 'calendar' ) ? '/timecards/calendar_view' : '/timecards/search'), :id => 'timecard_search_form', :method => 'get' do %>
+
+        <input type="hidden" id="calendar_date" name="calendar_date" value='<%= @calendar_report_object.nil? ? '' : @calendar_report_object["calendar_date"].strftime( "%Y-%m-%d" ) %>'>
+        <input type="hidden" id="report_date_from" name="report_date_from" value='<%= @calendar_report_object.nil? ? '' : @calendar_report_object["report_date_from"].strftime( "%Y-%m-%d" ) %>'>
+        <input type="hidden" id="report_date_to" name="report_date_to" value='<%= @calendar_report_object.nil? ? '' : @calendar_report_object["report_date_to"].strftime( "%Y-%m-%d" ) %>'>
+
+        <input type="hidden" id="state" name="state" value="<%= @state.nil? ? 'Normal' : @state %>" >
+        <input type="hidden" id="search_timecard_additional" name="search_timecard[additional]" value="<%= @state2.nil? ? 'ALL' : @state2 %>" >
+
+        <input type="hidden" id="search_timecard[from_date]" name="search_timecard[from_date]" value="<%=@search_object.nil? ? '' : @search_object.from_date %>" >
+        <input type="hidden" id="search_timecard[to_date]" name="search_timecard[to_date]" value="<%=@search_object.nil? ? '' : @search_object.to_date %>" >
+        <input type="hidden" id="search_timecard[search_text]" name="search_timecard[search_text]" value="<%=@search_object.nil? ? '' : @search_object.search_text %>" >
+
+      <% end %>
+    </div>
+<% end %>

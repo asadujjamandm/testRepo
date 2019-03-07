@@ -1,0 +1,38 @@
+<%= render 'calendar_scripts' %>
+<div class=" fc-header" >
+      <div style="float: left;">
+              <%= link_to '<span class="fc-button fc-button-prev fc-state-default fc-corner-left"> <i class="fa fa-caret-left"></i></span>'.html_safe, 'javascript:moveCalendar( "' + @previous_calendar_date + '" );', :title => 'Previous Month' %>
+      </div>
+  <div style="float: right;">
+    <%= link_to '<span class="fc-button fc-button-next fc-state-default fc-corner-right"><i class="fa fa-caret-right"></i></span>'.html_safe, 'javascript:moveCalendar( "' + @next_calendar_date + '" );', :title => 'Next Month' %>
+  </div>
+      <div style="text-align: center;">
+        <span class="fc-header-title">
+               <strong><%=@calendar_info['0']%> </strong>
+        </span>
+      </div>
+
+</div>
+<table class="calendartable" id="calendartable1">
+          <tr>
+            <th  class="calendartable"><%= @array_of_days[0] %></th><th class="calendartable"><%= @array_of_days[1] %></th><th class="calendartable"><%= @array_of_days[2] %></th><th class="calendartable"><%= @array_of_days[3] %></th><th class="calendartable"><%= @array_of_days[4] %></th><th class="calendartable"><%= @array_of_days[5] %></th><th class="calendartable"><%= @array_of_days[6] %></th>
+          </tr>
+          <tr>
+            <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell_summary'%>
+          </tr>
+          <tr>
+            <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell_summary'%>
+          </tr>
+          <tr>
+            <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell_summary'%>
+          </tr>
+          <tr>
+            <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell_summary'%>
+          </tr>
+          <tr>
+            <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell_summary'%>
+          </tr>
+          <tr  style='<%=@sixthRowsVisibility%>'>
+            <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell_summary'%>
+          </tr>
+</table>

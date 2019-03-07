@@ -1,0 +1,84 @@
+<style>
+    .input-group{padding-bottom: 5px;}
+    .input-group-addon{cursor: pointer;}
+</style>
+
+  <%form_tag "/client/create?page=#{@current_page}", :id => 'client_form', :method => 'post' do%>
+      <% if !@dirty_client.nil? %>
+          <!--value need to changed dirty_client.id, some problem faced -->
+          <%= hidden_field 'client', 'updated_client_id', :value => @dirty_client.id %>
+          <meta charset="utf-8">
+
+          <input type="hidden" id="page_stat" name="page_stat" value="">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="box box-primary" style="padding-bottom: 42px !important">
+                <div class="box-header">
+                  <h3 class="box-title">Client Entry</h3>
+                  <h4 id="show_Timekeeper" class="box-title" style="float: right;color: #3DA0DB;margin-right:5%"> </h4>
+                </div>
+                <div class="box-body">
+                  <div style ="width: 60%">
+                    <div id="formtable" >
+
+                      <%if !is_new_client%>
+                          <div class="form-group-1">
+                            <label>Client Number</label>
+                            <div  class="input-group">
+                              <div id="date_select" class="input-group-addon">
+                                <i class="fa fa-list-ol"></i>
+                              </div>
+                              <%= text_field_tag 'timecard[date]', @dirty_client.client_number, {:class=>"form-control", :style => "width:90%",:disabled=>"" } %>
+                              <input type="hidden" id="tc_date" value="">
+                            </div>
+                          </div>
+
+                      <%end%>
+
+                      <!-- Client Name -->
+                      <div class="form-group-1">
+                        <label>Client Name</label>
+                        <div class="input-group">
+                          <div id="client_name" class="input-group-addon">
+                            <i class="fa fa-tag"></i>
+                          </div>
+                          <%= text_field_tag 'client[client_name]', @dirty_client.client_name, {:class=>"form-control", :style => "width:90%" } %>
+                          <!--<input type="hidden" id="client_name" name="client[client_name]" value="<%=@dirty_client.client_name%>">-->
+                        </div>
+                      </div>
+
+                      <!-- Display Name -->
+                      <div class="form-group-1">
+                        <label>Display Name</label>
+                        <div class="input-group">
+                          <div id="display_name" class="input-group-addon">
+                            <i class="fa fa-tag"></i>
+                          </div>
+                          <%= text_field_tag 'client[display_name]', @dirty_client.display_name, {:class=>"form-control", :style => "width:90%" } %>
+                          <!--<input type="hidden" id="client_display_name" name="client[display_name]" value="<%=@dirty_client.display_name%>">-->
+                        </div>
+                      </div>
+
+                      <!--Is active-->
+                      <div class="form-group-1">
+
+                        <div class="input-group" style="width: 50% !important; float: left">
+                          <label style="padding-top: 5px">Is active</label>
+                          <%= check_box('client', 'is_active', {:checked =>@dirty_client.is_active == 'yes', :tabindex=> "5",:style=>"margin-left:5px; height:30px"}, 'yes', 'no') %>
+                        </div>
+                        <div class="input-group" style="width: 50% !important; float: left">
+                          <label style="padding-top: 5px">Open to all</label>
+                          <%= check_box('client', 'cl_udf9', {:checked =>@dirty_client.cl_udf9 =='yes', :tabindex=> "6",:style=>"margin-left:5px; height:30px"}, 'yes', 'no') %>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <%end%>
+  <% end %>
+

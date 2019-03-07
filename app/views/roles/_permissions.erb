@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table id='permissiontable' class="table">
+        <caption><%= is_viewing_permissions ? @localData['assigned_permissions_of_role'] + get_permission_role_name : @localData['assign_permissons'] %></caption>
+        <tbody>
+        <% if @rolepermissions.empty?  %>
+            <tr><td><b><%= GENERIC_NO_DATA_MESSAGE %></b></td></tr>
+        <% else %>
+            <% i=0 %>
+            <% @rolepermissions.each do |k, v| %>
+                <% if i == 0 %>
+                    <tr>
+                <% end %>
+                <td>
+                  <%= hidden_field 'permission[' + k + ']', 'service_object_id', :value => v.service_object_id %>
+                  <%= hidden_field 'permission[' + k + ']', 'operation', :value => v.operation %>
+                  <%= hidden_field 'permission[' + k + ']', 'description', :value => v.description %>
+                  <%= check_box('permission[' + k + ']', 'permission', {:checked => v.permission == 'yes', :tabindex=> "-1"}, 'yes', 'no') %>
+                </td>
+                <td><%= label_tag v.description %></td>
+                <% if i == 3 %>
+                    </tr>
+                    <% i = 0 %>
+                <% else %>
+                    <% i+=1 %>
+                <% end %>
+            <% end %>
+            <% if i != 0 %>
+                <% (4-i).times do %>
+                    <td></td>
+                    <td></td>
+                <% end %>
+                </tr>
+            <% end %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

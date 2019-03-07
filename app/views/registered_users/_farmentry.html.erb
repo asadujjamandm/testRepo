@@ -1,0 +1,58 @@
+<%= form_tag "/registered_users/create_farm?page=#{@current_page}", :id => 'registeredusers_form', :method => 'post' do %>
+        <meta charset="utf-8">
+        <div class="box box-primary" style="padding: 0.5em !important;">
+          <div class="box-header">
+            <h3 class="box-title" style="padding: 0px 10px !important;">Farm Entry</h3>
+          </div>
+          <div class="box-body">
+            <div id="formtable">
+              <div class="row">
+                <div class="col-lg-6 col-md-6">
+                  <div class="form-group-1">
+                    <%= label_tag @localData['farm_name'] %>
+                    <div  class="input-group">
+                      <div id="farm_name" class="input-group-addon" style="cursor: pointer;">
+                        <i class="fa fa-tag"></i>
+                      </div>
+                      <%= text_field_tag 'registered_users[farm_name]', @farm_setting.farm_name, {:class=>"form-control", :style => "width:90%" } %>
+                    </div>
+                  </div>
+
+                  <div class="form-group-1" style="padding-top: 10px">
+                    <div class="row">
+                      <div class="col-md-3 col-xs-6 col-sm-3">
+                        <%= label_tag @localData['sync_enabled'] %>
+                      </div>
+                      <div class="col-md-2 col-xs-2 col-sm-2">
+                        <%= check_box('registered_users', 'sync_enabled', {:checked => @farm_setting.sync_enabled == 'yes', :tabindex=> "5",:style => "float: left" }, 'yes', 'no') %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                  <div class="form-group-1">
+                    <%= label_tag @localData['xml_export_path'] %>
+                    <div  class="input-group">
+                      <div id="xml_export_path" class="input-group-addon" style="cursor: pointer;">
+                        <i class="fa fa-tag"></i>
+                      </div>
+                      <%= text_field_tag 'registered_users[xml_export_path]',@farm_setting.xml_export_path, {:class=>"form-control", :style => "width:90%" } %>
+                    </div>
+                  </div>
+                  <div class="form-group-1">
+                    <%= label_tag @localData['timecard_persistent_days'] %>
+                    <div  class="input-group">
+                      <div id="timecard_persistent_days" class="input-group-addon" style="cursor: pointer;">
+                        <i class="fa fa-tag"></i>
+                      </div>
+                      <%= select('registered_users', 'setting_timcard_persistent_days', @timecard_persistent_days, {:selected => @farm_setting.setting_timcard_persistent_days}, {:tabindex=> "1", :class => 'form-control', :style => 'width:90%'})  %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+<% end %>

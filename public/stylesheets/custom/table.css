@@ -1,0 +1,204 @@
+/* data table */
+#datatable {
+	border: solid 1px #A1ADAA;
+	border-spacing: 1px;
+	text-align: left;
+}
+
+#datatable a:link {
+	text-decoration: none;
+}
+
+#datatable a:hover {
+	color: #699197;
+}
+
+#datatable thead th {
+	text-align: center;
+	color: #374441;
+	background: #ADBCB9;
+}
+
+#datatable td.centerdata {
+	text-align: center;
+}
+
+#datatable td.action {
+	text-align: center;
+	padding: 0;
+}
+
+#datatable tr.dirty {
+	color: #FF0000;
+}
+
+#datatable tr.dirty a {
+	color: #FF0000;
+	font-weight: bold;
+}
+
+#datatable tr.dirty a:hover {
+	color: #699197;
+}
+
+#datatable tr.updated {
+	color: #565656;
+}
+
+#datatable tr.updated a {
+	color: #565656;
+	font-weight: bold;
+}
+
+#datatable tr.updated a:hover {
+	color: #699197;
+}
+
+#datatable tbody tr:nth-child(even) td, tbody tr.even td {
+	background: #C9D3D2;
+}
+
+.pager {
+	margin-bottom: 5px;
+}
+
+.pagination a:link {
+	text-decoration: none;
+}
+
+.pagination a:hover {
+	color: #699197;
+	text-decoration: underline;
+}
+
+/* form table */
+#formtable {
+	border: solid 1px #A1ADAA;
+	border-spacing: 0;
+	width: 100%;
+	padding: 2px;
+	margin: 0;
+}
+
+#formtable tr td {
+	background: #E1EAE9;
+	width: 40%;
+	margin: 0;
+	padding: 0;
+}
+
+#formtable tr td.labelcolumn {
+	width: 10%;
+}
+
+#formtable tr td.labelcolumn2 {
+	width: 15%;
+}
+
+#formtable tr td.itemcolumn {
+	
+}
+
+#formtable tr td.invisible {
+	visibility: hidden;
+}
+
+#formtable tr td textarea {
+	width: 400px;
+	height: 100px;
+	vertical-align: middle;
+	padding: 0;
+	margin: 1px;
+	/*max-width:95%;
+    max-height:50px;*/
+	resize: none;
+	line-height: 1.888em;
+}
+
+#formtable tr td textarea.fullrow {
+	width: 98%; /*max-width:98%;*/
+	resize: none;
+}
+
+#formtable tr td input[type=text], input.text, input.title, label, input.password,
+	input[type=password] {
+	width: 300px;
+	height: 20px;
+	padding: 2px;
+	margin: 1px;
+	vertical-align: middle;
+}
+
+#formtable tr td select {
+	width: 306px;
+	height: 25px;
+	padding: 2px;
+	margin: 1px;
+	vertical-align: middle;
+}
+
+#formtable tr td select.hourcombo, select.mincombo {
+	width: 50px;
+	margin: 0;
+}
+
+#formtable caption, #datatable caption {
+	border-top: 1px solid #A1ADAA;
+	border-left: 1px solid #A1ADAA;
+	border-right: 1px solid #A1ADAA;
+	background: #E1EAE9;
+	color: #565656;
+	padding-left: 5px;
+	/*margin: 0 -2px 0 0;*/
+	font-weight: bold;
+}
+
+.hiddenrow {
+	display: none;
+}
+
+.overflowcol {
+	overflow: hidden;
+}
+
+#popuptable {
+	border: solid 1px #A1ADAA;
+	border-spacing: 0;
+	width: 99%;
+	padding: 2px;
+	margin: 0;
+}
+
+#popuptable tr td {
+	background: #E1EAE9;
+	width: 40%;
+	margin: 0;
+	padding: 0;
+}
+
+#popuptable tr td input[type=text], input.text, input.title, select,
+	label, input.password, input[type=password] {
+	width: 300px;
+	height: 20px;
+	padding: 2px;
+	margin: 1px;
+}
+
+#videotable {
+	border: solid 0px #A1ADAA;
+	border-spacing: 0;
+	width: 100%;
+	padding: 2px;
+	margin: 0;
+}
+
+#videotable tr {
+	background: #E1EAE9;
+	margin: 0;
+	padding: 0;
+}
+
+#videotable td {
+	background: #E1EAE9;
+	text-align: center;
+}

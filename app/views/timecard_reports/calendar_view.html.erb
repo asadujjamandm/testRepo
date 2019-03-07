@@ -1,0 +1,119 @@
+<%= render 'styles' %>
+<%= render 'calendar_scripts' %>
+<%= form_tag "/timecard_reports/calendar_view", :id => 'calendar_submit_form', :method => 'post' do %>
+    <input type="hidden" id="calendar_date" name="calendar_date" value='<%= @calendar_report_object["calendar_date"].strftime( "%Y-%m-%d" ) %>'>
+    <input type="hidden" id="report_date" name="report_date" value='<%= @calendar_report_object["report_date"].strftime( "%Y-%m-%d" ) %>'>
+<% end %>
+
+<%= form_tag "/timecard_reports/view_pdf", :id => 'pdf_view_request_form', :method => 'post' do %>
+    <input type="hidden" id="search_timecard[from_date]" name="search_timecard[from_date]" value='<%= @date_for_pdf %>'>
+    <input type="hidden" id="search_timecard[to_date]" name="search_timecard[to_date]" value='<%= @date_for_pdf %>'>
+<% end %>
+
+<%= form_tag "/timecard_reports/week_report", :id => 'week_report_request_form', :method => 'post' do %>
+    <input type="hidden" id="search_timecard[from_date]" name="search_timecard[from_date]" value='<%= @date_for_pdf %>'>
+    <input type="hidden" id="search_timecard[to_date]" name="search_timecard[to_date]" value='<%= @date_for_pdf %>'>
+<% end %>
+
+<div class="controlpanel calendartitle">
+  <span><%= link_to '<<', 'javascript:moveCalendar( "' + @previous_calendar_date + '" );', :title => 'Previous Month' %></span>
+  <%=@calendar_info['0']%>
+  <span><%= link_to '>>', 'javascript:moveCalendar( "' + @next_calendar_date + '" );', :title => 'Next Month' %></span>
+</div>
+<table class="calendartable">
+      <tr>
+        <th  class="calendartable">MON</th><th class="calendartable">TUE</th><th class="calendartable">WED</th><th class="calendartable">THU</th><th class="calendartable">FRI</th><th class="calendartable">SAT</th><th class="calendartable">SUN</th>
+      </tr>
+      <tr>
+        <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%>
+      </tr>
+      <tr>
+        <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%>
+      </tr>
+      <tr>
+        <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%>
+      </tr>
+      <tr>
+        <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%>
+      </tr>
+      <tr>
+        <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%>
+      </tr>
+      <tr  style='<%=@sixthRowsVisibility%>'>
+        <%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%><%= render 'calendar_cell'%>
+      </tr>
+</table>
+<div>
+<div class="controlpanel">
+  <table>
+    <tr>
+    <td>
+    <span><%= link_to '' + @localData['previous'], 'javascript:gotoDate( "' + @previous_report_date + '" );', :title => '' + @localData['previous'] %></span>
+    <span><%= link_to image_tag('pdf.png', :options => {:alt => @localData['view_pdf']}) + ' ' + @localData['view_pdf'], 'javascript:submitViewPdf()', :title => @localData['view_in_pdf_format'] %></span>
+    <span><%= link_to image_tag('pdf.png', :options => {:alt => @localData['week_report']}) + ' ' + @localData['week_report'], 'javascript:submitWeekReport()', :title => @localData['view_report'] %></span>
+    &nbsp;&nbsp;&nbsp;<span class="billablebox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<%= @localData['billable_non_billable'] %>&nbsp;<span class="postedbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<%= @localData['posted_not_posted'] %>&nbsp;
+    </td>
+    <td style="text-align:right;">
+    <span style="text-align:right;"><%= link_to '' + @localData['next'], 'javascript:gotoDate( "' + @next_report_date + '" );', :title => '' + @localData['next'] %></span>
+    </td>
+    </tr>
+   </table>
+</div>
+<% if !@page_results.nil? %>
+    <table id="datatable">
+      <thead>
+      <tr>
+        <th><%= @localData['matter'] %></th>
+        <th><%= @localData['template'] %></th>
+        <th><%= @localData['description'] %></th>
+        <th><%= @localData['client'] %></th>
+        <th><%= @localData['timekeeper'] %></th>
+        <th width="60px"><%= @localData['bill_hours'] %></th>
+        <th width="40px"><%= @localData['unit'] %></th>
+        <th width="70px"><%= @localData['date'] %></th>
+        <th width="60px"><%= @localData['time'] %></th>
+        <th width="100px"><%= @localData['bill_status'] %></th>
+        <th width="120px"><%= @localData['user'] %></th>
+        <th width="30px"><%= @localData['status'] %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @page_results.each do |k, v| %>
+          <tr>
+            <td><%= v.matter_number %></td>
+            <td class="overflowcol"><%= v.template %></td>
+            <td class="overflowcol"><%= v.description %></td>
+            <td><%= v.client_number %></td>
+            <td><%= v.timekeeper_number %></td>
+            <td class="centerdata"><%= Utils.get_time_from_seconds(v.hours) %></td>
+            <td class="centerdata"><%= get_units_value_formatted(v.units) %></td>
+            <td class="centerdata"><%= v.date %></td>
+            <td class="centerdata"><%= v.hhmm %></td>
+            <td class="centerdata"><%= v.bill_status %></td>
+            <td><%= v.user_name %></td>
+            <td class="action"><%=
+                if v.approved == 'yes'
+                    image_tag('lock_locked.png', :alt => @localData['posted'], :title => @localData['timecard_is_posted'])
+                elsif v.posted == 'yes'
+                    image_tag('lock_unlocked2.png', :alt => @localData['synced'], :title => @localData['timecard_is_synced'])
+                else
+                    image_tag('lock_unlocked.png', :alt => @localData['not_synced'], :title => @localData['timecard_is_not_synced'])
+                end
+            %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="pager">
+      <span><%= @localData['records'] %><b><%= records_from %></b><%= @localData['to'] %><b><%= records_to %></b><%= @localData['of'] %><b><%= timecard_records_of %></b></span>
+
+      <div class="custom_pagination">
+        <% if @dirty_timecard.nil? %>
+            <%= will_paginate @page_results, :prev_label => "<< ", :next_label => " >>" %>
+        <% end %>
+      </div>
+    </div>
+    <br />
+    <br />
+<% end %>
+</div>

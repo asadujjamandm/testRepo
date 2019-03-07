@@ -1,0 +1,61 @@
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-primary">
+      <div class="box-header">
+        <h5 class="box-title">User Subscription</h5>
+      </div>
+      <div class="box-body ">
+        <!--<div class="row">
+          <p style="text-align: center !important; margin-top: 10px; font-size: 22px; color: #3C8DBC"><%=@localData['requesting_subscription']%></p>
+          <p style="margin-top: 20px; padding-left: 5px; text-align: center; font-size: 20px">
+            <%=@localData['your_model']%>
+            <span class='statusspan'><%= @dirty_model.subscription_model %></span><br/>
+            <%=@localData['model_days']%>
+            <span class='statusspan'><%= @dirty_model.subscription_days %></span><br/>
+            <%=@localData['your_price']%>
+            <span class='statusspan'><%= @dirty_model.subscription_price %></span>
+          </p>
+        </div>-->
+        <div class="row" >
+          <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12" style="border: 1px solid #367FA9; padding-bottom: 5px">
+            <p style="text-align: center !important; margin-top: 10px; font-size: 20px; color: #3C8DBC"><%=@localData['requesting_subscription']%></p>
+            <div class="row">
+              <div class="col-md-8 col-xs-8 confirmpaymenttext" style="text-align: left; font-size: 18px">
+                <%=@localData['your_model']%>
+              </div>
+              <div class="col-md-4 col-xs-4 confirmpaymenttext" style="text-align: right; font-size: 18px; color: #01A9DB">
+                <%= @dirty_model.subscription_model %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8 col-xs-8 confirmpaymenttext" style="text-align: left; font-size: 18px">
+                <%=@localData['model_days']%>
+              </div>
+              <div class="col-md-4 col-xs-4 confirmpaymenttext" style="text-align: right; font-size: 18px; color: #01A9DB">
+                <%= @dirty_model.subscription_days %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8 col-xs-8 confirmpaymenttext" style="text-align: left; font-size: 18px">
+                <%=@localData['your_price']%>
+              </div>
+              <div class="col-md-4 col-xs-4 confirmpaymenttext" style="text-align: right; font-size: 18px; color: #01A9DB">
+                $<%= @dirty_model.subscription_price %>
+              </div>
+            </div>
+            <div class="row" style="margin-top: 15px; text-align: right">
+              <div class="col-md-12" style="text-align: right">
+                <%= link_to image_tag('btn_paynow_107x30.png'),{:controller => 'subscriptions', :action => 'create', :model_id => @dirty_model.id, :user_list => @userlist} , :title => @localData['confirm_payment'] , :tabindex=> "-1", :style => "float:right" %>
+                <%= link_to 'Cancel', {:controller => 'subscriptions', :action => 'cancel'}, :class => "btn btn-primary btn-sm", :style => "margin-right: 5px"%>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,55 @@
+<section class="content dltm" style="padding: 0px 10px !important; overflow: hidden !important;">
+  <div class="row">
+    <div class="col-md-12">
+      <%= form_tag "/roles/#{@updateORNew}?page=#{@current_page}", :id => 'role_form', :method => 'post' do %>
+          <% if !@dirty_role.nil? %>
+              <%= hidden_field 'role', 'updated_role_id', :value => @dirty_role.id %>
+              <div class="box box-primary">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <%= label_tag @localData['name'] %>
+                          </div>
+                          <div class="col-md-9">
+                            <%= text_field_tag 'role[name]', @dirty_role.name, :maxlength => 50, :tabindex=> "5", :style => "width: 100%", :class => "form-control", :style => "margin-bottom: 10px;" %>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="col-md-2 col-sm-2 col-xs-6">
+                            <%= label_tag @localData['is_active'] %>
+                          </div>
+                          <div class="col-md-2 col-sm-2 col-xs-2">
+                            <%= check_box('role', 'is_active', {:checked => @dirty_role.is_active == 'yes', :tabindex=> "5"}, 'yes', 'no') %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="col-md-3"><%= label_tag @localData['description'] %></div>
+                          <div class="col-md-9"><%= text_area_tag 'role[desc]', @dirty_role.desc, :rows => 5, :maxlength => 200 , :tabindex=> "5", :class => "form-control", :style=>"width:100%"%></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+          <% end %>
+          <% if !@rolepermissions.nil? %>
+              <%= render 'permissions' %>
+          <% end %>
+      <% end %>
+      <div id="dialog-confirm">
+      </div>
+
+    </div>
+  </div>
+</section>

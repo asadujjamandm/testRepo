@@ -1,0 +1,429 @@
+<%= stylesheet_link_tag 'newcss/jquery-ui-1.10.3.custom.min', :media => 'screen' %>
+<%= javascript_include_tag 'newjs/jquery-ui-1.10.3.min' %>
+<%= javascript_include_tag 'custom/timecardreportview' %>
+<%= javascript_include_tag 'jquery.validate.min' %>
+<%= javascript_include_tag 'newjs/bootstrap.min'%>
+<%= javascript_include_tag 'newjs/bootstrap-modal'%>
+<%= javascript_include_tag 'newjs/bootstrap-modalmanager'%>
+
+<script type="text/javascript">
+    var singleErrorMessage = '<%=@localData['single_error_message']%>';
+    var multipleErrorMessage = '<%=@localData['multiple_error_message']%>';
+    function flashMessage(){
+        $('.messageContainer').fadeTo(500, 0, function() {
+            $(this).fadeTo(500, 1, function(){
+                $(this).fadeTo(500, 0, function(){
+                    $(this).fadeTo(500, 1);
+                });
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        if ($('#search_timecard_date_range').val() == "")
+            $('#search_timecard_date_range').val("Pick Date Range");
+        $('#search_timecard_bill_status').change(function (e) {
+            submitSearch();
+        });
+        $('#search_timecard_approved').change(function (e) {
+            submitSearch();
+        });
+        $('#search_timecard_matter').keyup(function () {
+            submitSearch();
+        });
+
+        $('#search_timecard_date_range').daterangepicker(
+                {
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                        'Last 7 Days': [moment().subtract('days', 6), moment()],
+                        'Last 30 Days': [moment().subtract('days', 29), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')],
+                        'This Year': [moment().startOf('year'), moment()]
+                    },
+                    format: '<%=session["javascript_date_format"]%>'.toUpperCase().replace('M','MM').replace('D','DD').replace('YY','YYYY')
+                },
+                function (start, end) {
+                    $('#search_timecard_date_range').val(start.format('<%=session["javascript_date_format"]%>'.toUpperCase().replace('M','MM').replace('D','DD').replace('YY','YYYY')) + " - " + end.format('<%=session["javascript_date_format"]%>'.toUpperCase().replace('M','MM').replace('D','DD').replace('YY','YYYY')));
+                    submitSearch();
+                }
+        );
+        $("#export_timecard_xml").click(function(e){
+            e.preventDefault();
+            $('#messageDiv').html('<img alt="Success" src="<%=image_path('info.png')%>" style="padding:0;margin:0 5px 3px 5px;vertical-align:middle;">'+"Exporting XML...");
+            $("#messageDiv").attr("class", "flash success");
+            $('#messageDiv').css("display","block");
+            $.ajax({
+                url : "/timecard_reports/export_timecard_xml",
+                type: "GET",
+                success: function(data) {
+                    var message = $(data).find('message').text();
+                    var errorCode = $(data).find('errorcode').text();
+                    if (errorCode == "0"){
+                        $('#messageDiv').html('<img alt="Success" src="<%=image_path('success.png')%>" style="padding:0;margin:0 5px 3px 5px;vertical-align:middle;">'+message);
+                        $("#messageDiv").attr("class", "flash success");
+                        $('#messageDiv').css("display","block");
+                        flashMessage();
+                    }
+                    else {
+                        $('#messageDiv').html('<img alt="Error" src="<%=image_path('error.png')%>" style="padding:0;margin:0 5px 3px 5px;vertical-align:middle;">'+message);
+                        $("#messageDiv").attr("class", "flash fatalerror");
+                        $('#messageDiv').css("display","block");
+                        flashMessage();
+                    }
+                },
+                error: function() {
+                    alert('Error occured');
+                }
+            });
+        });
+
+
+
+        /*$("#reference_no").click(function(){
+            console.log('clicked');
+            $('#type').val('');
+            $('#type').autocomplete("option", "appendTo", ".farm_setting_new");
+            $('#type').focus();
+        });*/
+
+
+        /*function farmNameSelected( id ) {
+            $( "#farm_id" ).val( id );
+        }
+        $( "#type" ).autocomplete({
+
+            source: "/timecard_reports/autocomplete_list?extra_id=0&type=6&timeactivityname=name_of",
+            minLength: 0,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    //farmNameSelected( ui.item.id );
+                }
+                else{
+                    console.log("error");
+                }
+            }
+        });
+        $( "#type" ).bind( "autocompleteopen", function(event, ui) {
+            $( "#farm_id" ).val("");
+        });
+        $('#type').focus(function() {
+            if( $('#type').val() == "" )
+            {
+                //$( "#farm_id" ).val("");
+                $(this).keydown();
+            }
+        });*/
+        $("#activity_export").click(function(){
+            var chkArray = [];
+
+            /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+            $(".td_list:checked").each(function() {
+                chkArray.push($(this).val());
+            });
+
+            /* we join the array separated by the comma */
+            var selected="";
+            //selected = chkArray.join(',') + ",";
+            selected = chkArray.join(',');
+            if(selected != "")
+            {
+                $('#timeActivityForm').modal('show');
+                $('#timeActivityForm').css("z-index", "1500");
+                //$('#timeActivityForm .modal-dialog').css('width', '400px');
+                $('#timeActivityForm .modal-dialog').css('margin-left', 'auto');
+                $('#timeActivityForm .modal-dialog').css('margin-right', 'auto');
+                $("#timecard_list").val(selected);
+            }
+            else
+            {
+                $("<div title='Select Timecard'>Please select at-lease one timecard to export.</div>").dialog({
+                    resizable: false,
+                    modal: true,
+                    width: 400,
+                    dialogClass: 'no-close',
+                    buttons: [{
+                        text: "OK",
+                        click: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }]
+                });
+            }
+
+
+
+        });
+        function getValueUsingClass(){
+            /* declare an checkbox array */
+            var chkArray = [];
+
+            /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+            $(".td_list:checked").each(function() {
+                chkArray.push($(this).val());
+            });
+
+            /* we join the array separated by the comma */
+            var selected;
+            selected = chkArray.join(',') + ",";
+
+            /*
+            if(selected.length > 1){
+                alert("You have selected " + selected);
+            }else{
+                alert("Please at least one of the checkbox");
+            }*/
+        }
+
+        var refData = "";
+        $( "#type" )
+                .change(function () {
+                    $('#time_activity_reference_no').val('');
+                    refData = "";
+                    //setReferenceAutocompleteSource()
+                    /*if ($(this).val()=="Vendor")
+                    {
+                        refData="request_qb_data_vendor";
+
+                    }
+                    else if ($(this).val()=="Employee")
+                    {
+                        refData="request_qb_data_employee";
+                    }*/
+                    var str = "";
+                    $( "#type option:selected" ).each(function() {
+                        str = $( this ).text();
+                    });
+                    if(str=="Vendor")
+                    {
+                        refData="request_qb_data_vendor";
+                        $( "#time_activity_reference_no" ).autocomplete({
+
+                            source: "/timecard_reports/autocomplete_list?extra_id=0&type=6&timeactivityname="+refData,
+                            minLength: 0,
+                            select: function( event, ui ) {
+                                if( ui.item )
+                                {
+                                    refernceSelected( ui.item.id );
+                                }
+                                else{
+                                    console.log("error");
+                                }
+                            }
+                        });
+                    }
+                    else if (str == "Employee")
+                    {
+                        refData="request_qb_data_employee";
+                        $( "#time_activity_reference_no" ).autocomplete({
+
+                            source: "/timecard_reports/autocomplete_list?extra_id=0&type=6&timeactivityname="+refData,
+                            minLength: 0,
+                            select: function( event, ui ) {
+                                if( ui.item )
+                                {
+                                    refernceSelected( ui.item.id );
+                                }
+                                else{
+                                    console.log("error");
+                                }
+                            }
+                        });
+                    }
+                    //alert(str + " "+refData);
+                })
+                .change();
+        $("#time_activity_reference_no").click(function(){
+            console.log('clicked');
+            $('#time_activity_reference_no').val('');
+            $('#time_activity_reference_no').autocomplete("option", "appendTo", ".time_activity_new");
+            $('#time_activity_reference_no').focus();
+        });
+        function refernceSelected( id ) {
+            $( "#time_activity_reference_id" ).val( id );
+        }
+
+        /*$( "#reference_no" ).autocomplete({
+
+            source: "/timecard_reports/autocomplete_list?extra_id=0&type=6&timeactivityname="+refData,
+            minLength: 0,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    refernceSelected( ui.item.id );
+                }
+                else{
+                    console.log("error");
+                }
+            }
+        });*/
+
+        //commented below for not autocomplete but load data
+        /*$( "#time_activity_reference_no" ).bind( "autocompleteopen", function(event, ui) {
+            $( "#reference_id" ).val("");
+        });
+        $('#time_activity_reference_no').focus(function() {
+            //setReferenceAutocompleteSource();
+            if( $('#time_activity_reference_no').val() == "" )
+            {
+                $( "#time_activity_reference_id" ).val("");
+                $(this).keydown();
+            }
+        });
+        function setReferenceAutocompleteSource()
+        {
+            var type = $( "#type" ).val();
+            alert(type);
+            if (type=="Employee")
+            {
+                $( "#reference_no" ).autocomplete( "option" , "source" , "/timecard_reports/autocomplete_list?timeactivityname=request_qb_data_employee" );
+            }
+            else if (type=="Vendor")
+            {
+                $( "#reference_no" ).autocomplete( "option" , "source" , "/timecard_reports/autocomplete_list?timeactivityname=request_qb_data_vendor" );
+            }
+
+        }
+
+        $("#time_activity_customer_ref").click(function(){
+            $('#time_activity_customer_ref').val('');
+            $('#time_activity_customer_ref').autocomplete("option", "appendTo", ".time_activity_new");
+            $('#time_activity_customer_ref').focus();
+        });
+        function customerSelected( id ) {
+            $( "#time_activity_customer_id" ).val( id );
+        }
+
+        $( "#time_activity_customer_ref" ).autocomplete({
+
+            source: "/timecard_reports/autocomplete_list?extra_id=0&type=6&timeactivityname=request_qb_data_customer",
+            minLength: 0,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    customerSelected( ui.item.id );
+                }
+                else{
+                    console.log("error");
+                }
+            }
+        });
+        $( "#time_activity_customer_ref" ).bind( "autocompleteopen", function(event, ui) {
+            $( "#time_activity_customer_id" ).val("");
+        });
+        $('#time_activity_customer_ref').focus(function() {
+            //setReferenceAutocompleteSource();
+            if( $('#time_activity_customer_ref').val() == "" )
+            {
+                $( "#time_activity_customer_id" ).val("");
+                $(this).keydown();
+            }
+        });
+        $("#time_activity_department_ref").click(function(){
+            $('#time_activity_department_ref').val('');
+            $('#time_activity_department_ref').autocomplete("option", "appendTo", ".time_activity_new");
+            $('#time_activity_department_ref').focus();
+        });
+        function departmentSelected( id ) {
+            $( "#time_activity_department_id" ).val( id );
+        }
+
+        $( "#time_activity_department_ref" ).autocomplete({
+
+            source: "/timecard_reports/autocomplete_list?extra_id=0&type=6&timeactivityname=request_qb_data_dept",
+            minLength: 0,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    departmentSelected( ui.item.id );
+                }
+                else{
+                    console.log("error");
+                }
+            }
+        });
+        $( "#time_activity_department_ref" ).bind( "autocompleteopen", function(event, ui) {
+            $( "#time_activity_department_ref" ).val("");
+        });
+        $('#time_activity_department_ref').focus(function() {
+            //setReferenceAutocompleteSource();
+            if( $('#time_activity_department_ref').val() == "" )
+            {
+                $( "#time_activity_department_id" ).val("");
+                $(this).keydown();
+            }
+        });
+        $("#time_activity_item_ref").click(function(){
+            $('#time_activity_item_ref').val('');
+            $('#time_activity_item_ref').autocomplete("option", "appendTo", ".time_activity_new");
+            $('#time_activity_item_ref').focus();
+        });
+        function itemSelected( id ) {
+            $( "#time_activity_item_id" ).val( id );
+        }
+
+        $( "#time_activity_item_ref" ).autocomplete({
+
+            source: "/timecard_reports/autocomplete_list?extra_id=0&type=6&timeactivityname=request_qb_data_item",
+            minLength: 0,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    itemSelected( ui.item.id );
+                }
+                else{
+                    console.log("error");
+                }
+            }
+        });
+        $( "#time_activity_item_ref" ).bind( "autocompleteopen", function(event, ui) {
+            $( "#time_activity_item_id" ).val("");
+        });
+        $('#time_activity_item_ref').focus(function() {
+            //setReferenceAutocompleteSource();
+            if( $('#time_activity_item_ref').val() == "" )
+            {
+                $( "#time_activity_item_id" ).val("");
+                $(this).keydown();
+            }
+        });
+        $("#time_activity_class_ref").click(function(){
+            $('#time_activity_class_ref').val('');
+            $('#time_activity_class_ref').autocomplete("option", "appendTo", ".time_activity_new");
+            $('#time_activity_class_ref').focus();
+        });
+        function classSelected( id ) {
+            $( "#time_activity_class_id" ).val( id );
+        }
+
+        $( "#time_activity_class_ref" ).autocomplete({
+
+            source: "/timecard_reports/autocomplete_list?extra_id=0&type=6&timeactivityname=request_qb_data_class",
+            minLength: 0,
+            select: function( event, ui ) {
+                if( ui.item )
+                {
+                    classSelected( ui.item.id );
+                }
+                else{
+                    console.log("error");
+                }
+            }
+        });
+        $( "#time_activity_class_ref" ).bind( "autocompleteopen", function(event, ui) {
+            $( "#time_activity_class_id" ).val("");
+        });
+        $('#time_activity_class_ref').focus(function() {
+            //setReferenceAutocompleteSource();
+            if( $('#time_activity_class_ref').val() == "" )
+            {
+                $( "#time_activity_class_id" ).val("");
+                $(this).keydown();
+            }
+        });*/
+    });
+
+</script>

@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"[]>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en">
+<%= render :partial => 'layouts/site_header', :locals => {:title => 'About US'} %>
+<%= stylesheet_link_tag 'site/page_style', :media => 'screen' %>
+
+<body>
+<div id="art-main">
+  <%= render 'layouts/site_menu' %>
+  <div class="art-box art-sheet">
+    <div class="art-box-body art-sheet-body">
+      <div class="art-layout-wrapper">
+        <div class="art-content-layout">
+          <div class="art-content-layout-row">
+            <%= render 'layouts/site_left' %>
+            <div class="art-layout-cell art-content">
+              <div class="art-box art-post">
+                <div class="art-box-body art-post-body">
+                  <div class="art-post-inner art-article">
+                    <div class="art-postcontent">
+                      About WIPTime Team ...
+                    </div>
+                    <div class="cleared"></div>
+                  </div>
+                  <div class="cleared"></div>
+                </div>
+              </div>
+              <div class="cleared"></div>
+            </div>
+            <%= render 'layouts/site_right' %>
+          </div>
+        </div>
+      </div>
+      <div class="cleared"></div>
+      <%= render 'layouts/site_footer' %>
+      <div class="cleared"></div>
+    </div>
+  </div>
+  <div class="cleared"></div>
+  <p class="art-page-footer"></p>
+  <div class="cleared"></div>
+</div>
+</body>
+</html>

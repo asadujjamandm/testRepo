@@ -1,0 +1,111 @@
+<% if !signed_in? %>
+    <li><%= link_to image_tag('userlogin.png', :alt => @local_menu_labels['sign_in'], :class => 'menu_img') + ' ' + @local_menu_labels['sign_in'], signin_path, :id => 'signin', :tabindex => "-1" %></li>
+    <li><%= link_to image_tag('wip.png', :alt => @local_menu_labels['about'], :class => 'menu_img') + ' ' + @local_menu_labels['about'], about_path, :id => 'about', :tabindex => "-1" %></li>
+<% else %>
+    <li><%= link_to image_tag('home.png', :alt => @local_menu_labels['home'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>")+@local_menu_labels['home']+raw("</span>"), homes_path, :id => 'home', :tabindex => "-1" %></li>
+    <li class="treeview hasSubmenu"><%= link_to image_tag('timecard.png', :alt => @local_menu_labels['timecards'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + @local_menu_labels['timecards']+raw("</span>") + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), timecards_path, :id => 'timecard', :tabindex => "-1" %>
+      <ul class="treeview-menu">
+        <li><%= link_to image_tag('timecard.png', :alt => @local_menu_labels['show_timecards'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + @local_menu_labels['show_timecards']+raw("</span>"), timecards_path, :tabindex => "-1" %></li>
+        <li><%= link_to image_tag('addnew.png', :alt => @local_menu_labels['new_timecard'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + @local_menu_labels['new_timecard']+raw("</span>"), {:controller => 'timecards', :action => 'new'}, {:tabindex => "-1"} %></li>
+      </ul>
+    </li>
+    <% if get_sync_enable == '1'%>
+    <li class="treeview hasSubmenu"><%= link_to image_tag('synchronization.png', :alt => @local_menu_labels['synchronization'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['synchronization']+raw("</span>") + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), syncs_path, :id => 'sync', :tabindex => "-1" %>
+      <ul class="treeview-menu">
+        <li><%= link_to image_tag('synchronization.png', :alt => @local_menu_labels['sync_home'], :class => 'menu_img') + raw('&nbsp &nbsp') + ' ' + raw("<span style='vertical-align:middle'>") + @local_menu_labels['sync_home']+raw("</span>") , syncs_path, :tabindex => "-1"  %></li>
+        <li onclick="javascript:showBlockedMessage('Please wait...');"><%= link_to image_tag('sync.png', :alt => @local_menu_labels['sync_timekeeper'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['sync_timekeeper']+raw("</span>") , {:controller => 'syncs', :action => 'sync_timekeeper'}, {:tabindex => "-1"} %></li>
+        <li onclick="javascript:showBlockedMessage('Please wait...');"><%= link_to image_tag('sync.png', :alt => @local_menu_labels['sync_client'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['sync_client']+raw("</span>") , {:controller => 'syncs', :action => 'sync_client'}, {:tabindex => "-1"} %></li>
+        <li onclick="javascript:showBlockedMessage('Please wait...');"><%= link_to image_tag('sync.png', :alt => @local_menu_labels['sync_matter'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['sync_matter']+raw("</span>") , {:controller => 'syncs', :action => 'sync_matter'}, {:tabindex => "-1"} %></li>
+        <li onclick="javascript:showBlockedMessage('Please wait...');"><%= link_to image_tag('sync.png', :alt => @local_menu_labels['sync_timecard'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['sync_timecard']+raw("</span>") , {:controller => 'syncs', :action => 'sync_timecard'}, {:tabindex => "-1"} %></li>
+        <li onclick="javascript:showBlockedMessage('Please wait...');"><%= link_to image_tag('sync.png', :alt => @local_menu_labels['sync_all'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['sync_all']+raw("</span>") , {:controller => 'syncs', :action => 'sync_all'}, {:tabindex => "-1"} %></li>
+      </ul>
+    </li>
+    <% end %>
+
+    <li class="treeview hasSubmenu"><%= link_to image_tag('report.png', :alt => @local_menu_labels['reports'], :class => 'menu_img') + raw('&nbsp &nbsp')+ raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['reports']+raw("</span>")  + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), {:controller => 'timecard_reports', :action => 'index'}, :id => 'report', :tabindex => "-1" %>
+      <ul class="treeview-menu">
+        <!--<li><%= link_to image_tag('report.png', :alt => @local_menu_labels['timecard_reports'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['timecard_reports']+raw("</span>"), reports_path, :id => 'report', :tabindex => "-1" %></li>-->
+        <li><%= link_to image_tag('timecard.png', :alt => @local_menu_labels['search_timecards'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['search_timecards']+raw("</span>"), {:controller => 'timecard_reports', :action => 'index'}, {:tabindex => "-1"} %></li>
+        <li><%= link_to image_tag('timecard.png', :alt => @local_menu_labels['last_four_weeks'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['last_four_weeks']+raw("</span>"), {:controller => 'timecard_reports', :action => 'last_four_weeks'}, {:tabindex => "-1"} %></li>
+        <li><%= link_to image_tag('timecard.png', :alt => @local_menu_labels['month_to_date'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['month_to_date']+raw("</span>"), {:controller => 'timecard_reports', :action => 'month_to_date'}, {:tabindex => "-1"} %></li>
+        <li><%= link_to image_tag('timecard.png', :alt => @local_menu_labels['year_to_date'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['year_to_date']+raw("</span>"), {:controller => 'timecard_reports', :action => 'year_to_date'}, {:tabindex => "-1"} %></li>
+      </ul>
+    </li>
+
+    <li class="treeview hasSubmenu"><%= link_to image_tag('preference.png', :alt => @local_menu_labels['preferences'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['preferences']+raw("</span>") + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), {:controller => 'user_setting', :action => 'index'}, :id => 'preference', :tabindex => "-1" %>
+      <ul class="treeview-menu">
+        <li><%= link_to image_tag('settings.png', :alt => @local_menu_labels['customize'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['customize']+raw("</span>"), {:controller => 'user_setting', :action => 'index'}, {:tabindex => "-1"} %></li>
+        <li><%= link_to image_tag('locale.png', :alt => @local_menu_labels['locale'], :class => 'menu_img')  + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>")+ ' ' + @local_menu_labels['locale']+raw("</span>"), {:controller => 'locality', :action => 'index'}, {:tabindex => "-1"} %></li>
+        <li><%= link_to image_tag('userlogin.png', :alt => @local_menu_labels['change_password'], :class => 'menu_img')  + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>")+ ' ' + @local_menu_labels['change_password']+raw("</span>"), {:controller => 'change_password', :action => 'index'}, {:tabindex => "-1"} %></li>
+      </ul>
+    </li>
+    <% if ((NsiServices.hasPermission(NSI_SERVICE_USER, {'userid' => session[:remember_token][SESSION_LOGIN_INDEX], 'password' => session[:remember_token][SESSION_PASSWORD_INDEX]})) or (NsiServices.hasPermission(NSI_SERVICE_ROLE, {'userid' => session[:remember_token][SESSION_LOGIN_INDEX], 'password' => session[:remember_token][SESSION_PASSWORD_INDEX]}))) %>
+        <li class="treeview hasSubmenu"><%= link_to image_tag('admin.png', :alt => @local_menu_labels['admins'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['admins']+raw("</span>") + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), {}, :id => 'admin', :tabindex => "-1" %>
+          <ul class="treeview-menu">
+            <li class="treeview hasSubmenu"><%= link_to image_tag('master.png', :alt => @local_menu_labels['masters'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['masters']+raw("</span>") + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), {}, :id => 'master', :tabindex => "-1" %>
+              <ul class="treeview-menu">
+                <li><%= link_to image_tag('timekeepers.png', :alt => @local_menu_labels['list_timekeepers'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['list_timekeepers']+raw("</span>"), {:controller => 'timekeeper', :action => 'index'}, {:tabindex => "-1"} %></li>
+                <li><%= link_to image_tag('client.png', :alt => @local_menu_labels['clients'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['clients']+raw("</span>"), {:controller => 'client', :action => 'index'}, {:tabindex => "-1"} %></li>
+                <li><%= link_to image_tag('matter.png', :alt => @local_menu_labels['matters'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['matters']+raw("</span>"), {:controller => 'matter', :action => 'index'}, {:tabindex => "-1"} %></li>
+                <li><%= link_to image_tag('activity.png', :alt => @local_menu_labels['activities'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['activities']+raw("</span>"), {:controller => 'activitycodes', :action => 'index'}, {:tabindex => "-1"} %></li>
+                <li><%= link_to image_tag('user.png', :alt => @local_menu_labels['users'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['users']+raw("</span>"), {:controller => 'users', :action => 'index'}, {:tabindex => "-1"} %></li>
+                <li><%= link_to image_tag('role.png', :alt => @local_menu_labels['roles'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['roles']+raw("</span>"), {:controller => 'roles', :action => 'index'}, {:tabindex => "-1"} %></li>
+              </ul>
+              <!--<ul class="treeview-menu">
+                <li class="treeview hasSubmenu"><%= link_to image_tag('timekeeper.png', :alt => @local_menu_labels['timekeepers'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['timekeepers']+raw("</span>") + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), {:controller => 'timekeeper', :action => 'index'}, :id => 'timekeeper', :tabindex => "-1" %>
+                  <ul class="treeview-menu">
+                    <% if NsiServices.hasPermission(NSI_SERVICE_USER, {'userid' => session[:remember_token][SESSION_LOGIN_INDEX], 'password' => session[:remember_token][SESSION_PASSWORD_INDEX]})%>
+                        <li><%= link_to image_tag('timekeepers.png', :alt => @local_menu_labels['list_timekeepers'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['list_timekeepers']+raw("</span>"), {:controller => 'timekeeper', :action => 'index'}, {:tabindex => "-1"} %></li>
+                        <li><%= link_to image_tag('addnew.png', :alt => @local_menu_labels['new_timekeeper'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['new_timekeeper']+raw("</span>"), {:controller => 'timekeeper', :action => 'new', :page => 1}, :tabindex => "-1" %></li>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="treeview hasSubmenu"><%= link_to image_tag('client.png', :alt => @local_menu_labels['client'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['client']+raw("</span>") + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), {:controller => 'client', :action => 'index'}, :id => 'client', :tabindex => "-1" %>
+                  <ul class="treeview-menu">
+                    <% if NsiServices.hasPermission(NSI_SERVICE_USER, {'userid' => session[:remember_token][SESSION_LOGIN_INDEX], 'password' => session[:remember_token][SESSION_PASSWORD_INDEX]})%>
+                        <li><%= link_to image_tag('client.png', :alt => @local_menu_labels['clients'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['clients']+raw("</span>"), {:controller => 'client', :action => 'index'}, {:tabindex => "-1"} %></li>
+                        <li><%= link_to image_tag('addnew.png', :alt => @local_menu_labels['new_client'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['new_client']+raw("</span>"), {:controller => 'client', :action => 'new', :page => 1}, :tabindex => "-1" %></li>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="treeview hasSubmenu"><%= link_to image_tag('matter.png', :alt => @local_menu_labels['matter'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['matter']+raw("</span>") + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), {:controller => 'matter', :action => 'index'}, :id => 'matter', :tabindex => "-1" %>
+                  <ul class="treeview-menu">
+                    <% if NsiServices.hasPermission(NSI_SERVICE_USER, {'userid' => session[:remember_token][SESSION_LOGIN_INDEX], 'password' => session[:remember_token][SESSION_PASSWORD_INDEX]})%>
+                        <li><%= link_to image_tag('matter.png', :alt => @local_menu_labels['matters'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['matters']+raw("</span>"), {:controller => 'matter', :action => 'index'}, {:tabindex => "-1"} %></li>
+                        <li><%= link_to image_tag('addnew.png', :alt => @local_menu_labels['new_matter'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['new_matter']+raw("</span>"), {:controller => 'matter', :action => 'new', :page => 1}, :tabindex => "-1" %></li>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="treeview hasSubmenu"><%= link_to image_tag('activity.png', :alt => @local_menu_labels['activity_codes'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['activity_codes']+raw("</span>") + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), {:controller => 'activitycodes', :action => 'index'}, :id => 'activity', :tabindex => "-1" %>
+                  <ul class="treeview-menu">
+                    <% if NsiServices.hasPermission(NSI_SERVICE_USER, {'userid' => session[:remember_token][SESSION_LOGIN_INDEX], 'password' => session[:remember_token][SESSION_PASSWORD_INDEX]})%>
+                        <li><%= link_to image_tag('activity.png', :alt => @local_menu_labels['activities'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['activities']+raw("</span>"), {:controller => 'activitycodes', :action => 'index'}, {:tabindex => "-1"} %></li>
+                        <li><%= link_to image_tag('addnew.png', :alt => @local_menu_labels['new_activity'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['new_activity']+raw("</span>"), {:controller => 'activitycodes', :action => 'new', :page => 1}, :tabindex => "-1" %></li>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="treeview hasSubmenu"><%= link_to image_tag('users.png', :alt => @local_menu_labels['user_and_role'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['user_and_role']+raw("</span>") + raw('<span class="glyphicon glyphicon-chevron-right pull-right"></span>'), {:controller => 'users', :action => 'index'}, :id => 'userandrole', :tabindex => "-1" %>
+                  <ul class="treeview-menu">
+                    <% if NsiServices.hasPermission(NSI_SERVICE_USER, {'userid' => session[:remember_token][SESSION_LOGIN_INDEX], 'password' => session[:remember_token][SESSION_PASSWORD_INDEX]})%>
+                        <li><%= link_to image_tag('user.png', :alt => @local_menu_labels['users'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['users']+raw("</span>"), {:controller => 'users', :action => 'index'}, {:tabindex => "-1"} %></li>
+                        <li><%= link_to image_tag('addnew.png', :alt => @local_menu_labels['new_user'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['new_user']+raw("</span>"), {:controller => 'users', :action => 'new', :page => 1}, :tabindex => "-1" %></li>
+                        <li><%= link_to image_tag('role.png', :alt => @local_menu_labels['roles'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['roles']+raw("</span>"), {:controller => 'roles', :action => 'index'}, {:tabindex => "-1"} %></li>
+                        <li><%= link_to image_tag('addnew.png', :alt => @local_menu_labels['new_role'], :class => 'menu_img') + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>") + ' ' + @local_menu_labels['new_role']+raw("</span>"), {:controller => 'roles', :action => 'new', :page => 1}, :tabindex => "-1" %></li>
+                    <% end %>
+                  </ul>
+                </li>
+
+               </ul>-->
+            </li>
+            <% if (NsiServices.hasPermission(NSI_SERVICE_USER_REG, {'userid' => session[:remember_token][SESSION_LOGIN_INDEX], 'password' => session[:remember_token][SESSION_PASSWORD_INDEX]}))%>
+                <li><%= link_to image_tag('reg_user.png', :alt => @local_menu_labels['reg_user'], :class => 'menu_img')  + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>")+ ' ' + @local_menu_labels['reg_users']+raw("</span>"), {:controller => 'registered_users', :action => 'index'}, {:tabindex => "-1"} %></li>
+            <% end %>
+
+            <li><%= link_to image_tag('settings.png', :alt => @local_menu_labels['farm_setting'], :class => 'menu_img')  + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>")+ ' ' + @local_menu_labels['farm_setting']+raw("</span>"), {:controller => 'farm_setting', :action => 'index'}, {:tabindex => "-1"} %></li>
+            </ul>
+        </li>
+    <% end %>
+    <li><%= link_to image_tag('subscription.png', :alt => @local_menu_labels['subscribe'], :class => 'menu_img')  + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>")+ ' ' + @local_menu_labels['subscribe']+raw("</span>"), {:controller => 'subscriptions', :action => 'index'}, {:tabindex => "-1"} %></li>
+    <li><%= link_to image_tag('wip.png', :alt => @local_menu_labels['about'], :class => 'menu_img')  + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>")+ ' ' + @local_menu_labels['about']+raw("</span>"), about_path, :id => 'about', :tabindex => "-1" %></li>
+    <li><%= link_to image_tag('signout.png', :alt => @local_menu_labels['sign_out'], :class => 'menu_img')  + raw('&nbsp &nbsp') + raw("<span style='vertical-align:middle'>")+ ' ' + @local_menu_labels['sign_out']+raw("</span>"), signout_path, :tabindex => "-1" %></li>
+<% end %>

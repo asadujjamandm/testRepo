@@ -1,0 +1,94 @@
+<% stylesheet_link_tag 'custom/table', :media => 'screen' %>
+<%= render 'scripts' %>
+<section class="content" style="padding: 0px 0px !important; overflow: hidden !important;">
+   <div class="row">
+     <%= render 'control_panel' %>
+     <div class="col-md-12">
+       <%= form_tag "/locality/reset", :id => 'locality_reset_form', :method => 'post' do %>
+
+       <% end %>
+
+       <%= form_tag "/locality/update", :id => 'locality_form', :method => 'post' do %>
+           <div class="box box-primary">
+             <div class="table-responsive">
+               <table id="formtable">
+                 <tr>
+
+                   <td class="labelcolumn">
+                     <%= @localData['locale'] %>
+                   </td>
+                   <td class="labelcolumn">
+                     <%= select_tag "locality", options_from_collection_for_select(    @locality_for_drop_down, "locality_id", "label", @selected_locality ) %>
+                   </td>
+
+
+                 </tr>
+                 <tr>
+
+                   <td class="labelcolumn">
+                     <%= @localData['date_format'] %>
+                   </td>
+                   <td class="labelcolumn">
+                     <%= select_tag "date_format", options_from_collection_for_select(    @date_format_for_drop_down, "date_format_id", "date_format", @selected_date_format ) %>
+                   </td>
+
+                 </tr>
+                 <tr>
+
+                   <td class="labelcolumn">
+                     <%= @localData['time_format'] %>
+                   </td>
+                   <td class="labelcolumn">
+                     <%= select_tag "time_format", options_from_collection_for_select(    @time_format_for_drop_down, "time_format_id", "time_format", @selected_time_format ) %>
+                   </td>
+
+                 </tr>
+                 <tr>
+
+                   <td class="labelcolumn">
+                     <%= @localData['number_format'] %>
+                   </td>
+                   <td class="labelcolumn">
+                     <%= select_tag "number_format", options_from_collection_for_select(    @number_format_for_drop_down, "number_format_id", "number_format", @selected_number_format ) %>
+                   </td>
+
+                 </tr>
+                 <tr>
+
+                   <td class="labelcolumn">
+                     <%= @localData['calendar_start_day'] %>
+                   </td>
+                   <td class="labelcolumn">
+                     <%= select_tag "calendar_start_day", options_from_collection_for_select(    @calendar_start_day_for_drop_down, "calendar_start_day_id", "calendar_start_day", @selected_calendar_start_day ) %>
+                   </td>
+
+                 </tr>
+                 <tr>
+
+                   <td class="labelcolumn">
+                     <%= @localData['timecard_unit'] %>
+                   </td>
+                   <td class="labelcolumn">
+
+                     <% unit_value, unit_type = get_units_value( @selected_timecard_unit ) %>
+                     <%= select('timecard', 'units', get_units.collect { |u| [u, u] }, {:selected => unit_value}, :class => 'timecarduintform') %>
+                     <%= select('timecard', 'unit_type', get_unit_types.collect { |t| [t, t] }, {:selected => unit_type}, :class => 'timecarduintform1') %>
+
+                   </td>
+
+                 </tr>
+               </table>
+             </div>
+           <%= @localData['change_notice'] %>
+           <br />
+           <br />
+       <% end %>
+     </div>
+   </div>
+
+       </div>
+     </div>
+   </div>
+</section>
+
+

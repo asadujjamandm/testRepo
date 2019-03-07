@@ -1,0 +1,17 @@
+<%= stylesheet_link_tag 'newcss/jQueryUI/jquery-ui-1.10.3.custom.min', :media => 'screen' %>
+<%= javascript_include_tag 'newjs/jquery-ui-1.10.3.min' %>
+<%= javascript_include_tag 'custom/subscriptionview' %>
+<%= javascript_include_tag 'newjs/bootstrap.min'%>
+<%= javascript_include_tag 'newjs/bootstrap-modal'%>
+<%= javascript_include_tag 'newjs/bootstrap-modalmanager'%>
+
+<script type="text/javascript">
+
+    var singleErrorMessage = '<%=@localData['single_error_message']%>';
+    var multipleErrorMessage = '<%=@localData['multiple_error_message']%>';
+
+    $(document).ready(function(){
+
+    }) ;
+
+</script>

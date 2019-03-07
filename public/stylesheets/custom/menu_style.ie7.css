@@ -1,0 +1,251 @@
+/* Start Box */
+.art-box {
+	zoom: expression(runtimeStyle.zoom = 1, function(e){for(var i = 0;
+	i
+	<e.length;
+	i
+	++)insertBefore(document.createElement('div'),firstChild).className='art-box-'+e[
+	i]
+}
+
+('
+br
+,
+bl
+,
+cr
+,
+cl
+,
+tr
+,
+tl
+'
+.split
+('
+,
+')));
+}
+.art-box-body {
+	zoom: 1;
+}
+
+.art-box-tl, .art-box-tr, .art-box-cl, .art-box-cr, .art-box-bl,
+	.art-box-br {
+	position: absolute;
+	display: block;
+	top: 0;
+	bottom: 0;
+	background-repeat: no-repeat;
+}
+
+.art-box-tl, .art-box-bl, .art-box-cl {
+	left: 0;
+}
+
+.art-box-tr, .art-box-br, .art-box-cr {
+	right: 0;
+}
+
+.art-box-cl, .art-box-cr {
+	background-repeat: repeat-y;
+}
+
+.art-box-tl {
+	background-position: top left;
+	z-index: -3;
+}
+
+.art-box-tr {
+	background-position: top right;
+	z-index: -3;
+}
+
+.art-box-cl {
+	background-position: center left;
+	z-index: -3;
+}
+
+.art-box-cr {
+	background-position: center right;
+	z-index: -3;
+}
+
+.art-box-bl {
+	background-position: bottom left;
+	z-index: -3;
+}
+
+.art-box-br {
+	background-position: bottom right;
+	z-index: -3;
+}
+
+.art-box .art-box-tl, .art-box .art-box-tr, .art-box .art-box-cl,
+	.art-box .art-box-cr, .art-box .art-box-bl, .art-box .art-box-br {
+	z-index: -2;
+}
+
+.art-box .art-box .art-box-tl, .art-box .art-box .art-box-tr, .art-box .art-box .art-box-cl,
+	.art-box .art-box .art-box-cr, .art-box .art-box .art-box-bl, .art-box .art-box .art-box-br
+	{
+	z-index: -1;
+}
+/* End Box */
+
+/* Start Bar */
+.art-bar {
+	zoom: expression(runtimeStyle.zoom = 1, function(e){for(var i = 0;
+	i
+	<e.length;
+	i
+	++)insertBefore(document.createElement('div'),firstChild).className='art-bar-'+e[
+	i]
+}
+
+('
+r
+,
+l
+'
+.split
+('
+,
+')));
+}
+.art-bar-l, .art-bar-r {
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	bottom: 0;
+	content: ' ';
+	background-repeat: repeat-y;
+}
+
+.art-bar-l {
+	left: 0;
+	background-position: top left;
+}
+
+.art-bar-r {
+	right: 0;
+	background-position: top right;
+}
+/* End Bar */
+
+/* begin Menu */
+.art-nav {
+	position: expression(runtimeStyle.position = 'relative');
+}
+
+.art-nav>.art-bar-l, .art-nav>.art-bar-r {
+	background-image: url('../../images/site/nav.png');
+}
+
+.art-nav>.art-bar-l {
+	right: 21px;
+}
+
+.art-nav>.art-bar-r {
+	width: 21px;
+}
+
+.art-hmenu ul li {
+	float: left !important;
+	width: 100%;
+}
+
+.art-hmenu>li {
+	display: inline !important;
+	zoom: 1;
+	float: none !important;
+	vertical-align: top;
+}
+
+/* end Menu */
+
+/* begin MenuItem */
+ul.art-hmenu>li>a {
+	zoom: expression(runtimeStyle.zoom = 1, function(e){for(var i = 0;
+	i
+	<e.length;
+	i
+	++)insertBefore(document.createElement('span'),firstChild).className='art-hmenu-'+e[
+	i]
+}
+
+('
+r
+,
+l
+'
+.split
+('
+,
+')));
+}
+ul.art-hmenu>li>a>span.art-hmenu-l, ul.art-hmenu>li>a>span.art-hmenu-r {
+	position: absolute;
+	display: block;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+	background-image: url('../../images/site/menuitem.png');
+}
+
+ul.art-hmenu>li>a>span.art-hmenu-l {
+	left: 0;
+	right: 8px;
+	background-position: top left;
+}
+
+ul.art-hmenu>li>a>span.art-hmenu-r {
+	width: 8px;
+	right: 0;
+	background-position: top right;
+}
+
+ul.art-hmenu>li>a.active>span.art-hmenu-l {
+	background-position: bottom left;
+}
+
+ul.art-hmenu>li>a.active>span.art-hmenu-r {
+	background-position: bottom right;
+}
+
+ul.art-hmenu>li>a.active {
+	color: #263638;
+}
+
+ul.art-hmenu>li>a:hover>span.art-hmenu-l, ul.art-hmenu>li:hover>a>span.art-hmenu-l
+	{
+	background-position: center left;
+}
+
+ul.art-hmenu>li>a:hover>span.art-hmenu-r, ul.art-hmenu>li:hover>a>span.art-hmenu-r
+	{
+	background-position: center right;
+}
+
+ul.art-hmenu>li>a:hover, ul.art-hmenu>li:hover>a {
+	color: #F6F8F8;
+}
+
+/* end MenuItem */
+
+/* begin MenuSeparator */
+ul.art-hmenu>li:first-child {
+	padding-right: 7px;
+}
+
+ul.art-hmenu>li>span.art-hmenu-separator {
+	position: absolute;
+	display: block;
+	top: 0;
+	left: -7px;
+	width: 7px;
+	height: 26px;
+	background: url('../../images/site/menuseparator.png') center center
+		no-repeat;
+}
+/* end MenuSeparator */

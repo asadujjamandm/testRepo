@@ -1,0 +1,11 @@
+<div class="controlpanel" style="margin-bottom: 10px; margin-right: 10px">
+   <% if is_new_timekeeper %>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-save") + ' ' + @localData['add'], 'javascript:createTimekeeper()', :title => @localData['add_new_timekeeper'], :tabindex=> "10",:class => "btn btn-primary" %></span>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-times") + ' ' + @localData['cancel'], {:controller => 'timekeeper', :action => 'cancel'}, :title => @localData['cancel_changes'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+   <% elsif !@dirty_timekeeper.nil? %>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-save") + ' ' + @localData['update'], 'javascript:updateTimekeeper()', :title => @localData['update_timekeepers'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-times") + ' ' + @localData['cancel'], {:controller => 'timekeeper', :action => 'cancel'}, :title => @localData['cancel_changes'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+   <% else %>
+      <span><%= link_to image_tag('addnew.png', :options => {:alt => @localData['add_new']}) + ' ' + @localData['add_new'], {:controller => 'timekeeper', :action => 'new'}, :id => 'new', :title => @localData['create_new'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+   <% end %>
+</div>

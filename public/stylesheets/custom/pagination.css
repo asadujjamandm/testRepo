@@ -1,0 +1,72 @@
+.custom_pagination {
+	background: #E1EAE9;
+}
+
+.custom_pagination a, .custom_pagination span, .custom_pagination em {
+	font-size: .9em;
+	padding: 0 8px 0 8px;
+	display: block;
+	float: left;
+	margin-right: 1px;
+}
+
+.custom_pagination span.disabled {
+	color: #999;
+	border: 1px solid #999;
+}
+
+.pagination span {
+	color: #8B8B8B;
+	border: 1px solid #A1ADAA;
+}
+
+.custom_pagination em {
+	font-weight: bold;
+	color: #566B66;
+	border: 1px solid #A1ADAA;
+}
+
+.custom_pagination a {
+	text-decoration: none;
+	background: #E1EAE9;
+	color: #566B66;
+	border: 1px solid #A1ADAA;
+}
+
+.custom_pagination a:hover, .custom_pagination a:focus {
+	color: #566B66;
+	border-color: #A1ADAA;
+	text-decoration: none;
+	background: white;
+}
+
+.custom_pagination .page_info {
+	background: #EBF0FB;
+	color: white;
+	padding: .4em .6em;
+	width: 22em;
+	margin-bottom: .3em;
+	text-align: center;
+}
+
+.custom_pagination .page_info b {
+	color: #566B66;
+	background: #E1EAE9;
+	padding: .1em .25em;
+}
+
+.custom_pagination:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+* html .custom_pagination {
+	height: 1%;
+}
+
+*:first-child+html .custom_pagination {
+	overflow: hidden;
+}

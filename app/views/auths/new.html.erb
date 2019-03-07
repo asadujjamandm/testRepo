@@ -1,0 +1,74 @@
+<%= render 'scripts' %>
+<div class="form-box" id="login-box">
+  <div class="header" style="padding: 10px 10px 40px 10px">
+        <!--<span style="float: left; font-family: sans-serif !important">
+          <%= image_tag('logo.png', :alt => @local_menu_labels['wiptime'], :height => '32px', :width => '32px') %>
+          <span style="vertical-align: middle; margin-left: -5px">WIPTime</span>
+        </span>
+    <span style="margin-left: 110px; font-weight: 500">Sign In</span>-->
+    <div>
+      <%= image_tag('logo.png', :alt => @local_menu_labels['wiptime'], :height => '32px', :width => '32px', :style => "float: left") %>
+      <p style="float: left; vertical-align: middle; font-weight: 500; margin-top: -5px; margin-left: 5px">WIPTime</p>
+      <p style="float: right; vertical-align: middle; font-weight: 400; margin-top: -5px">Sign In</p>
+    </div>
+  </div>
+  <%= form_for(@auth) do |f| %>
+      <div class="body bg-gray">
+        <div class="form-group">
+          <%= f.text_field :login, :class => 'form-control', :placeholder => "User ID" %>
+        </div>
+        <div class="form-group">
+          <%= f.password_field :password, :class => 'form-control', :placeholder => "Password" %>
+        </div>
+        <!--<div class="form-group">
+          <%= f.label :"Instance: ", :style => "font-weight:normal; margin-bottom:0px" %>
+          <%= f.label APP_INSTANCE, :style => "font-weight:normal; margin-bottom:0px" %>
+        </div>-->
+        <div class="messageContainer">
+          <%
+             found = false
+             flash.each do |key, value|
+             if (key.to_s == 'success')
+          %>
+             <div id='messageDiv' class="flash <%= key %>" style="color: #088A08" <%= key %>"><%= value %></div>
+          <%
+             end
+             if (key.to_s == 'error')
+          %>
+              <div id='messageDiv' class="flash <%= key %>" style="color: #b70000" <%= key %>"><%= value %></div>
+          <%
+             end
+             found = true
+             end
+             if (!found) then
+          %>
+              <div id='messageDiv' style="display:none" class="flash success"></div>
+          <%
+             end
+          %>
+        </div>
+      </div>
+      <div class="footer">
+        <%= f.submit "Sign me in", :class => "btn bg-light-blue btn-block" %>
+        <%= link_to 'I have forgot my password', resetpassword_path %> <br>
+        <%= link_to 'Register a new user', signup_path %>
+      </div>
+  <% end %>
+  <div class="margin text-center">
+    <span style="font-size: 26px; vertical-align: middle; padding-right: 10px">Get it on</span>
+    <a id="logo-appstore" class="btn btn-circle" href="http://itunes.apple.com/us/app/wiptime/id511381620?mt=8&uo=4" target="_blank">
+      <img alt="Available on the App Store" src="./images/apple-icon.png" style="background-color: #c5c5c5"/>
+    </a>
+    <a id="logo-googleplay" class="btn btn-circle" href="http://play.google.com/store/apps/details?id=nidaan.systems.wiptime" target="_blank">
+      <img alt="Get it on Google Play" src="./images/play-store-icon.png" style="background-color: #c5c5c5" />
+    </a>
+    <a id="logo-appworld" class="btn btn-circle" href="http://appworld.blackberry.com/webstore/content/103878/?lang=EN" target="_blank">
+      <img alt="Get it at Blackberry AppWorld" src="./images/blackberry-icon.png" style="background-color: #c5c5c5"/>
+    </a>
+  </div>
+  <script type="text/javascript">
+      $('html').css("background", "none repeat scroll 0 0 #c5c5c5");
+      $('html').css("height", "inherit");
+      $('body').css("height", "inherit");
+  </script>
+</div>

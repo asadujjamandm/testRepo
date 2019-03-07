@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box box-primary">
+      <div class="box-header">
+        <h5 class="box-title">User Subscription Notification</h5>
+      </div>
+      <div class="box-body ">
+        <div class="row">
+          <p style="text-align: center !important; margin-top: 10px; font-size: 22px; color: #3C8DBC"><%=@localData['subscription_invoice']%></p>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p><%= @localData['subscription_model']%> : <%= @subscriptions.subscription_model%></p>
+            <p><%= @localData['model_price']%> : <%= @subscriptions.subscription_price%></p>
+            <p><%= @localData['subscriptioon_days']%> : <%= @subscriptions.subscription_days%></p>
+            <p><%= @localData['payment_status']%> : <%= @subscriptions.payment_status%></p>
+            <p><%= @localData['payment_date']%> : <%= @subscriptions.payment_date%></p>
+            <p><%= @localData['payment_transcation_id']%> : <%= @subscriptions.transaction_id%></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

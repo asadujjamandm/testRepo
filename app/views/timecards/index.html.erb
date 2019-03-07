@@ -1,0 +1,15 @@
+<%= render 'styles' %>
+<%= render 'scripts' %>
+
+<%= render 'search' %>
+
+	<div class="row calendar_wrapper" id="calendarrow" style="border: 1px solid #3c8dbc; border-radius: 2px; margin: auto 5px; padding: 3px; width: 40%; ">
+  	<%= render 'calendar_view' %>
+	</div>
+
+<% if flash[:fatalerror].nil? %>
+    <!--<div class="row">-->
+        <%= render 'edit' %>
+        <%= render 'list' %>
+    <!--</div>-->
+<% end %>

@@ -1,0 +1,35 @@
+<div id="matter_window_outer" class="popup" style="display: none;"></div>
+<div id="matter_window" class="window formtable" style="display: none;">
+<%= form_tag "/timecards/temporary_matter", :id => 'temp_matter_form', :method => 'post' do %>
+    <div class="controlpanel">
+        &nbsp;
+        <span><%= link_to ' '+ @localData['save'], "javascript:submitTempMatter();", :id => 'submit', :title => @localData['save'], :tabindex=> "3" %></span>
+        <span><%= link_to ' '+ @localData['cancel'], "javascript:closePopup('matter_window');", :id => 'cancel_temp_matter', :title => @localData['cancel'], :tabindex=> "4" %></span>
+    </div>
+    <table id="popuptable">
+        <tr>
+            <td class="labelcolumn"><%= @localData['client'] %></td>
+            <td class="itemcolumn">
+                <input type="hidden" id="timecard_client_id2" name="timecard[client_id2]" value="">
+                <%= text_field_tag 'timecard[client_number2]', "", {:tabindex=> "2"} %>
+            </td>
+        </tr>
+        <tr>
+            <td class="labelcolumn"><%= @localData['matter_number'] %></td>
+            <td class="itemcolumn"><%= text_field_tag 'matter_number2', '', {:tabindex=> "2"} %></td>
+        </tr>
+        <tr>
+            <td class="labelcolumn"><%= @localData['matter_name'] %></td>
+            <td class="itemcolumn"><%= text_field_tag 'matter_name2', '', {:tabindex=> "2"} %></td>
+        </tr>
+        <tr>
+            <td class="labelcolumn"><%= @localData['nick_name'] %></td>
+            <td class="itemcolumn"><%= text_field_tag 'matter_nick2', '', {:tabindex=> "2"} %></td>
+        </tr>
+        <tr>
+            <td class="labelcolumn"><%= @localData['description_temp_matter'] %></td>
+            <td class="itemcolumn"><%= text_field_tag 'matter_description2', '', {:tabindex=> "2"} %></td>
+        </tr>
+    </table>
+<% end %>
+</div>

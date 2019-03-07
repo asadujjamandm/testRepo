@@ -1,0 +1,8 @@
+<%= stylesheet_link_tag 'custom/groupbox', :media => 'screen' %>
+<div class="groupbox">
+  <div class="legend" style='width:120px'><%= @localData['timecard_reports'] %></div>
+  <div class="imagelink"><%= link_to image_tag('timecard.png') + ' ' + @localData['all_timecards'], {:controller => 'timecard_reports', :action => 'index'} %></div>
+  <div class="imagelink"><%= link_to image_tag('timecard.png') + ' ' + @localData['last_four_weeks'], {:controller => 'timecard_reports', :action => 'last_four_weeks'} %></div>
+  <div class="imagelink"><%= link_to image_tag('timecard.png') + ' ' + @localData['month_to_date'], {:controller => 'timecard_reports', :action => 'month_to_date'} %></div>
+  <div class="imagelink"><%= link_to image_tag('timecard.png') + ' ' + @localData['year_to_date'], {:controller => 'timecard_reports', :action => 'year_to_date'} %></div>
+</div>

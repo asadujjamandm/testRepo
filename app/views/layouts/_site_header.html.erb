@@ -1,0 +1,26 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>WIPTime Manager - <%= title %></title>
+
+    <%= stylesheet_link_tag 'site/menu_style', :media => 'screen' %>
+    <%= stylesheet_link_tag 'site/style', :media => 'screen' %>
+    <%= stylesheet_link_tag 'site/footer_style', :media => 'screen' %>
+    <!--[if IE 6]>
+        <%= stylesheet_link_tag 'site/style.ie6', :media => 'screen' %>
+        <%= stylesheet_link_tag 'site/menu_style.ie6', :media => 'screen' %>
+        <%= stylesheet_link_tag 'site/footer_style.ie6', :media => 'screen' %>
+    <![endif]-->
+    <!--[if IE 7]>
+        <%= stylesheet_link_tag 'site/style.ie7', :media => 'screen' %>
+        <%= stylesheet_link_tag 'site/menu_style.ie7', :media => 'screen' %>
+        <%= stylesheet_link_tag 'site/footer_style.ie7', :media => 'screen' %>
+    <![endif]-->
+
+    <%= javascript_include_tag 'jquery' %>
+    <%= javascript_include_tag 'site/script' %>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('ul.art-hmenu li a#<%= @menu %>').addClass('active');
+    });
+</script>
+</head>

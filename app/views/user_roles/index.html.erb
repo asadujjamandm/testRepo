@@ -1,0 +1,6 @@
+<%= stylesheet_link_tag 'custom/groupbox', :media => 'screen' %>
+<div class="groupbox">
+  <div class="legend" style='width:160px'><%= @localData['user_and_role_management'] %></div>
+  <div class="imagelink"><%= link_to image_tag('user.png') + ' ' + @localData['manage_users'], {:controller => 'users', :action => 'index'} %></div>
+  <div class="imagelink"><%= link_to image_tag('role.png') + ' ' + @localData['manage_roles'], {:controller => 'roles', :action => 'index'} %></div>
+</div>

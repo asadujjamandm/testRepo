@@ -1,0 +1,19 @@
+.art-post .layout-item-0 {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.ie7 .art-post .art-layout-cell {
+	border: none !important;
+	padding: 0 !important;
+}
+
+.ie6 .art-post .art-layout-cell {
+	border: none !important;
+	padding: 0 !important;
+}
+
+.auto-style2 {
+	font-size: 12px;
+	color: #42514E;
+}

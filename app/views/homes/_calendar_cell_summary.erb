@@ -1,0 +1,65 @@
+<%
+   if @current_week.nil?
+       @current_week = 1
+   else
+       @current_week += 1
+   end
+
+   if @summary_from_date.nil?
+        @class = 'innertable'
+   else
+      if ( ( @summary_from_date + @summary_to_date ) == @selected_date_string )
+        if( @summary_has_timecad )
+          @class = 'currentselectionwithtimecard'
+        else
+          @class = 'currentselection'
+        end
+      else
+        if( @summary_has_timecad )
+          @class = 'innertablewithtimecard'
+        else
+          @class = 'innertable'
+        end
+      end
+   end
+
+%>
+<td class="calendartable" onclick="<%='summaryClicked(' + @current_week.to_s + ');' %>" id="summaryClicked" style="display: none">
+  <table class="<%=@class%> " style="display:block;cursor:pointer;">
+    <tbody>
+    <tr >
+      <td class="<%=@class%>  bigfont" >
+        <input type="hidden" id='<%= "calendar_summary_" + @current_week.to_s %>' name='<%= "calendar_summary_" + @current_week.to_s %>' value='<%= @summary_from_date %>'>
+        <input type="hidden" id='<%= "calendar_summary2_" + @current_week.to_s %>' name='<%= "calendar_summary2_" + @current_week.to_s %>' value='<%= @summary_to_date %>'>
+        <%= "W-" + @current_week.to_s %>
+      </td>
+    </tr>
+    <tr >
+      <td class="totalhourssummarybox  smallfont">
+        <%=@total_timecards %>
+      </td>
+    </tr>
+    <tr >
+      <td class="summarybillablebox  smallfont">
+        <%= ( Utils.format_single_calendar_data(@summary_billable) )  + "/" + ( Utils.format_single_calendar_data(@summary_non_billable) ) %>
+      </td>
+    </tr>
+    <tr>
+      <td class="summarypostedbox smallfont" style="width:60px;">
+        <%= @total_posted %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</td>
+<%
+   @summary_from_date = nil
+   @summary_billable = 0
+   @summary_non_billable = 0
+   @summary_posted = 0
+   @summary_not_posted = 0
+   @summary_total_hours = 0
+   @summary_has_timecad = false
+   @total_timecards = 0
+   @total_posted = 0
+%>

@@ -1,0 +1,9 @@
+<%=@error%>
+<%
+   @matters.each do |k, v|
+%>
+<%= "" + v.is_non_billable  %>
+<%
+       break
+   end
+%>

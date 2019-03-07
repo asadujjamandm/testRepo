@@ -1,0 +1,15 @@
+<div class="controlpanel" style="margin-bottom: 10px; margin-left: 0px">
+  <% if is_new_user %>
+
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-save") + ' ' + @localData['save'], 'javascript:createUser()', :title => @localData['save_new_user'], :tabindex=> "10",:class => "btn btn-primary" %></span>
+      <span><%= link_to image_tag('list.png', :options => {:alt => @localData['show_users']}) + ' ' + @localData['show_users'], {:controller => 'users', :action => 'index'}, :title => @localData['show_users'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+  <% elsif !@dirty_user.nil? %>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-save") + ' ' + @localData['update'], 'javascript:updateUser()', :id => 'update', :title => @localData['update_changed_user'], :tabindex=> "10",:class => "btn btn-primary" %></span>
+      <span><%= link_to content_tag(:i," ",:class=>"fa fa-fw fa-times") + ' ' + @localData['cancel_changes'], {:controller => 'users', :action => 'cancel', :page => @current_page}, :id => 'cancel', :title => @localData['cancel_changes'], :tabindex=> "11",:class => "btn btn-primary" %></span>
+  <% else %>
+      <span><%= link_to image_tag('addnew.png', :options => {:alt => @localData['add_new']}) + ' ' + @localData['add_new'], {:controller => 'users', :action => 'new', :page => @current_page}, :id => 'new', :title => @localData['create_new_user'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+      <% if is_viewing_roles %>
+          <span><%= link_to image_tag('list.png', :options => {:alt => @localData['show_users']}) + ' ' + @localData['show_users'], {:controller => 'users', :action => 'search'}, :title => @localData['show_users'], :tabindex=> "-1",:class => "btn btn-primary" %></span>
+      <% end %>
+  <% end %>
+</div>

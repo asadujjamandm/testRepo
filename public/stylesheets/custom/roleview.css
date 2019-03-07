@@ -1,0 +1,32 @@
+#permissiontable {
+	height: auto;
+	border: 1px solid #A1ADAA;
+	width: 80%;
+	height: 100%;
+	margin: 10px 0 0 0;
+	padding: 2px;
+	border-spacing: 0px;
+}
+
+#permissiontable tbody {
+	background: #E1EAE9;
+}
+
+#permissiontable tr td {
+	background: #E1EAE9;
+	height: 20px;
+	vertical-align: middle;
+	padding: 2px 5px 2px 2px;
+}
+
+#permissiontable tr td label, input {
+	font-weight: normal;
+	vertical-align: top;
+}
+
+#permissiontable caption {
+	background: #E1EAE9;
+	font-weight: bold;
+	padding-left: 0;
+	color: #565656;
+}

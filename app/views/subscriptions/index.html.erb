@@ -1,0 +1,111 @@
+<%= render 'scripts' %>
+<% if flash[:fatalerror].nil? %>
+    <div class="row">
+      <div class="col-md-6 col-lg-6">
+        <div class="box box-primary">
+          <div class="box-header">
+            <h5 class="box-title">User Subscription</h5>
+          </div>
+          <div class="box-body">
+            <%= form_tag "/subscriptions/confirm", :id => 'subscription_form', :method => 'post' do %>
+                <div>
+                  <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                      <%= label_tag @localData['subscription_model'] %>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                      <%= select 'subscription', 'subscription_model', @subscriptions_model.collect { |k, v| [v.subscription_model + " - "+v.subscription_days + " days", v.id] },{ :include_blank => true},{:style => "width:100%", :class => "form-control"} %>
+                    </div>
+                  </div>
+                  <script id="model_json" type="text/json">
+                    <%= raw @subscriptions_model.values.to_json %>
+                  </script>
+                  <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                      <%= label_tag @localData['model_price'] %>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                      <%= text_field_tag 'subscription[subscription_price]', value=nil, {:class=>"form-control", :style => "width:100%"}%>
+                    </div>
+                  </div>
+                  <% if @permitted==1 %>
+                  <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-12">
+                      <%= render 'userlist' %>
+                    </div>
+                  </div>
+                  <% end %>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="float: right">
+                      <%= link_to 'Submit', 'javascript:submitSubscription()', :tabindex=> "10",:class => "btn btn-primary btn-sm", :id => 'confirmSubscription', :style => "float:right"%>
+                    </div>
+                  </div>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+    <!--<% if session[:modal]==true %>
+        <% puts session[:modal] %>
+        <%= render :partial => 'flash_success'%>
+    <% end %>-->
+
+<% end %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        /*var alertText = '<%= params[:success] %>';
+        if(alertText.length > 0){
+            alert(alertText);
+        }*/
+        $("#subscription_subscription_model").change(function(){
+            var selectedId = $("#subscription_subscription_model").val();
+            var jalaisna;
+            if (selectedId != "")
+            {
+               jalaisna = getId(selectedId);
+            }
+            else jalaisna="";
+            $("#subscription_subscription_price").val(jalaisna);
+        });
+
+        var modelJSON = $("#model_json").html();
+        var jsonData = $.parseJSON(modelJSON);
+        function getId(id){
+            var days;
+            $.each(jsonData, function(i, v) {
+                var idd = v.subscription_model.id;
+                if (idd == id) {
+                     days = v.subscription_model.subscription_price;
+                }
+            });
+            return ("$"+days);
+        }
+        /*$("#userlisttable input:checkbox").change(function() {
+            var i = 0;
+            var ischecked= $(this).is(':checked');
+            if(ischecked)
+            {
+                i++;
+                alert(i+" "+ $(this).val());
+            }
+            else
+            {
+                i--;
+                alert(i+" "+ $(this).val());
+            }
+
+        });*/
+
+    });
+</script>
+
+<!--
+<script>
+    <% if params[:success].present? %>
+    alert(<%= params[:success] %>);
+    <% end %>
+</script>-->

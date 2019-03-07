@@ -1,0 +1,82 @@
+<%= stylesheet_link_tag 'newcss/jquery-ui-1.10.3.custom.min', :media => 'screen' %>
+<%= javascript_include_tag 'newjs/jquery-ui-1.10.3.min' %>
+
+
+<script type="text/javascript">
+     $(document).ready(function(){
+
+     });
+    //Activity Code Autocomplete
+     $(function()
+     {
+         $(document).ready(function(){
+             //------
+//             alert("Loaded");
+             //------------Default------------
+             var defaultActivity=$('#default_activity_code').val()
+             $('#farm_setting_setting_default_activity_code').val(defaultActivity.split(" - ")[0]);
+             //---------call tracking------------
+             var callActivity=$('#activity_code_tracked_timecards').val()
+             $('#farm_setting_setting_default_activity_code_tracked_timecards').val(callActivity.split(" - ")[0]);
+         });
+         //Activity Code Autocomplete
+
+         //------------Default Activity Code---------------
+         $( "#default_activity_code" ).autocomplete({
+             source: "/timecards/autocomplete_list?extra_id=0&type=4",
+             minLength: 0,
+             select: function( event, ui ) {
+                 if( ui.item )
+                 {
+                     activitySelected( ui.item.label.split(" - ")[0] );
+                 }
+             }
+         });
+
+         function activitySelected( code ) {
+             $( "#farm_setting_setting_default_activity_code" ).val( code );
+         }
+//
+         $( "#default_activity_code" ).bind( "autocompleteopen", function(event, ui) {
+             $( "#farm_setting_setting_default_activity_code" ).val("");
+         });
+
+         $('#default_activity_code').focus(function() {
+             if( $('#farm_setting_setting_default_activity_code').val() == "" )
+             {
+                 $( "#farm_setting_setting_default_activity_code" ).val("");
+                 $(this).keydown();
+             }
+         });
+         //------------------------------------------
+
+         //------------Call Tracking Activity Code---------------
+         $( "#activity_code_tracked_timecards" ).autocomplete({
+             source: "/timecards/autocomplete_list?extra_id=0&type=4",
+             minLength: 0,
+             select: function( event, ui ) {
+                 if( ui.item )
+                 {
+                     CallActivitySelected( ui.item.label.split(" - ")[0] );
+                 }
+             }
+         });
+
+         function CallActivitySelected( code ) {
+             $( "#farm_setting_setting_default_activity_code_tracked_timecards" ).val( code );
+         }
+//
+         $( "#activity_code_tracked_timecards" ).bind( "autocompleteopen", function(event, ui) {
+             $( "#farm_setting_setting_default_activity_code_tracked_timecards" ).val("");
+         });
+//
+         $('#activity_code_tracked_timecards').focus(function() {
+             if( $('#farm_setting_setting_default_activity_code_tracked_timecards').val() == "" )
+             {
+                 $( "#farm_setting_setting_default_activity_code_tracked_timecards" ).val("");
+                 $(this).keydown();
+             }
+         });
+         //------------------------------------------
+     });
+</script>

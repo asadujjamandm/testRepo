@@ -1,0 +1,260 @@
+<%= render 'styles' %>
+<div class="row">
+  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="height: 100%;">
+    <div class="box box-primary">
+      <div class="box-body no-padding">
+        <div>
+          <% if !@dashboard.nil? %>
+              <%
+                 if ((session[SESSION_USER_SUBSCRIPTION_REMAIN_DAYS_ERRORCODE].to_s != '8085') and (session[SESSION_USER_SUBSCRIPTION_REMAIN_DAYS_ERRORCODE].to_s != '8080'))
+              %>
+                  <p><%= session[SESSION_USER_SUBSCRIPTION_REMAIN_DAYS_MSG]%></p>
+              <%
+                 end
+              %>
+              <p style="margin-bottom: -2px !important; border: 1px solid #3c8dbc; border-radius: 2px; padding-left: 5px;">
+                <%=@localData['last_logged_in_at']%>
+                <span class='statusspan'><%= get_dashboard_status @dashboard.last_login_web %></span><br/>
+                <%=@localData['last_logged_in_from_device']%>
+                <span class='statusspan'><%= get_dashboard_status @dashboard.last_login_device %></span> <br>
+                <%=@localData['last_time_entry_date'] %>
+                <span class="statusspan"><%= get_dashboard_status @dashboard.last_time_card_date %></span>
+              </p>
+              <br/>
+              <div style="margin-bottom: 15px; padding-left: 0px; border: 1px solid #3c8dbc; border-radius: 2px;">
+                <p style="text-align: center !important; margin-top: 10px;">Time Cards For Last Three Months(In Hours)</p>
+                <canvas id="chart" width="300" height="180"></canvas>
+                <img src="images/bill-nbill.jpg" class="img-responsive" style="margin-left:auto; margin-right:auto; margin-top: 0px; margin-bottom: 5px;" >
+              </div>
+
+
+              <p style="margin-top: 0px; padding-left: 5px; border: 1px solid #3c8dbc; border-radius: 2px;">
+                <%=@localData['last_synced_from_device']%>
+                <span class='statusspan'><%= get_dashboard_status @dashboard.last_sync_device %></span><br/>
+                <%=@localData['last_synced_from_erp']%>
+                <span class='statusspan'><%= get_dashboard_status @dashboard.last_sync_web %></span>
+              </p>
+              <br/>
+              <%
+                @d1 = Date.parse(@calendar_info['0']).at_beginning_of_month.strftime( '%m-%d-%Y' ).to_s
+                @d2 = Date.parse(@calendar_info['0']).at_end_of_month.strftime( '%m-%d-%Y' ).to_s
+                @d3 = @d1 + ' - ' + @d2
+                #@d3 ='8-01-2014' + ' - ' + '8-31-2014'
+              %>
+              <br/>
+              <script id="chart_data_json" type="text/json">
+                <%= raw @dashboard.to_json %>
+              </script>
+          <% end %>
+        </div>
+        <div id="search">
+          <% form_tag({:action => :index, :controller => :homes }, {:method => :post, :id => 'timecard_search_form'}) do %>
+
+              <input type="hidden" id="calendar_date" name="calendar_date" value='<%= @calendar_report_object.nil? ? '' : @calendar_report_object["calendar_date"].strftime( "%Y-%m-%d" ) %>'>
+              <input type="hidden" id="report_date_from" name="report_date_from" value='<%= @calendar_report_object.nil? ? '' :@calendar_report_object["report_date_from"].strftime( "%Y-%m-%d" ) %>'>
+              <input type="hidden" id="report_date_to" name="report_date_to" value='<%= @calendar_report_object.nil? ? '' :@calendar_report_object["report_date_to"].strftime( "%Y-%m-%d" ) %>'>
+
+              <input type="hidden" id="state" name="state" value="<%= @state.nil? ? 'Normal' : @state %>" >
+              <input type="hidden" id="search_timecard_additional" name="search_timecard[additional]" value="<%= @state2.nil? ? 'ALL' : @state2 %>" >
+
+              <input type="hidden" id="search_timecard_from_date" name="search_timecard[from_date]" value="<%=@search_object.nil? ? '' : @search_object.from_date %>" >
+              <input type="hidden" id="search_timecard_to_date" name="search_timecard[to_date]" value="<%=@search_object.nil? ? '' : @search_object.to_date %>" >
+              <input type="hidden" id="search_timecard_search_text" name="search_timecard[search_text]" value="<%=@search_object.nil? ? '' : @search_object.search_text %>" >
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 columnxs" style="height: 100%;">
+    <div class="box box-primary">
+      <div class="box-body no-padding">
+        <div class=" row rowmargin">
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red" style="padding: 0px !important">
+              <div class="inner">
+                <h3 id="timecard1" style="margin-bottom: 5px !important;">
+
+                </h3>
+                <p style="margin-bottom: 5px !important;">
+                  Timecards
+                </p>
+              </div>
+              <div class="icon" style="font-size: 60px ; bottom: 10px ;">
+                <i class="ion ion-ios7-pricetag-outline"></i>
+              </div>
+              <div class="small-box-footer" style="height: 28px !important;"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-xs-6"  >
+            <!-- small box -->
+            <div class="small-box bg-yellow" style="padding: 0px !important">
+              <div class="inner " >
+
+                <h3 id="hours" style="margin-bottom: 5px !important;">
+
+                </h3>
+                <p style="margin-bottom: 5px !important;">
+                 Hours
+                </p>
+              </div>
+              <div class="icon" style="font-size: 60px ; bottom: 10px ;">
+                <i class="ion ion-ios7-alarm-outline"></i>
+              </div>
+
+              <div class="small-box-footer btn"  type="button" id="totalhours-btn">
+                More Info <i class="fa fa-arrow-circle-right" ></i>
+                <% form_tag url_for(:controller => 'timecard_reports', :action => 'search'), :id => 'timecard_search_form_month',:method =>'post' do %>
+                    <%= hidden_field_tag 'search_timecard[date_range]', @d3%>
+                <% end %>
+              </div>
+            </div>
+          </div><!-- ./col -->
+
+          <div class="col-lg-3 col-xs-6" >
+            <!-- small box -->
+            <div class="small-box bg-aqua" style="padding: 0px !important">
+              <div class="inner" >
+
+                <h3 id="billable" style="margin-bottom: 5px !important;">
+
+                </h3>
+                <p style="margin-bottom: 5px !important;">
+                  Billable
+                </p>
+              </div>
+              <div class="icon" style="font-size: 60px; bottom: 10px ;">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <div class="small-box-footer btn" id="billable-btn" type="button">
+                <i class="fa fa-arrow-circle-right"></i>
+              </div>
+            </div>
+          </div><!-- ./col -->
+          <div class="col-lg-3 col-xs-6" >
+            <!-- small box -->
+            <div class="small-box bg-green" style="padding: 0px !important">
+              <div class="inner" >
+
+                <h3 id="timecards_posted" style="margin-bottom: 5px !important;">
+
+                </h3>
+                <p style="margin-bottom: 5px !important;">
+                  Timecards Posted
+                </p>
+              </div>
+              <div class="icon" style="font-size: 60px ; bottom: 13px ">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <div class="small-box-footer btn" id="posted-btn" type="button">
+                <i class="fa fa-arrow-circle-right"></i>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row" id="calendarrow" style="border: 1px solid #3c8dbc; border-radius: 2px; margin: 0px; padding: 3px;">
+          <%= render 'calendar_view' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#totalhours-btn').click(function(e){
+            $('#timecard_search_form_month').submit();
+        });
+
+        var chartDataJSON = $("#chart_data_json").html();
+        var jsonData = $.parseJSON(chartDataJSON);
+        var billable = [];
+        var non_billable = [];
+        var i = 0;
+        $.each(jsonData, function() {
+            billable[i]= calcHours(this['total_billable_current']);
+            non_billable[i]=calcHours(this['total_non_billable_current']);
+            billable[i+1] = calcHours(this['total_billable_last_month']);
+            non_billable[i+1]=calcHours(this['total_non_billable_last_month']);
+            billable[i+2] = calcHours(this['total_billable_last_month2']);
+            non_billable[i+2]=calcHours(this['total_non_billable_last_month2']);
+        });
+
+        function calcHours(strtime){
+            var actualH;
+            if(strtime == "0") actualH = parseInt(strtime);
+            else{
+                var t = strtime.split(':') ;
+                var  h = parseInt(t[0]);
+                var  m = parseInt(t[1]);
+                actualH = parseFloat(h) + parseFloat(m/100);
+            }
+            return actualH;
+        }
+        var monthNames = ["Jan", "Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        var d = new Date();
+        var curM = d.getMonth();
+        var pastM = 0;
+        var pastM2 = 0;
+        if(curM == 0)
+        {
+            pastM = curM + 11;
+            pastM2 = curM + 10;
+        }
+        else if (curM==1)
+        {
+            pastM = curM -1;
+            pastM2 = curM + 11;
+        }
+        else
+        {
+            pastM = curM -1;
+            pastM2 = curM -2;
+        }
+
+        var barChartData = {
+            labels : [monthNames[pastM2],monthNames[pastM],monthNames[curM]],
+            datasets : [
+                {
+                    fillColor : "#00c0ef",
+                    //fillColor : "#A60328",
+                    //strokeColor : "#3399FF",
+                    //strokeColor : "#610B0B",
+                    highlightFill: "#01A9DB",
+                    //highlightStroke: "#3399FF",
+                    //highlightFill: "#B40404",
+                    //highlightStroke: "#610B0B",
+                    data : [billable[i + 2], billable[i + 1],billable[i]]
+
+                },
+                {
+                    fillColor : "#A9D0F5",
+                    //strokeColor : "#81BEF7",
+                    highlightFill: "#A9D0F0",
+                    //highlightStroke: "#81DAF5",
+                    /*fillColor : "#FA5858",
+                    strokeColor : "#B40431",
+                    highlightFill: "#F78181",
+                    highlightStroke: "#B40431",*/
+                    data : [non_billable[i + 2], non_billable[i+1], non_billable[i]]
+
+                }
+            ]
+
+        };
+        var ctx = document.getElementById("chart").getContext("2d");
+        new Chart(ctx).Bar(barChartData,{
+            responsive : true,
+            barStrokeWidth : 2,
+            barValueSpacing : 5,
+            barDatasetSpacing : 3,
+            scaleShowGridLines : false
+        });
+
+    });
+</script>
+

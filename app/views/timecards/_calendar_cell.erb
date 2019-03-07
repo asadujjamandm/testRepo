@@ -1,0 +1,62 @@
+<%
+   if @current.nil?
+       @current = 1
+   else
+       @current += 1
+   end
+   @hash1 = @calendar_info['' + @current.to_s]
+
+   #initialize instance variables for summary
+   if @summary_billable.nil?
+      @summary_billable = 0
+   end
+   if @summary_non_billable.nil?
+      @summary_non_billable = 0
+   end
+   if @summary_posted.nil?
+      @summary_posted = 0
+   end
+   if @summary_not_posted.nil?
+      @summary_not_posted = 0
+   end
+   if @summary_has_timecad.nil?
+      @summary_has_timecad = false
+   end
+
+   #calculate summary
+   if( (!@hash1[ 'day'].nil? ) && @hash1['day'] != '' )
+       @summary_billable = @summary_billable +( @hash1[ 'billable'].to_f )
+       @summary_non_billable = @summary_non_billable +( @hash1[ 'non_billable'].to_f )
+       @summary_posted = @summary_posted +( @hash1[ 'posted' ].to_f )
+       @summary_not_posted = @summary_not_posted +( @hash1[ 'not_posted' ].to_f )
+       if @summary_from_date.nil?
+           @summary_from_date = @hash1[ 'date']
+       end
+       @summary_to_date = @hash1[ 'date']
+       if( @hash1[ 'has_timecard'] )
+           @summary_has_timecad = true
+       end
+   end
+
+%>
+<td class="calendartable" onclick="<%='dateClicked(' + @current.to_s + ');' %>">
+<table class="<%=@hash1[ 'class']%> " style="<%=@hash1[ 'cell_visible']%> ">
+  <tbody>
+  <tr>
+    <td class="<%=@hash1[ 'class']%>  bigfont">
+    <input type="hidden" id='<%= "calendar" + @current.to_s %>' name='<%= "calendar" + @current.to_s %>' value='<%= @hash1[ 'date'] %>'>
+     <%= @hash1[ 'day'] %>
+    </td>
+    <td class='<%= ((@hash1[ 'within_months_range']) ? 'billablebox  smallfont' :  'billablebox2  smallfont' ) %>'>
+        <%= Utils.format_single_calendar_data( @hash1[ 'billable'] ) + "/" + Utils.format_single_calendar_data( @hash1[ 'non_billable'] ) %>
+    </td>
+  </tr>
+  <tr >
+    <td class="<%=@hash1[ 'class']%>" style="width:30px;"> </td>
+    <td class='<%= ((@hash1[ 'within_months_range']) ? 'postedbox  smallfont' :  'postedbox2  smallfont' ) %>' style="width:130px;">
+       <%= Utils.format_single_calendar_data( @hash1[ 'posted' ] ) + "/" + Utils.format_single_calendar_data( @hash1[ 'not_posted' ] ) %>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</td>

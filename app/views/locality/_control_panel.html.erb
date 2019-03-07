@@ -1,0 +1,4 @@
+<div class="controlpanel" style="margin-bottom: 10px; margin-left: 15px">
+    <span><%= link_to image_tag('save.png', :options => {:alt => @localData['change_user_locality']}) + ' ' + @localData['save_user_locality'], 'javascript:submitChange()', :title => @localData['save'], :class => "btn btn-primary" %></span>
+    <span><%= link_to image_tag('reset.png', :options => {:alt => @localData['reset_locality']}) + ' ' + @localData['reset_user_locality'], 'javascript:resetLocality()', :title => @localData['reset'], :class => "btn btn-primary" %></span>
+</div>

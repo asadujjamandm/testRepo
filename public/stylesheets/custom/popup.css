@@ -1,0 +1,25 @@
+.popup {
+	background:
+		url("../jqui/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png") repeat
+		scroll 50% 50% #EEEEEE;
+	opacity: 0.8;
+	width: 1400px;
+	height: 1000px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	-moz-opacity: 0.75;
+	-khtml-opacity: 0.75;
+	filter: alpha(opacity = 75);
+}
+
+.window {
+	width: 450px;
+	height: 210px;
+	margin: 0 auto;
+	border: 1px solid #A1ADAA;
+	background: #ffffff;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
